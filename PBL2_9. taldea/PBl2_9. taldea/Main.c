@@ -42,7 +42,8 @@ int main(int argc, char** argv)
 	// Liberar informacion y terminar
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (window) SDL_DestroyWindow(window);
-	SDL_QUIT;
+	//SDL_QUIT; Para que no de warning (en linux) hay que poner SDL_Quit()
+	SDL_Quit();
 	return 0;
 }
 
