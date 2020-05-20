@@ -1,2 +1,4 @@
 ﻿  Main.c
-  Leer informacion de un fichero.vcxproj -> C:\Users\Jon\Desktop\Pruebas\Debug\Leer informacion de un fichero.exe
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Pruebas\Leer informacion de un fichero\Main.c(138,31): warning C4047: '=': 'ptrPuntua' es distinto en los niveles de direccionamiento indirecto de 'A_PESOS **'
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Pruebas\Leer informacion de un fichero\Main.c(149,30): warning C4047: '=': 'ptrPuntua' es distinto en los niveles de direccionamiento indirecto de 'A_PESOS **'
+  Leer informacion de un fichero.vcxproj -> C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Pruebas\Debug\Leer informacion de un fichero.exe

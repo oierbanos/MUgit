@@ -11,16 +11,19 @@ typedef struct DE_POSIZIOA
 	int y;
 } POS;
 
-typedef struct DE_PUNTUA 
+typedef struct DE_PUNTUA
 {
 	int id;
 	POS pos;
-	struct DE_PUNTUA* ptrHurrengoa;
-} PUNTUA, *ptrPuntua;
+	int* peso;
+	int* idKonexioa;
+	struct A_PESOS** ptrKonexioa;
+} PUNTUA, * ptrPuntua;
 
 int fitxategiaIreki(FILE** fitxategia);
 void fitxategiaJaso(FILE** fitxategia);
 void puntuakJaso(ptrPuntua* burua, FILE* fitxategia);
+void sartu(int* pisua, int* konexioa, ptrPuntua* berria);
 void pantailaratu(ptrPuntua burua);
 void askatu(ptrPuntua burua);
 
@@ -73,7 +76,8 @@ int fitxategiaIreki(FILE** fitxategia)
 void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 {
 	ptrPuntua berria = NULL, ptrAux = NULL;
-	int egoera;
+	int egoera, i;
+	int peso[100], id[100];
 
 	do {
 		berria = (ptrPuntua)malloc(sizeof(PUNTUA));
@@ -81,7 +85,14 @@ void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 		if (berria == NULL) { printf("Arazo bat eman da memoria alokatzean.\n"); egoera = -1; }
 		else {
 			egoera = fscanf(fitxategia, "%d %d %d\n", &berria->id, &berria->pos.x, &berria->pos.y);
-			berria->ptrHurrengoa = NULL;
+			i = 0;
+			do {
+				egoera = fscanf(fitxategia, "%d %d\n", (id + i), (peso + i));
+				i++;
+			} while (*(id + i - 1) != -1 && egoera == 2);
+			sartu(peso, id, &berria);
+
+			/**(berria->ptrKonexioa) = NULL;
 
 			if (*burua == NULL && berria->id != -1) {
 				*burua = berria;
@@ -89,13 +100,33 @@ void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 			}
 			else {
 				if (ptrAux != NULL && berria->id != -1) {
-					ptrAux->ptrHurrengoa = berria;
-					ptrAux = ptrAux->ptrHurrengoa;
+					ptrAux->ptrKonexioa = berria;
+					ptrAux = *(ptrAux->ptrKonexioa);
 				}
-			}
+			}*/
 		}
-		if (berria != NULL && berria->id == -1) { free(berria); berria = NULL; }
+		//if (berria != NULL && berria->id == -1) { free(berria); berria = NULL; }
 	} while (berria != NULL && berria->id != -1);
+}
+
+void sartu(int* pisua, int* konexioa, ptrPuntua* berria)
+{
+	int kont = 0, i = 0;
+
+	while (*(konexioa + kont) != -1) kont++;
+	(*berria)->peso = (int*)malloc(kont *sizeof(int));
+	(*berria)->idKonexioa = (int*)malloc(kont * sizeof(int));
+
+	if ((*berria)->peso == NULL || (*berria)->idKonexioa == NULL) printf("Arazo bat egon da memoria alokatzean.\n");
+	else {
+		while (*(konexioa + i) != -1) {
+			*((*berria + i)->peso) = *(pisua + i);
+			printf("%d\n", *((*berria + i)->peso));
+			*((*berria + i)->idKonexioa) = *(konexioa + i);
+			printf("%d\n", *((*berria + i)->idKonexioa));
+			i++;
+		}
+	}
 }
 
 void pantailaratu(ptrPuntua burua)
@@ -104,7 +135,7 @@ void pantailaratu(ptrPuntua burua)
 
 	while (ptrAux != NULL) {
 		printf("%d %d %d\n", ptrAux->id, ptrAux->pos.x, ptrAux->pos.y);
-		ptrAux = ptrAux->ptrHurrengoa;
+		ptrAux = ptrAux->ptrKonexioa;
 	}
 }
 
@@ -115,7 +146,7 @@ void askatu(ptrPuntua burua)
 	if (burua != NULL) {
 		while (burua != NULL)
 		{
-			burua = burua->ptrHurrengoa;
+			burua = burua->ptrKonexioa;
 			free(aux);
 			aux = burua;
 		}
