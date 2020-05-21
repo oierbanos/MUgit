@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{9E594E93-485A-40A0-ADAF-33911870A5F9}</ProjectGuid>
-    <RootNamespace>Leerinformaciondeunfichero</RootNamespace>
+    <ProjectGuid>{1386D286-4D0B-468F-B7A7-D32903D84144}</ProjectGuid>
+    <RootNamespace>Escribirlainformaciónenunfitxero</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,7 +127,7 @@
     <ClCompile Include="Main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileReading.h" />
+    <ClInclude Include="FileWriting.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

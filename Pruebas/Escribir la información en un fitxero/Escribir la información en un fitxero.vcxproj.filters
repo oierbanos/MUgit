@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileReading.h">
+    <ClInclude Include="FileWriting.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
