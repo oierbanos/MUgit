@@ -14,7 +14,7 @@ typedef struct DE_PUNTUA
 {
 	int id;
 	POS pos;
-	struct A_PESOS* ptrHurrengoa;
+	struct DE_PUNTUA* ptrHurrengoa;
 } PUNTUA, * ptrPuntua;
 
 int fitxategiaIreki(FILE** fitxategia);
