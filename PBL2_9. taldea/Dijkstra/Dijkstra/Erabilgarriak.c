@@ -5,6 +5,13 @@
 #include "Dijkstra.h"
 #include "Erabilgarriak.h"
 
+int erreserbaBurutu(int** bek, int kop)
+{
+	*bek = (int*)malloc(sizeof(int) * kop);
+	if (*bek == NULL) return 0;
+	else return 1;
+}
+
 void pantailaratu(ptrMugi burua)
 {
 	ptrMugi ptrAux = burua;

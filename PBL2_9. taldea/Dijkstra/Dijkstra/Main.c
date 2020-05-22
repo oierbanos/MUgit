@@ -7,41 +7,42 @@
 
 int main(int argc, char** argv)
 {
-	int G[MAX][MAX];
-	int puntuKop, org, dest;
 	ptrMugi burua = NULL;
+	int pKop, org, dest;
+	int* Grafo = NULL;
 
 	printf("Enter no. of vertices: ");
-	scanf("%d", &puntuKop);
+	scanf("%d", &pKop);
 
-	// Pisuen matrizea sartu
-	printf("\nEnter the adjacency matrix:\n");
-	for (int i = 0; i < puntuKop; i++) {
-		for (int j = 0; j < puntuKop; j++)
-			scanf("%d", &G[i][j]);
-		printf("============================\n");
-	}
-
-	// Bidea Aurkitu
-	printf("If you enter -1 as the starting node the program will end.\n");
-	do {
-		printf("Enter the starting node: ");
-		scanf("%d", &org);
-
-		if (org != -1) {
-			printf("Enter the final node: ");
-			scanf("%d", &dest);
-
-			dijkstra(G, puntuKop, org - 1, dest - 1, &burua);
-
-			printf("\n============================\n");
-			pantailaratu(burua);
-			askatu(&burua);
-			burua = NULL;
-			printf("\n============================\n");
+	if (!erreserbaBurutu(&Grafo, pKop * pKop)) printf("Arazo bat eman da memoria alokatzean.\n");
+	else {
+		// Pisuen matrizea sartu
+		printf("\nEnter the adjacency matrix:\n");
+		for (int i = 0; i < pKop; i++) {
+			for (int j = 0; j < pKop; j++)
+				scanf("%d", (Grafo + i * pKop + j));
+			printf("============================\n");
 		}
-		printf("\n");
-	} while (org != -1);
 
-	return 0;
+		// Bidea Aurkitu
+		printf("If you enter -1 as the starting node the program will end.\n");
+		do {
+			printf("Enter the starting node: ");
+			scanf("%d", &org);
+
+			if (org != -1) {
+				printf("Enter the final node: ");
+				scanf("%d", &dest);
+
+				dijkstra(Grafo, pKop, org - 1, dest - 1, &burua);
+
+				printf("\n============================\n");
+				pantailaratu(burua);
+				askatu(&burua);
+				burua = NULL;
+				printf("\n============================\n");
+			}
+			printf("\n");
+		} while (org != -1);
+	}
 }

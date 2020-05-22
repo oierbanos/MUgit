@@ -5,78 +5,84 @@
 #include "Dijkstra.h"
 #include "Erabilgarriak.h"
 
-void dijkstra(int G[MAX][MAX], int puntuKop, int org, int dest, ptrMugi* burua)
+void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 {
-
-	int pisua[MAX][MAX], distantzia[MAX], aurrekoa[MAX];
-	int check[MAX], kop, minLuzeera, hurrengoa;
+	int* pisua = NULL, * distantzia = NULL, * aurrekoa = NULL, * check = NULL;
+	int kop, minLuzeera, hurrengoa = 0;
 
 	// Aurrekoa nodo bakoitzaren aurrekoa gordetzen du
 	// kop begiratutako nodo kopurua kontrolatzen du
+	if (erreserbaBurutu(&pisua, pKop * pKop) && erreserbaBurutu(&distantzia, pKop) && erreserbaBurutu(&aurrekoa, pKop) && erreserbaBurutu(&check, pKop)) {
+		
+		// Dijkstraren taula sortu
+		dijkstraTaula(Grafo, pisua, pKop);
 
-	// Dijkstraren taula sortu
-	dijkstraTaula(G, pisua, puntuKop);
+		// hasieratu aurrekoa, distantzia eta check
+		hasieratu(pKop, org, &kop, distantzia, aurrekoa, check, pisua);
 
-	// hasieratu aurrekoa, distantzia eta check
-	hasieratu(puntuKop, org, &kop, distantzia, aurrekoa, check, pisua);
+		while (kop < pKop - 1) {
+			minLuzeera = INFINITY;
 
-	while (kop < puntuKop - 1) {
-		minLuzeera = INFINITY;
-
-		// 'hurrengoa'-k gertuen dagoen nodoa ematen du
-		for (int i = 0; i < puntuKop; i++)
-			if (distantzia[i] < minLuzeera && !check[i]) {
-				minLuzeera = distantzia[i];
-				hurrengoa = i;
-			}
-
-		// beste nodoak erabiliz bide motzen bat dagoen begiratu
-		check[hurrengoa] = 1;
-		for (int i = 0; i < puntuKop; i++)
-			if (!check[i])
-				if (minLuzeera + pisua[hurrengoa][i] < distantzia[i]) {
-					distantzia[i] = minLuzeera + pisua[hurrengoa][i];
-					aurrekoa[i] = hurrengoa;
+			// 'hurrengoa'-k gertuen dagoen nodoa ematen du
+			for (int i = 0; i < pKop; i++)
+				if (*(distantzia + i) < minLuzeera && !*(check + i)) {
+					minLuzeera = *(distantzia + i);
+					hurrengoa = i;
 				}
-		kop++;
-	}
 
-	// Nodo batetik besterako distantziak kate batean gorde
-	gorde(puntuKop, org, dest, distantzia, aurrekoa, burua);
+			// beste nodoak erabiliz bide motzen bat dagoen begiratu
+			*(check + hurrengoa) = 1;
+			for (int i = 0; i < pKop; i++)
+				if (!*(check + i))
+					if (minLuzeera + *(pisua + hurrengoa * pKop + i) < *(distantzia + i)) {
+						*(distantzia + i) = minLuzeera + *(pisua + hurrengoa * pKop + i);
+						*(aurrekoa + i) = hurrengoa;
+					}
+			kop++;
+		}
+
+		// Nodo batetik besterako distantziak kate batean gorde
+		gorde(pKop, org, dest, distantzia, aurrekoa, burua);
+		free(distantzia);
+		free(aurrekoa);
+		free(pisua);
+		free(check);
+	}
+	else printf("Arazo bat eman da memoria alokatzerakoan.\n");
 }
 
-void dijkstraTaula(int G[MAX][MAX], int pisua[MAX][MAX], int puntuKop)
+void dijkstraTaula(int* Grafo, int* pisua, int pKop)
 {
-	for (int i = 0; i < puntuKop; i++)
-		for (int j = 0; j < puntuKop; j++)
-			if (G[i][j] == 0)
-				pisua[i][j] = INFINITY;
+	for (int i = 0; i < pKop; i++)
+		for (int j = 0; j < pKop; j++)
+			if (*(Grafo + i * pKop + j) == 0)
+				*(pisua + i * pKop + j) = INFINITY;
 			else
-				pisua[i][j] = G[i][j];
+				*(pisua + i * pKop + j) = *(Grafo + i * pKop + j);
 }
 
-void hasieratu(int puntuKop, int org, int* kop, int distantzia[MAX], int aurrekoa[MAX], int check[MAX], int pisua[MAX][MAX])
+void hasieratu(int pKop, int org, int* kop, int* distantzia, int* aurrekoa, int* check, int* pisua)
 {
-	for (int i = 0; i < puntuKop; i++) {
-		distantzia[i] = pisua[org][i];
-		aurrekoa[i] = org;
-		check[i] = 0;
+	for (int i = 0; i < pKop; i++) {
+		*(distantzia + i) = *(pisua + org * pKop + i);
+		*(aurrekoa + i) = org;
+		*(check + i) = 0;
 	}
-	distantzia[org] = 0;
-	check[org] = 1;
+	*(distantzia + org) = 0;
+	*(check + org) = 1;
 	*kop = 1;
 }
 
-void gorde(int puntuKop, int org, int dest, int distantzia[MAX], int aurrekoa[MAX], ptrMugi* burua)
+void gorde(int pKop, int org, int dest, int* distantzia, int* aurrekoa, ptrMugi* burua)
 {
-	for (int i = 0; i < puntuKop; i++)
+	for (int i = 0; i < pKop; i++)
 		if (i == dest) {
-			printf("\nDistance of node %d = %d", i + 1, distantzia[i]);
+			printf("\nDistance of node %d = %d", i + 1, *(distantzia + i));
 			mugimenduak(i + 1, burua);
 
 			int j = i;
 			do {
-				j = aurrekoa[j];
+				j = *(aurrekoa + j);
 				mugimenduak(j + 1, burua);
 			} while (j != org);
 		}
