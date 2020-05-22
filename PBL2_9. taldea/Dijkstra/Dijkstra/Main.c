@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
-#include<conio.h>
 #include <stdlib.h>
 #include "Dijkstra.h"
 #include "Erabilgarriak.h"
