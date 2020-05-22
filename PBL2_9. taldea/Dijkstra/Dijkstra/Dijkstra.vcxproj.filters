@@ -18,5 +18,19 @@
     <ClCompile Include="Main.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="DijkstraFuntzioak.c">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Erabilgarriak.c">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dijkstra.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Erabilgarriak.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
