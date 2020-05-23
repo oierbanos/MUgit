@@ -13,7 +13,7 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo)
 	puntuakJaso(burua, fitxategia);
 	pKop = puntuakZenbatu(*burua);
 
-	if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("Arazo bat eman da memoria alokatzean.\n");
+	if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("302 Errorea\n");
 	else {
 		// Pisuen matrizea sartu
 		pisuakJaso(*burua, fitxategia, Grafo);
@@ -51,7 +51,6 @@ void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 	// Aurrekoa nodo bakoitzaren aurrekoa gordetzen du
 	// kop begiratutako nodo kopurua kontrolatzen du
 	if (erreserbaBurutu(&pisua, pKop * pKop) && erreserbaBurutu(&distantzia, pKop) && erreserbaBurutu(&aurrekoa, pKop) && erreserbaBurutu(&check, pKop)) {
-
 		// Dijkstraren taula sortu
 		dijkstraTaula(Grafo, pisua, pKop);
 
@@ -86,7 +85,7 @@ void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 		free(pisua);
 		free(check);
 	}
-	else printf("Arazo bat eman da memoria alokatzerakoan.\n");
+	else printf("303 Errorea\n");
 }
 
 void dijkstraTaula(int* Grafo, int* pisua, int pKop)
@@ -131,7 +130,7 @@ void mugimenduak(int mugimendua, ptrMugi* burua)
 	ptrMugi ptrAux = *burua, berria;
 
 	berria = (ptrMugi)malloc(sizeof(MUGI));
-	if (berria == NULL) printf("Arazo bat egon da memoria alokatzerakoan.\n");
+	if (berria == NULL) printf("304 Errorea\n");
 	else {
 		berria->moveId = mugimendua;
 		berria->ptrHurrengoa = NULL;

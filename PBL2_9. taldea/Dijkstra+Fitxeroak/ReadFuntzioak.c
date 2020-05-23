@@ -33,7 +33,7 @@ int fitxategiaIreki(FILE** fitxategia)
 
 	*fitxategia = fopen(izena, "rb");
 	if (*fitxategia == NULL) {
-		printf("Arazo bat eman da fitxategia irakurtzerakoan.\n");
+		printf("201 Errorea\n");
 		return 0;
 	}
 	else return 1;
@@ -47,14 +47,14 @@ void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 	do {
 		berria = (ptrPuntua)malloc(sizeof(PUNTUA));
 
-		if (berria == NULL) { printf("Arazo bat eman da memoria alokatzean.\n"); egoera = -1; }
+		if (berria == NULL) { printf("202 Errorea\n"); egoera = -1; }
 		else {
 			egoera = fread(&berria->id, sizeof(int), 1, fitxategia);
 			if (berria->id != -1 && egoera == 1) {
 				egoera = fread(&berria->pos.x, sizeof(int), 1, fitxategia);
 				if (egoera == 1) egoera = fread(&berria->pos.y, sizeof(int), 1, fitxategia);
 			}
-			else if (egoera != 1) printf("Arazo bat egon da fitxategia irakurtzerakoan.\n");
+			if (egoera != 1) printf("203 Errorea\n");
 			berria->ptrHurrengoa = NULL;
 
 			if (*burua == NULL && berria->id != -1 && egoera == 1) {
@@ -78,7 +78,7 @@ void pisuakJaso(ptrPuntua burua, FILE* fitxategia, int** pisuak)
 	int egoera, i = 0;
 
 	*pisuak = (int*)malloc(kont * kont * sizeof(int));
-	if (*pisuak == NULL) printf("Arazo bat eman da memoria alokatzean.\n");
+	if (*pisuak == NULL) printf("204 Errorea\n");
 	else {
 		do {
 			egoera = fread((*pisuak + i), sizeof(int), 1, fitxategia);

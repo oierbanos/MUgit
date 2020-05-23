@@ -58,21 +58,21 @@ void puntuakIdatzi(FILE* fitxategia, int kop)
 		sscanf(str, "%d", &aux);
 
 		egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
-		if (egoera != 1) printf("Arazo bat eman da informazioa gordetzerakoan\n");
+		if (egoera != 1) printf("102 Errorea\n");
 		else {
 			printf("Puntuaren koordenatua (X): ");
 			fgets(str, MAX_SIZE, stdin);
 			sscanf(str, "%d", &aux);
 
 			egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
-			if (egoera != 1) printf("Arazo bat eman da informazioa gordetzerakoan\n");
+			if (egoera != 1) printf("103 Errorea\n");
 			else {
 				printf("Puntuaren koordenatua (Y): ");
 				fgets(str, MAX_SIZE, stdin);
 				sscanf(str, "%d", &aux);
 
 				egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
-				if (egoera != 1) printf("Arazo bat eman da informazioa gordetzerakoan\n");
+				if (egoera != 1) printf("104 Errorea\n");
 			}
 		}
 		i++;
@@ -93,7 +93,7 @@ void pisuenMatrizeaIdatzi(FILE* fitxategia, int kop)
 			sscanf(str, "%d", &aux);
 
 			egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
-			if (egoera != 1) printf("Arazo bat eman da informazioa gordetzerakoan\n");
+			if (egoera != 1) printf("105 Errorea\n");
 			j++;
 		} while (j < kop && egoera == 1);
 		i++;

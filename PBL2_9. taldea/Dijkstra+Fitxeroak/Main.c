@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 			break;
 		case 3: // Error desde 300
 			//Dijkstra
-			if(fitxategia == NULL) printf("Arazo bat eman da");
+			if(fitxategia == NULL) printf("301 Errorea");
 			else setUp(fitxategia, &burua, &mBurua, &Grafo);
 			break;
 		default:
