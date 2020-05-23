@@ -126,10 +126,14 @@
     <ClCompile Include="Dijkstra_Funtzioak.c" />
     <ClCompile Include="Erabilgarriak.c" />
     <ClCompile Include="Main.c" />
+    <ClCompile Include="ReadFuntzioak.c" />
+    <ClCompile Include="WriteFuntzioak.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Erabilgarriak.h" />
+    <ClInclude Include="FileReading.h" />
+    <ClInclude Include="FileWriting.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

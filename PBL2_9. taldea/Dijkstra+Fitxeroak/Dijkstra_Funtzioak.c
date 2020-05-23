@@ -3,6 +3,45 @@
 #include <stdlib.h>
 #include "Dijkstra.h"
 #include "Erabilgarriak.h"
+#include "FileReading.h"
+#include "FileWriting.h"
+
+void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo)
+{
+	int pKop, org, dest;
+
+	puntuakJaso(burua, fitxategia);
+	pKop = puntuakZenbatu(*burua);
+
+	if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("Arazo bat eman da memoria alokatzean.\n");
+	else {
+		// Pisuen matrizea sartu
+		pisuakJaso(*burua, fitxategia, Grafo);
+
+		// Bidea Aurkitu
+		printf("If you enter -1 as the starting node the program will end.\n");
+		do {
+			printf("Enter the starting node: ");
+			scanf("%d", &org);
+
+			if (org != -1) {
+				printf("Enter the final node: ");
+				scanf("%d", &dest);
+
+				dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
+
+				printf("\n============================\n");
+				pantailaratuBidea(*mBurua);
+				askatuMugitu(mBurua);
+				printf("\n============================\n");
+			}
+			printf("\n");
+		} while (org != -1);
+	}
+	askatuPuntuak(burua);
+	fclose(fitxategia);
+	free(Grafo);
+}
 
 void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 {

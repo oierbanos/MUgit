@@ -24,12 +24,24 @@
     <ClCompile Include="Erabilgarriak.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="ReadFuntzioak.c">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="WriteFuntzioak.c">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Erabilgarriak.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="FileReading.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWriting.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
