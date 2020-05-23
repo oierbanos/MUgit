@@ -129,7 +129,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\simpleSdlWrapper\ebentoak.c" />
+    <ClCompile Include="..\simpleSdlWrapper\graphics.c" />
+    <ClCompile Include="..\simpleSdlWrapper\imagen.c" />
+    <ClCompile Include="..\simpleSdlWrapper\soinua.c" />
+    <ClCompile Include="..\simpleSdlWrapper\text.c" />
     <ClCompile Include="Main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\simpleSdlWrapper\ebentoak.h" />
+    <ClInclude Include="..\simpleSdlWrapper\graphics.h" />
+    <ClInclude Include="..\simpleSdlWrapper\imagen.h" />
+    <ClInclude Include="..\simpleSdlWrapper\soinua.h" />
+    <ClInclude Include="..\simpleSdlWrapper\text.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SDL.h"
+#include "graphics.h"
+
+
 
 #define WIDTH 500
 #define HEIGHT 500
