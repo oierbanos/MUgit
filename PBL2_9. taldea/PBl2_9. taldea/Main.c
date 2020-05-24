@@ -13,6 +13,7 @@ SDL_Renderer* getRenderer(void) { return gRenderer; }
 
 int hasieratu(SDL_Window** window, SDL_Renderer** renderer);
 void textuaIdatzi(int x, int y, char* str);
+void textuaGaitu(void);
 
 // Funtzio orokorra
 int main(int argc, char** argv)
@@ -22,7 +23,9 @@ int main(int argc, char** argv)
 	SDL_Event ebentu;
 	int running = 0;
 	char str[128] = "", title[128] = "Textua Sartu: ";
+	TTF_Init();
 
+	textuaGaitu();
 	SDL_StartTextInput();
 	if (!hasieratu(&window, &renderer)) {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -59,8 +62,19 @@ int main(int argc, char** argv)
 	if (window) SDL_DestroyWindow(window);
 	SDL_StopTextInput();
 	//SDL_QUIT; Para que no de warning (en linux) hay que poner SDL_Quit()
+	atexit(TTF_Quit);
 	SDL_Quit();
 	return 0;
+}
+
+void textuaGaitu(void)
+{
+	font = TTF_OpenFontIndex("C:\\WINDOWS\\Fonts\\ARIAL.TTF", 16, 0);
+	if (!font)
+	{
+		printf("TTF_OpenFontIndex: %s\n", TTF_GetError());
+		// handle error
+	}
 }
 
 void textuaIdatzi(int x, int y, char *str)
