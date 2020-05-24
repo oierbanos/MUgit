@@ -8,27 +8,32 @@
 #define WIDTH 500
 #define HEIGHT 500
 TTF_Font* font = 0;
-SDL_Renderer* gRenderer;
-SDL_Renderer* getRenderer(void) { return gRenderer; }
+//SDL_Renderer* gRenderer;
+SDL_Renderer* renderer;
 
 int hasieratu(SDL_Window** window, SDL_Renderer** renderer);
 void textuaIdatzi(int x, int y, char* str);
 void textuaGaitu(void);
 
+SDL_Renderer* getRenderer(void) { return renderer; }
+
 // Funtzio orokorra
 int main(int argc, char** argv)
 {
 	SDL_Window* window;
-	SDL_Renderer* renderer;
+	//SDL_Renderer* renderer;
 	SDL_Event ebentu;
 	int running = 0;
 	char str[128] = "", title[128] = "Textua Sartu: ";
-	TTF_Init();
-
-	textuaGaitu();
-	SDL_StartTextInput();
+	
 	if (!hasieratu(&window, &renderer)) {
+
+		TTF_Init();
+		atexit(TTF_Quit);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		textuaGaitu();
+		SDL_StartTextInput();
+		
 
 		// Loop infinito para mantener la pantalla
 		while (running == 0)
@@ -62,7 +67,7 @@ int main(int argc, char** argv)
 	if (window) SDL_DestroyWindow(window);
 	SDL_StopTextInput();
 	//SDL_QUIT; Para que no de warning (en linux) hay que poner SDL_Quit()
-	atexit(TTF_Quit);
+	
 	SDL_Quit();
 	return 0;
 }
