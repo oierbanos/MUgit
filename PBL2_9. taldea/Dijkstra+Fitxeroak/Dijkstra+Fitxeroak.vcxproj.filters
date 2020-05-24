@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\SDL_Wrapper">
+      <UniqueIdentifier>{28a0bf09-94ae-4314-b84f-3d39253ae469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\SDL_Wrapper">
+      <UniqueIdentifier>{d522e588-d962-4827-aa04-1e75cff240f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.c">
@@ -30,6 +36,21 @@
     <ClCompile Include="WriteFuntzioak.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\simpleSdlWrapper\ebentoak.c">
+      <Filter>Archivos de origen\SDL_Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simpleSdlWrapper\graphics.c">
+      <Filter>Archivos de origen\SDL_Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simpleSdlWrapper\imagen.c">
+      <Filter>Archivos de origen\SDL_Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simpleSdlWrapper\soinua.c">
+      <Filter>Archivos de origen\SDL_Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simpleSdlWrapper\text.c">
+      <Filter>Archivos de origen\SDL_Wrapper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.h">
@@ -44,5 +65,26 @@
     <ClInclude Include="FileWriting.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\packages\sdl2_ttf.nuget.2.0.15\build\native\include\SDL_ttf.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleSdlWrapper\ebentoak.h">
+      <Filter>Archivos de encabezado\SDL_Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleSdlWrapper\graphics.h">
+      <Filter>Archivos de encabezado\SDL_Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleSdlWrapper\imagen.h">
+      <Filter>Archivos de encabezado\SDL_Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleSdlWrapper\text.h">
+      <Filter>Archivos de encabezado\SDL_Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleSdlWrapper\soinua.h">
+      <Filter>Archivos de encabezado\SDL_Wrapper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -76,9 +76,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>..\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,6 +126,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\simpleSdlWrapper\ebentoak.c" />
+    <ClCompile Include="..\simpleSdlWrapper\graphics.c" />
+    <ClCompile Include="..\simpleSdlWrapper\imagen.c" />
+    <ClCompile Include="..\simpleSdlWrapper\soinua.c" />
+    <ClCompile Include="..\simpleSdlWrapper\text.c" />
     <ClCompile Include="Dijkstra_Funtzioak.c" />
     <ClCompile Include="Erabilgarriak.c" />
     <ClCompile Include="Main.c" />
@@ -130,12 +138,38 @@
     <ClCompile Include="WriteFuntzioak.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\packages\sdl2_ttf.nuget.2.0.15\build\native\include\SDL_ttf.h" />
+    <ClInclude Include="..\simpleSdlWrapper\ebentoak.h" />
+    <ClInclude Include="..\simpleSdlWrapper\graphics.h" />
+    <ClInclude Include="..\simpleSdlWrapper\imagen.h" />
+    <ClInclude Include="..\simpleSdlWrapper\soinua.h" />
+    <ClInclude Include="..\simpleSdlWrapper\text.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Erabilgarriak.h" />
     <ClInclude Include="FileReading.h" />
     <ClInclude Include="FileWriting.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\sdl2_ttf.nuget.redist.2.0.15\build\native\sdl2_ttf.nuget.redist.targets" Condition="Exists('..\packages\sdl2_ttf.nuget.redist.2.0.15\build\native\sdl2_ttf.nuget.redist.targets')" />
+    <Import Project="..\packages\sdl2_ttf.nuget.2.0.15\build\native\sdl2_ttf.nuget.targets" Condition="Exists('..\packages\sdl2_ttf.nuget.2.0.15\build\native\sdl2_ttf.nuget.targets')" />
+    <Import Project="..\packages\sdl2.nuget.redist.2.0.12\build\native\sdl2.nuget.redist.targets" Condition="Exists('..\packages\sdl2.nuget.redist.2.0.12\build\native\sdl2.nuget.redist.targets')" />
+    <Import Project="..\packages\sdl2.nuget.2.0.12\build\native\sdl2.nuget.targets" Condition="Exists('..\packages\sdl2.nuget.2.0.12\build\native\sdl2.nuget.targets')" />
+    <Import Project="..\packages\sdl2_mixer.nuget.redist.2.0.4\build\native\sdl2_mixer.nuget.redist.targets" Condition="Exists('..\packages\sdl2_mixer.nuget.redist.2.0.4\build\native\sdl2_mixer.nuget.redist.targets')" />
+    <Import Project="..\packages\sdl2_mixer.nuget.2.0.4\build\native\sdl2_mixer.nuget.targets" Condition="Exists('..\packages\sdl2_mixer.nuget.2.0.4\build\native\sdl2_mixer.nuget.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\sdl2_ttf.nuget.redist.2.0.15\build\native\sdl2_ttf.nuget.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2_ttf.nuget.redist.2.0.15\build\native\sdl2_ttf.nuget.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sdl2_ttf.nuget.2.0.15\build\native\sdl2_ttf.nuget.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2_ttf.nuget.2.0.15\build\native\sdl2_ttf.nuget.targets'))" />
+    <Error Condition="!Exists('..\packages\sdl2.nuget.redist.2.0.12\build\native\sdl2.nuget.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2.nuget.redist.2.0.12\build\native\sdl2.nuget.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sdl2.nuget.2.0.12\build\native\sdl2.nuget.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2.nuget.2.0.12\build\native\sdl2.nuget.targets'))" />
+    <Error Condition="!Exists('..\packages\sdl2_mixer.nuget.redist.2.0.4\build\native\sdl2_mixer.nuget.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2_mixer.nuget.redist.2.0.4\build\native\sdl2_mixer.nuget.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\sdl2_mixer.nuget.2.0.4\build\native\sdl2_mixer.nuget.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sdl2_mixer.nuget.2.0.4\build\native\sdl2_mixer.nuget.targets'))" />
+  </Target>
 </Project>
