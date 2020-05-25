@@ -58,7 +58,7 @@ void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 		hasieratu(pKop, org, &kop, distantzia, aurrekoa, check, pisua);
 
 		while (kop < pKop - 1) {
-			minLuzeera = INFINITY;
+			minLuzeera = INFINITO;
 
 			// 'hurrengoa'-k gertuen dagoen nodoa ematen du
 			for (int i = 0; i < pKop; i++)
@@ -93,7 +93,7 @@ void dijkstraTaula(int* Grafo, int* pisua, int pKop)
 	for (int i = 0; i < pKop; i++)
 		for (int j = 0; j < pKop; j++)
 			if (*(Grafo + i * pKop + j) == 0)
-				*(pisua + i * pKop + j) = INFINITY;
+				*(pisua + i * pKop + j) = INFINITO;
 			else
 				*(pisua + i * pKop + j) = *(Grafo + i * pKop + j);
 }

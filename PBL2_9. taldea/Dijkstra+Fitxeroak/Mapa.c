@@ -14,7 +14,7 @@
 
 #define MAPAREN_ATZEKALDEA ".\\Recursos PBL2\\hoja en blanco.bmp"
 
-int MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 
 	MAPA_ELEMENTUA fondoa;
 	int jarraitu = 0;
@@ -22,14 +22,15 @@ int MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 	if (sgHasieratu() == -1)
 	{
 		fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
-		return 1;
+		
 	}
-	textuaGaitu();
-	fondoa.id = maparenAtzekaldea();
-	zuzenakMarraztu(fitxategia, burua, pisuak);
-	pantailaBerriztu();
-
-
+	else
+	{
+		textuaGaitu();
+		fondoa.id = maparenAtzekaldea();
+		zuzenakMarraztu(fitxategia, burua, pisuak);
+		pantailaBerriztu();
+	}
 }
 
 
@@ -57,6 +58,14 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 	ptrPuntua ptrAux2 = *burua;
 	pkop = puntuakZenbatu(*burua);
 	arkatzKoloreaEzarri(300, 300, 300);
+
+	while (ptrAux != NULL)
+	{
+		ptrAux->visitado = 0;
+		ptrAux = ptrAux->ptrHurrengoa;
+	}
+
+	ptrAux = *burua;
 	
 	for (kont = 0; kont <= pkop; kont++) {
 
@@ -78,7 +87,7 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 
 					ptrAux2 = *burua;
 
-					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL) {
+					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux->visitado == 0) {
 
 						ptrAux2 = ptrAux2->ptrHurrengoa;
 					}
@@ -89,7 +98,8 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 				i++;
 			}
 			
-			ptrAux->id += 0.1;
+			//ptrAux->id += 0.1;
+			ptrAux->visitado = 1;
 
 			j++;
 		}

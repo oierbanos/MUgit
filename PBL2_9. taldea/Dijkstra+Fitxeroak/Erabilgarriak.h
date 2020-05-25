@@ -2,7 +2,7 @@
 #define ERABILGARRIAK
 
 #define MAX_SIZE 128
-#define INFINITY 9999
+#define INFINITO 9999
 
 typedef struct DE_POSIZIOA
 {
@@ -14,6 +14,7 @@ typedef struct DE_PUNTUA
 {
 	int id;
 	POS pos;
+	int visitado;
 	struct DE_PUNTUA* ptrHurrengoa;
 } PUNTUA, * ptrPuntua;
 

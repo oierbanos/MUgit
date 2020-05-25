@@ -30,12 +30,12 @@ int main(int argc, char** argv)
 			break;
 		case 3: // Error desde 300
 			//Dijkstra
-			if(fitxategia == NULL) printf("301 Errorea");
+			if(fitxategia == NULL) printf("301 Errorea\n");
 			else setUp(fitxategia, &burua, &mBurua, &Grafo);
 			break;
 		case 4:
 			//Mapa marraztu
-			if (fitxategia == NULL) printf("301 Errorea");
+			if (fitxategia == NULL) printf("301 Errorea\n");
 			else MapaMarraztu(fitxategia, &burua, &Grafo);
 		default:
 			printf("Aukera ez da egokia.\n\n");

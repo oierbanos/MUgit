@@ -1,24 +1,25 @@
 #ifndef DRAW_THE_MAP
 #define DRAW_THE_MAP
 #include <stdlib.h>
+#include "Erabilgarriak.h"
 #include"SDL.h"
 
-typedef struct
+/*typedef struct
 {
     int x;
     int y;
 
-}POSIZIOA;
+}POSIZIOA;*/
 
 typedef struct
 {
-    POSIZIOA pos;
+    POS pos;
     int id;
 
 }MAPA_ELEMENTUA;
 
 
-int MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak);
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak);
 int maparenAtzekaldea();
 void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak);
 void erregulatu(ptrPuntua ptrAux, ptrPuntua ptrAux2);
