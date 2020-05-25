@@ -10,9 +10,9 @@
 #include "text.h"
 #include "Dijkstra.h"
 #include "Erabilgarriak.h"
-#include "Math.h"
+#include "math.h"
 
-#define MAPAREN_ATZEKALDEA ".\\Recursos PBL2\\hoja en blanco.bmp"
+#define MAPAREN_ATZEKALDEA "Recursos PBL2/hoja en blanco.bmp"
 
 void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 
@@ -117,7 +117,7 @@ void erregulatu(ptrPuntua ptrAux, ptrPuntua ptrAux2) {
 
 	int egoera = -1;
 
-	if (fabs((__int64)ptrAux->pos.x - (__int64)ptrAux2->pos.x) >= fabs((__int64)ptrAux->pos.y - (__int64)ptrAux2->pos.y)) egoera = 0;
+	if (fabs((Uint64)ptrAux->pos.x - (Uint64)ptrAux2->pos.x) >= fabs((Uint64)ptrAux->pos.y - (Uint64)ptrAux2->pos.y)) egoera = 0;
 	else egoera = 1;
 
 	if (egoera == 0) {
