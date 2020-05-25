@@ -7,12 +7,15 @@
 
 #define WIDTH 500
 #define HEIGHT 500
+#define TERMINATE -1
+#define IN 0
+#define OUT 1
 TTF_Font* font = 0;
-//SDL_Renderer* gRenderer;
 SDL_Renderer* renderer;
 
 int hasieratu(SDL_Window** window, SDL_Renderer** renderer);
 void textuaIdatzi(int x, int y, char* str);
+int textuaPantailanIdatzi(char* title, char* input);
 void textuaGaitu(void);
 
 SDL_Renderer* getRenderer(void) { return renderer; }
@@ -20,73 +23,83 @@ SDL_Renderer* getRenderer(void) { return renderer; }
 // Funtzio orokorra
 int main(int argc, char** argv)
 {
+	char input[128] = "";
 	SDL_Window* window;
-	//SDL_Renderer* renderer;
-	SDL_Event ebentu;
-	int running = 0;
-	char str[128] = "", title[128] = "Textua Sartu: ";
+	int running = IN;
 	
 	if (!hasieratu(&window, &renderer)) {
-
 		TTF_Init();
 		atexit(TTF_Quit);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-		textuaGaitu();
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		textuaGaitu(1);
 		SDL_StartTextInput();
 		
 
 		// Loop infinito para mantener la pantalla
-		while (running == 0)
+		while (running == IN)
 		{
-			// Mirar a ver si hay un evento
-			while (SDL_PollEvent(&ebentu)) {
-				if (ebentu.type == SDL_QUIT)
-					running = 1;
-				else if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN) {
-					if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_BACKSPACE && strlen(str) > 0)
-						*(str + strlen(str) - 1) = '\0';
-					else if (ebentu.type == SDL_TEXTINPUT)
-						strcat(str, ebentu.text.text);
-				}
-			}
-
-			// Limpiar la pantalla
 			SDL_RenderClear(renderer);
-
-			// Dibujar algo
-			sprintf(title, "Textua Sartu: %s", str);
-			textuaIdatzi(10, 10, title);
-
-			// Mostrar lo que se ha dibujado
+			running = textuaPantailanIdatzi("Fitxategiaren Izena", input);
 			SDL_RenderPresent(renderer);
 			SDL_UpdateWindowSurface(window);
 		}
 	}
-	// Liberar informacion y terminar
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (window) SDL_DestroyWindow(window);
 	SDL_StopTextInput();
-	//SDL_QUIT; Para que no de warning (en linux) hay que poner SDL_Quit()
-	
-	SDL_Quit();
+	SDL_Quit(); // Necesario poner esto, sino en Linux da warning
 	return 0;
 }
 
-void textuaGaitu(void)
+void textuaGaitu(int aukera)
 {
-	font = TTF_OpenFontIndex("C:\\WINDOWS\\Fonts\\ARIAL.TTF", 16, 0);
-	if (!font)
+	switch (aukera)
 	{
+	case 1:
+		font = TTF_OpenFont("..\\SDL2\\Fonts\\Font_Types\\Courier_Prime.ttf", 16);
+		break;
+	default:
+		printf("Aukera desegokia.\n");
+		break;
+	}
+	if (!font)
 		printf("TTF_OpenFontIndex: %s\n", TTF_GetError());
 		// handle error
+}
+
+int textuaPantailanIdatzi(char* title, char* input)
+{
+	char str[128];
+	SDL_Event ebentu;
+	int running = 0;
+
+	// Mirar a ver si hay un evento
+	while (SDL_PollEvent(&ebentu) && running == IN) {
+		if (ebentu.type == SDL_QUIT)
+			running = TERMINATE;
+		else if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN) {
+			if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_BACKSPACE && strlen(input) > 0)
+				*(input + strlen(input) - 1) = '\0';
+			else if (ebentu.type == SDL_TEXTINPUT)
+				strcat(input, ebentu.text.text);
+			else if (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN) {
+				if (ebentu.key.keysym.sym == SDLK_RETURN) running = OUT;
+				else running = TERMINATE;
+			}
+		}
 	}
+	sprintf(str, "%s: %s", title, input);
+	textuaIdatzi(10, 10, str);
+	textuaIdatzi(10, 30, "Sakatu enter jarraitzeko.");
+
+	return running;
 }
 
 void textuaIdatzi(int x, int y, char *str)
 {
 	SDL_Surface* textSurface;
 	SDL_Texture *mTexture;
-	SDL_Color textColor = { 0XFF, 0XFF, 0XFF };
+	SDL_Color textColor = { 0, 0, 0 };
 	SDL_Rect src, dst;
 	SDL_Renderer* gRenderer;
 
