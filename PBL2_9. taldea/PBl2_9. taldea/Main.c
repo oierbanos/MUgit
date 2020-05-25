@@ -16,7 +16,7 @@ SDL_Renderer* renderer;
 int hasieratu(SDL_Window** window, SDL_Renderer** renderer);
 void textuaIdatzi(int x, int y, char* str);
 int textuaPantailanIdatzi(char* title, char* input);
-void textuaGaitu(void);
+void textuaGaitu(int aukera);
 
 SDL_Renderer* getRenderer(void) { return renderer; }
 
@@ -56,7 +56,7 @@ void textuaGaitu(int aukera)
 	switch (aukera)
 	{
 	case 1:
-		font = TTF_OpenFont("..\\SDL2\\Fonts\\Font_Types\\Courier_Prime.ttf", 16);
+		font = TTF_OpenFont("../SDL2/Fonts/Font_Types/Courier_Prime.ttf", 16);
 		break;
 	default:
 		printf("Aukera desegokia.\n");
