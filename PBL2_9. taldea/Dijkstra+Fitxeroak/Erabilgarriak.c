@@ -16,6 +16,7 @@ int menu(void)
 	printf("1.- Mapa bat sortu.\n");
 	printf("2.- Mapa bat kargatu.\n");
 	printf("3.- Dijkstra aplikatu.\n");
+	printf("4.- Mapa marraztu\n");
 	printf("Sartu 0 programa amaitzeko.\n");
 	printf("\nAukera: ");
 	fgets(str, MAX_SIZE, stdin);

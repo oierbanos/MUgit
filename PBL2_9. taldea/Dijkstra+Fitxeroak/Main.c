@@ -5,6 +5,7 @@
 #include "Erabilgarriak.h"
 #include "FileReading.h"
 #include "FileWriting.h"
+#include "Mapa.h"
 
 int main(int argc, char** argv)
 {
@@ -32,9 +33,14 @@ int main(int argc, char** argv)
 			if(fitxategia == NULL) printf("301 Errorea");
 			else setUp(fitxategia, &burua, &mBurua, &Grafo);
 			break;
+		case 4:
+			//Mapa marraztu
+			if (fitxategia == NULL) printf("301 Errorea");
+			else MapaMarraztu(fitxategia, &burua, &Grafo);
 		default:
 			printf("Aukera ez da egokia.\n\n");
 			break;
 		}
 	} while (aukera != 0);
+	return 0;
 }

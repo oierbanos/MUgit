@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\simpleSdlWrapper;..\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +134,7 @@
     <ClCompile Include="Dijkstra_Funtzioak.c" />
     <ClCompile Include="Erabilgarriak.c" />
     <ClCompile Include="Main.c" />
+    <ClCompile Include="Mapa.c" />
     <ClCompile Include="ReadFuntzioak.c" />
     <ClCompile Include="WriteFuntzioak.c" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="Erabilgarriak.h" />
     <ClInclude Include="FileReading.h" />
     <ClInclude Include="FileWriting.h" />
+    <ClInclude Include="Mapa.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

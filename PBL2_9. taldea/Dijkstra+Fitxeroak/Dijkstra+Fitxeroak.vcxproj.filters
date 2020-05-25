@@ -51,6 +51,9 @@
     <ClCompile Include="..\simpleSdlWrapper\text.c">
       <Filter>Archivos de origen\SDL_Wrapper</Filter>
     </ClCompile>
+    <ClCompile Include="Mapa.c">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.h">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="..\simpleSdlWrapper\soinua.h">
       <Filter>Archivos de encabezado\SDL_Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Mapa.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
