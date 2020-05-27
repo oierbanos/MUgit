@@ -140,14 +140,18 @@ int aukeraMenu(SDL_Event ebentu, char* fileName, char* mapName, DIM mapDim)
 		if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = -1;
 		break;
 	case SDL_MOUSEBUTTONDOWN:
-		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 0, 100, 100, ebentu)) {
+		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 0, 230, 20, ebentu)) {
 			egoera = getTextFromUser(fileName, "Fitxategiaren Helbidea", "Get File");
 			if (egoera == OUT) printf("Helbidea: %s\n", fileName);
+			else strcpy(fileName, "");
 		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(100, 0, 100, 100, ebentu)) {
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 20, 230, 20, ebentu)) {
 			egoera = getTextFromUser(mapName, "Irudiaren Helbidea", "Get Map");
 			if (egoera == OUT) printf("Helbidea: %s\n", mapName);
+			else strcpy(mapName, "");
 		}
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 40, 230, 20, ebentu))
+			printf("Yuju dijkstra\n");
 		break;
 	default:
 		break;
