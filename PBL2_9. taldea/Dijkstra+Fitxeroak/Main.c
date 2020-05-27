@@ -6,60 +6,70 @@
 #include "FileReading.h"
 #include "FileWriting.h"
 #include "Mapa.h"
-#include "ClickDetect.h"
+#include "Menu.h"
 
 int main(int argc, char** argv)
 {
+	DIM mapDim = { mapDim.height = 0, mapDim.width = 0 };
+	char fileName[128] = "", mapName[128] = "";
+	int running = 0, egoera;
+	SDL_Window* window;
+	SDL_Event ebentu;
 	int* Grafo = NULL, aukera;
 	FILE* fitxategia = NULL;
 	ptrPuntua burua = NULL;
 	ptrMugi mBurua = NULL;
-	int running = 0;
-	int id = 0;
-	SDL_Event ebentu;
 	
-	do {
-		aukera = menu();
-		switch (aukera)
-		{
-		case 0:
-			break;
-		case 1: // Error desde 100
-			//Mapa bat sortu
-			fitxategiBatSortu();
-			break;
-		case 2: // Error desde 200
-			//Mapa bat kargatu
-			fitxategiaJaso(&fitxategia);
-			break;
-		case 3: // Error desde 300
-			//Dijkstra
-			if(fitxategia == NULL) printf("301 Errorea\n");
-			else setUp(fitxategia, &burua, &mBurua, &Grafo);
-			break;
-		case 4:
-			//Mapa marraztu
-			if (fitxategia == NULL) printf("301 Errorea\n");
-			else
+	if (!hasieratu(&window, &renderer, WIDTH, HEIGHT, "MUgit") && TTF_Init() == 0) {
+		atexit(TTF_Quit);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		textuaGaitu(1);
+
+		do {
+			aukera = menu();
+			switch (aukera)
 			{
-				MapaMarraztu(fitxategia, &burua, &Grafo);
-				while (running == 0)
-				{ // Loop infinito para mantener la pantalla
-					
-					while (SDL_PollEvent(&ebentu) == 1 && ebentu.type == SDL_MOUSEBUTTONDOWN && ebentu.button.button == SDL_BUTTON_LEFT && running == 0)
-					{
-						id = clickID(burua, ebentu);
-						if (id != 0)
-						{
-							running = 1;
-						}
-					}					
-				}
+			case 0:
+				break;
+			case 1: // Error desde 100
+				//Mapa bat sortu
+				fitxategiBatSortu();
+				break;
+			case 2: // Error desde 200
+				//Mapa bat kargatu
+				fitxategiaJaso(&fitxategia);
+				break;
+			case 3: // Error desde 300
+				//Dijkstra
+				if (fitxategia == NULL) printf("301 Errorea\n");
+				else setUp(fitxategia, &burua, &mBurua, &Grafo);
+				break;
+			case 4:
+				//Mapa marraztu
+				if (fitxategia == NULL) printf("301 Errorea\n");
+				else MapaMarraztu(fitxategia, &burua, &Grafo);
+			default:
+				printf("Aukera ez da egokia.\n\n");
+				break;
 			}
-		default:
-			printf("Aukera ez da egokia.\n\n");
-			break;
+		} while (aukera != 0);
+
+		while (running == 0) { // Loop infinito para mantener la pantalla
+			while ((egoera = SDL_PollEvent(&ebentu)) == 1 && running == 0) {
+				SDL_RenderClear(renderer); // Limpiar
+				if (egoera == 1) running = aukeraMenu(ebentu, fileName, mapName, mapDim);
+				textuaIdatzi(0, 0, "Fitxategiaren Helbidea");
+				textuaIdatzi(0, 20, "Irudiaren Helbidea");
+				textuaIdatzi(0, 40, "Dijkstra aplikatu");
+				SDL_RenderPresent(renderer); // Refrescar
+				SDL_UpdateWindowSurface(window); // Actualizar pantalla
+			}
 		}
-	} while (aukera != 0);
+	}
+	if (renderer) SDL_DestroyRenderer(renderer);
+	if (window) SDL_DestroyWindow(window);
+	SDL_StopTextInput();
+	SDL_Quit(); // Necesario poner esto, sino en Linux da warning
+
 	return 0;
 }

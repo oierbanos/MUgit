@@ -23,5 +23,6 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak);
 int maparenAtzekaldea();
 void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak);
 void erregulatu(ptrPuntua ptrAux, ptrPuntua ptrAux2);
+char enteroACaracter(ptrPuntua ptrAux);
 
 #endif

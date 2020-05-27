@@ -54,7 +54,7 @@
     <ClCompile Include="Mapa.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="ClickDetect.c">
+    <ClCompile Include="menu.c">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +92,7 @@
     <ClInclude Include="Mapa.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ClickDetect.h">
+    <ClInclude Include="Menu.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

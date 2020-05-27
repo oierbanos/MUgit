@@ -131,11 +131,11 @@
     <ClCompile Include="..\simpleSdlWrapper\imagen.c" />
     <ClCompile Include="..\simpleSdlWrapper\soinua.c" />
     <ClCompile Include="..\simpleSdlWrapper\text.c" />
-    <ClCompile Include="ClickDetect.c" />
     <ClCompile Include="Dijkstra_Funtzioak.c" />
     <ClCompile Include="Erabilgarriak.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Mapa.c" />
+    <ClCompile Include="menu.c" />
     <ClCompile Include="ReadFuntzioak.c" />
     <ClCompile Include="WriteFuntzioak.c" />
   </ItemGroup>
@@ -146,12 +146,12 @@
     <ClInclude Include="..\simpleSdlWrapper\imagen.h" />
     <ClInclude Include="..\simpleSdlWrapper\soinua.h" />
     <ClInclude Include="..\simpleSdlWrapper\text.h" />
-    <ClInclude Include="ClickDetect.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Erabilgarriak.h" />
     <ClInclude Include="FileReading.h" />
     <ClInclude Include="FileWriting.h" />
     <ClInclude Include="Mapa.h" />
+    <ClInclude Include="Menu.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

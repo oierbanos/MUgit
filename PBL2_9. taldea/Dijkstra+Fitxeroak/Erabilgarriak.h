@@ -1,8 +1,24 @@
 #ifndef ERABILGARRIAK
 #define ERABILGARRIAK
+#include "SDL.h"
+#include "SDL_ttf.h"
 
 #define MAX_SIZE 128
 #define INFINITO 9999
+
+#define WIDTH 1109
+#define HEIGHT 680
+
+#define IN 0
+#define OUT 1
+#define TERMINATE -1
+SDL_Renderer* renderer;
+
+typedef struct DE_DIMENTSIOA
+{
+	int width;
+	int height;
+} DIM;
 
 typedef struct DE_POSIZIOA
 {
