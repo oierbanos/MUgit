@@ -18,11 +18,11 @@ void textuaGaitu(void){
 	}
 }
 
-void textuaIdatzi(int x, int y, char *str)
+void textuaIdatzi(int x, int y, char* str)
 {
   SDL_Surface* textSurface;
   SDL_Texture *mTexture;
-  SDL_Color textColor = { 0XFF, 0XFF, 0XFF };
+  SDL_Color textColor = { 0000, 0000, 0000 };
   SDL_Rect src, dst;
   SDL_Renderer* gRenderer;
 

@@ -49,8 +49,8 @@ int maparenAtzekaldea() {
 
 void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 
-	int pkop, i, j, konexioa = 0, kont, kont2;
-
+	int pkop, i, j, konexioa = 0, kont, kont2, kont3=0;
+	char str[2] = { '0', '\0' };
 
 	puntuakJaso(burua, fitxategia);
 	pisuakJaso(*burua, fitxategia, pisuak);
@@ -92,23 +92,35 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 						ptrAux2 = ptrAux2->ptrHurrengoa;
 					}
 
-					if (ptrAux->pos.x != ptrAux2->pos.x && ptrAux->pos.y != ptrAux2->pos.y) erregulatu(ptrAux, ptrAux2);
-					else zuzenaMarraztu(ptrAux->pos.x, ptrAux->pos.y, ptrAux2->pos.x, ptrAux2->pos.y);
+					/*if (ptrAux->pos.x != ptrAux2->pos.x && ptrAux->pos.y != ptrAux2->pos.y) erregulatu(ptrAux, ptrAux2);
+					else*/ zuzenaMarraztu(ptrAux->pos.x, ptrAux->pos.y, ptrAux2->pos.x, ptrAux2->pos.y);
 				}
 				i++;
 			}
-			
-			//ptrAux->id += 0.1;
+		
 			ptrAux->visitado = 1;
 
 			j++;
 		}
 
+		kont3++;
+		
+		
+
+	
+		printf("%c\n", *str);
+		zirkuluaMarraztu(ptrAux->pos.x, ptrAux->pos.y, 5);
+	
+
 		 ptrAux = *burua;
 		 ptrAux2 = *burua;
 
 		for (kont2 = 0; kont2 < kont; kont2++) ptrAux = ptrAux->ptrHurrengoa;
+		if (ptrAux != NULL) {
 
+			*(str) = enteroACaracter(ptrAux);
+			textuaIdatzi(ptrAux->pos.x+5, ptrAux->pos.y+5 , &str);
+		}
 	}
 
 }
@@ -132,3 +144,7 @@ void erregulatu(ptrPuntua ptrAux, ptrPuntua ptrAux2) {
 	}
 }
 
+
+char enteroACaracter(ptrPuntua ptrAux) {
+	return (ptrAux->id + 48);
+}
