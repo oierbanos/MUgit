@@ -73,56 +73,38 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int** pisuak) {
 		kont2 = 0;
 
 		while (j != pkop) {
-
 			i = 0;
-			
-
 			while (i != pkop) {
-
-				
-
 				if (*(pisuak + i * pkop + j) != 0) konexioa = 1;
 
 				if (konexioa == 1) {
-
 					ptrAux2 = *burua;
 
-					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux->visitado == 0) {
-
+					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux->visitado == 0)
 						ptrAux2 = ptrAux2->ptrHurrengoa;
-					}
-
 					/*if (ptrAux->pos.x != ptrAux2->pos.x && ptrAux->pos.y != ptrAux2->pos.y) erregulatu(ptrAux, ptrAux2);
 					else*/ zuzenaMarraztu(ptrAux->pos.x, ptrAux->pos.y, ptrAux2->pos.x, ptrAux2->pos.y);
 				}
 				i++;
 			}
-		
 			ptrAux->visitado = 1;
-
 			j++;
 		}
-
 		kont3++;
 		
-		
-
-	
 		printf("%c\n", *str);
 		zirkuluaMarraztu(ptrAux->pos.x, ptrAux->pos.y, 5);
 	
-
-		 ptrAux = *burua;
-		 ptrAux2 = *burua;
+		ptrAux = *burua;
+		ptrAux2 = *burua;
 
 		for (kont2 = 0; kont2 < kont; kont2++) ptrAux = ptrAux->ptrHurrengoa;
 		if (ptrAux != NULL) {
-
-			*(str) = enteroACaracter(ptrAux);
-			textuaIdatzi(ptrAux->pos.x+5, ptrAux->pos.y+5 , &str);
+		
+		*(str) = enteroACaracter(ptrAux);
+		textuaIdatzi(ptrAux->pos.x+5, ptrAux->pos.y+5 , &str);
 		}
 	}
-
 }
 
 void erregulatu(ptrPuntua ptrAux, ptrPuntua ptrAux2) {
