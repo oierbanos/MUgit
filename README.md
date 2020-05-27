@@ -1,5 +1,8 @@
 # POPBL2_9.taldea
 
+Proiektuaren deskribapena:
+Biltegi baten barruan hainbat produktu ezberdin toki batetik bestera eramango duen robota. Robot honek biltegi barruko bideak kontuan hartuta biderik laburrena bilatuko du, kasu honetan dijkstra algoritmoaz baliatuz. Programa hau robotaren mugimenduaren simulazio bat da, non biltegiaren mapak sortu/kargatu eta erabili ahal dira.
+
 Arazoen Zerrenda:
 -101 errorea: Sartutako puntu kopurua 1 baino txikiagoa izan da.
 -102 errorea: Arazo bat eman da puntuaren ID-a gordetzeko.
@@ -14,3 +17,6 @@ Arazoen Zerrenda:
 -302 errorea: Pisuen matrizea gordetzen duen elementuarentzako memoria erreserba egiterakoan errorea eman da.
 -303 errorea: Arazo bat eman da dijkstra algoritmoan memoria erreserbak egiterakoan.
 -304 errorea: Arazo bat eman da robotak egin behar dituen mugimenduak gordetzerakoan.
+
+GitHub repositorioaren helbidea:
+https://github.com/oierbanos/POPBL2_9.taldea
