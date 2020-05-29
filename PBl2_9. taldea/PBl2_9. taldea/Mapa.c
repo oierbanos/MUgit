@@ -10,6 +10,7 @@
 #include "Erabilgarriak.h"
 #include "math.h"
 #include "SDL_ttf.h"
+#include "mugimendua.h"
 
 void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) 
 {
@@ -25,6 +26,7 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak)
 		textuaGaitu(1);
 		SDL_RenderClear(renderer);
 		zuzenakMarraztu(fitxategia, burua, pisuak);
+		
 		SDL_RenderPresent(renderer);
 		SDL_UpdateWindowSurface(window);
 	}

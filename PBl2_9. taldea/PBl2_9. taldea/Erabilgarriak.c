@@ -32,6 +32,16 @@ int erreserbaBurutu(int** bek, int kop)
 	else return 1;
 }
 
+int* bilatu(ptrPuntua burua2, int* x, int* y, int z) {
+
+	ptrPuntua ptrAux = burua2;
+	
+	while (ptrAux->id != z && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
+
+	*x = ptrAux->pos.x;
+	*y = ptrAux->pos.y;
+}
+
 void pantailaratuBidea(ptrMugi burua)
 {
 	ptrMugi ptrAux = burua;

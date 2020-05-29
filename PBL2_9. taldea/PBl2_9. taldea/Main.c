@@ -35,6 +35,7 @@ int main(int argc, char** argv)
 				textuaIdatzi(0, 40, "Mapa berri bat sortu");
 				textuaIdatzi(0, 60, "Dijkstra aplikatu");
 				textuaIdatzi(0, 80, "Mapa marraztu");
+				textuaIdatzi(0, 100, "Mugimendua");
 				SDL_RenderPresent(renderer); // Refrescar
 				SDL_UpdateWindowSurface(window); // Actualizar pantalla
 			}

@@ -23,17 +23,21 @@
     <ClCompile Include="Erabilgarriak.c" />
     <ClCompile Include="Fitxategian_Idatzi.c" />
     <ClCompile Include="Fitxategia_Irakurri.c" />
+    <ClCompile Include="imagen.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Mapa.c" />
     <ClCompile Include="Menu.c" />
+    <ClCompile Include="Mugimendua.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Erabilgarriak.h" />
     <ClInclude Include="Fitxategian_Idatzi.h" />
     <ClInclude Include="Fitxategia_Irakurri.h" />
+    <ClInclude Include="imagen.h" />
     <ClInclude Include="Mapa.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Mugimendua.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "Menu.h"
 #include "Mapa.h"
+#include "Mugimendua.h"
 #include "SDL_ttf.h"
 #include "Erabilgarriak.h"
 #include "Dijkstra.h"
@@ -139,7 +140,7 @@ void textuaIdatzi(int x, int y, char* str)
 
 int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, char* fileName, char* mapName, DIM mapDim)
 {
-	int running = 0, egoera;
+	int running = 0, egoera, jokalaria=0;
 
 	switch (ebentu.type)
 	{
@@ -167,12 +168,18 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 			if (*fitxategia != NULL) setUp(*fitxategia, burua, mBurua, Grafo);
 			else printf("Fitxategia ezin da ireki.\n");
 		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 80, 230, 20, ebentu))
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 80, 230, 20, ebentu)) {
 			if (*fitxategia != NULL) {
 				MapaMarraztu(*fitxategia, burua, *Grafo);
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");
+		}
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 100, 230, 20, ebentu)) {
+			jokalaria = JOKOA_jokalariaIrudiaSortu(burua);
+			if (*fitxategia != NULL) kalkulatu(burua, mBurua, fitxategia, Grafo, jokalaria);
+			else printf("Fitxategia ezin da ireki.\n");
+		}
 		break;
 	default:
 		break;
