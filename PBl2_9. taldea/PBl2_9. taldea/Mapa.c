@@ -95,8 +95,10 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux->visitado == 0)
 						ptrAux2 = ptrAux2->ptrHurrengoa;
 					SDL_RenderDrawLine(renderer, ptrAux->pos.x, ptrAux->pos.y, ptrAux2->pos.x, ptrAux2->pos.y);
+					konexioa = 0;
 				}
 				i++;
+				
 			}
 			ptrAux->visitado = 1;
 			j++;
