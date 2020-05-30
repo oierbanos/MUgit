@@ -15,18 +15,11 @@
 
 #define JOKOA_PLAYER_IMAGE "../Media/mugit.bmp"
 
-
-
-
-void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, int jokalaria) {
-
-	 
+void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, int jokalaria) 
+{
 	double mainx = 0, mainy = 0, mx=0, my=0, x = 0, y = 0, z = 0, k = 0;
 
-	
-	ptrMugi p1 = *burua, p2 = p1->ptrHurrengoa;
-	
-
+	ptrMugi p1 = *burua, p2 = p1->ptrHurrengoa;	
 	while (p1 != NULL) {
 
 		bilatu(burua2, &x, &y, p1->moveId);
@@ -43,33 +36,6 @@ void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
-	/*while (running == 0)
-		while (SDL_PollEvent(&ebentu) && running == IN) {
-			aurkitu = 0;
-			ptrAux = *burua2;
-			switch (ebentu.type)
-			{
-			case SDL_QUIT:
-				running = 1;
-				break;
-			case SDL_KEYDOWN:
-				if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = 1;
-				break;
-			case SDL_MOUSEBUTTONDOWN:
-				if (ebentu.button.button == SDL_BUTTON_LEFT)
-					while (ptrAux != NULL && aurkitu == 0) {
-						aurkitu = checkArea(ptrAux->pos.x - 5, ptrAux->pos.y - 5, 10, 10, ebentu);
-						if (aurkitu == 1) printf("Aurkitu da %d puntua.\n", ptrAux->id);
-						ptrAux = ptrAux->ptrHurrengoa;
-					}
-				break;
-			default:
-				break;
-			}
-		}
-	if (jokalaria)  irudiaKendu(jokalaria);
-	if (renderer) SDL_DestroyRenderer(renderer);*/
-
 }
 
 void mugitu(double x, double y, double z, double k, double j, double i, FILE* fitxategia, ptrPuntua* burua, int* Grafo, int jokalaria, ptrMugi* burua2) {

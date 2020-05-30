@@ -42,7 +42,6 @@ typedef struct A_MUGIMENDUA
 
 int menu(void);
 int erreserbaBurutu(int** bek, int kop);
-void pantailaratuBidea(ptrMugi burua);
 void askatuMugitu(ptrMugi* burua);
 void askatuPuntuak(ptrPuntua* burua);
 void bilatu(ptrPuntua* burua2, double* x, double* y, int z);

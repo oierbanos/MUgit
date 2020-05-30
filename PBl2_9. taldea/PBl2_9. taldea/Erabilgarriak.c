@@ -42,17 +42,6 @@ void bilatu(ptrPuntua* burua2, double* x, double* y, int z) {
 	*y =(float) ptrAux->pos.y;
 }
 
-void pantailaratuBidea(ptrMugi burua)
-{
-	ptrMugi ptrAux = burua;
-
-	printf("Ibilbidea: ");
-	while (ptrAux != NULL) {
-		printf("->%d ", ptrAux->moveId);
-		ptrAux = ptrAux->ptrHurrengoa;
-	}
-}
-
 void askatuPuntuak(ptrPuntua* burua)
 {
 	ptrPuntua aux = *burua;

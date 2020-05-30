@@ -33,9 +33,7 @@ int main(int argc, char** argv)
 				textuaIdatzi(0, 0, "Fitxategiaren Helbidea");
 				textuaIdatzi(0, 20, "Irudiaren Helbidea");
 				textuaIdatzi(0, 40, "Mapa berri bat sortu");
-				textuaIdatzi(0, 60, "Dijkstra aplikatu");
-				textuaIdatzi(0, 80, "Mapa marraztu");
-				textuaIdatzi(0, 100, "Mugimendua");
+				textuaIdatzi(0, 60, "Mapa marraztu");
 				SDL_RenderPresent(renderer); // Refrescar
 				SDL_UpdateWindowSurface(window); // Actualizar pantalla
 			}

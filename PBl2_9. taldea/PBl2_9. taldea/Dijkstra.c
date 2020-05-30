@@ -16,31 +16,17 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, int
 	if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("302 Errorea\n");
 	else {
 		// Pisuen matrizea sartu
-		pisuakJaso(*burua, &fitxategia, Grafo);
+		pisuakJaso(*burua, fitxategia, Grafo);
 
 		// Bidea Aurkitu
-		printf("If you enter -1 as the starting node the program will end.\n");
-		do {
-			
-			org = pos1;
+		org = pos1;
+		dest = pos2;
 
-			if (org != -1) {
-				
-				dest = pos2;
-
-				dijkstra(&Grafo, pKop, org - 1, dest - 1, mBurua);
-
-				printf("\n============================\n");
-				pantailaratuBidea(*mBurua);
-				askatuMugitu(mBurua);
-				printf("\n============================\n");
-			}
-			printf("\n");
-		} while (org != -1);
+		dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
 	}
 	askatuPuntuak(burua);
 	fclose(fitxategia);
-	free(Grafo);
+	free(*Grafo);
 }
 
 void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)

@@ -165,10 +165,6 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 			fitxategiBatSortu();
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 60, 230, 20, ebentu)) {
-			if (*fitxategia != NULL) /*setUp(*fitxategia, burua, mBurua, Grafo, pos1, pos2);
-			else*/ printf("Fitxategia ezin da ireki.\n");
-		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 80, 230, 20, ebentu)) {
 			if (*fitxategia != NULL) {
 				MapaMarraztu(*fitxategia, burua, *Grafo, mBurua);
 				rewind(*fitxategia);
