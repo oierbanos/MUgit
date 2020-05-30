@@ -1,1 +1,17 @@
-﻿  PBl2_9. taldea.vcxproj -> C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\Debug\PBl2_9. taldea.exe
+﻿  Dijkstra.c
+C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\PBl2_9. taldea\Dijkstra.c(19,33): warning C4047: 'función': 'FILE *' es distinto en los niveles de direccionamiento indirecto de 'FILE **'
+C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\PBl2_9. taldea\Dijkstra.c(19,33): warning C4024: 'pisuakJaso': tipos distintos para el parámetro formal y el parámetro real 2
+C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\PBl2_9. taldea\Dijkstra.c(31,20): warning C4047: 'función': 'int *' es distinto en los niveles de direccionamiento indirecto de 'int ***'
+C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\PBl2_9. taldea\Dijkstra.c(31,20): warning C4024: 'dijkstra': tipos distintos para el parámetro formal y el parámetro real 1
+  Erabilgarriak.c
+  Fitxategian_Idatzi.c
+  Fitxategia_Irakurri.c
+  imagen.c
+C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\PBl2_9. taldea\imagen.c(67,24): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\PBl2_9. taldea\imagen.c(68,24): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+  Main.c
+  Mapa.c
+  Menu.c
+  Mugimendua.c
+  Generando código...
+  PBl2_9. taldea.vcxproj -> C:\Users\svequ\Desktop\PBL 2\POPBL2_9.taldea\PBL2_9. taldea\Debug\PBl2_9. taldea.exe

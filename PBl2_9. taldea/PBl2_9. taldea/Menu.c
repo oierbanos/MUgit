@@ -165,21 +165,17 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 			fitxategiBatSortu();
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 60, 230, 20, ebentu)) {
-			if (*fitxategia != NULL) setUp(*fitxategia, burua, mBurua, Grafo);
-			else printf("Fitxategia ezin da ireki.\n");
+			if (*fitxategia != NULL) /*setUp(*fitxategia, burua, mBurua, Grafo, pos1, pos2);
+			else*/ printf("Fitxategia ezin da ireki.\n");
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 80, 230, 20, ebentu)) {
 			if (*fitxategia != NULL) {
-				MapaMarraztu(*fitxategia, burua, *Grafo);
+				MapaMarraztu(*fitxategia, burua, *Grafo, mBurua);
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");
 		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 100, 230, 20, ebentu)) {
-			jokalaria = JOKOA_jokalariaIrudiaSortu(burua);
-			if (*fitxategia != NULL) kalkulatu(burua, mBurua, fitxategia, Grafo, jokalaria);
-			else printf("Fitxategia ezin da ireki.\n");
-		}
+		
 		break;
 	default:
 		break;

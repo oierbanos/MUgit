@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "Menu.h"
 #include "Mapa.h"
+#include "Mugimendua.h"
 #include "imagen.h"
 #include "SDL_ttf.h"
 #include "Erabilgarriak.h"
@@ -14,20 +15,22 @@
 
 #define JOKOA_PLAYER_IMAGE "../Media/mugit.bmp"
 
-int* kalkulatu(ptrMugi burua, ptrPuntua* burua2, FILE* fitxategia, int* Grafo, int jokalaria) {
 
-	float x = 0, y = 0, z = 0, k = 0, mainx=0, mainy=0, mx=0, my=0;
 
-	SDL_Window* window;
-	SDL_Event ebentu;
-	int jarraitu = 0, running = 0, aurkitu;
-	ptrMugi p1 = burua, p2 = p1->ptrHurrengoa;
-	ptrPuntua ptrAux;
+
+void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, int jokalaria) {
+
+	 
+	double mainx = 0, mainy = 0, mx=0, my=0, x = 0, y = 0, z = 0, k = 0;
+
+	
+	ptrMugi p1 = *burua, p2 = p1->ptrHurrengoa;
+	
 
 	while (p1 != NULL) {
 
-		bilatu(burua2, x, y, p1->moveId);
-		bilatu(burua2, z, k, p2->moveId);
+		bilatu(burua2, &x, &y, p1->moveId);
+		bilatu(burua2, &z, &k, p2->moveId);
 
 		mainx = fabs(x - z);
 		mainy = fabs(y - k);
@@ -35,12 +38,12 @@ int* kalkulatu(ptrMugi burua, ptrPuntua* burua2, FILE* fitxategia, int* Grafo, i
 		mx = mainx / mainy;
 		my = mainy / mainx;
 
-		mugitu(mx, my, x, y, z, k, fitxategia, burua, *Grafo, jokalaria);
+		mugitu(mx, my, x, y, z, k, fitxategia, burua2, Grafo, jokalaria, burua);
 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
-	while (running == 0)
+	/*while (running == 0)
 		while (SDL_PollEvent(&ebentu) && running == IN) {
 			aurkitu = 0;
 			ptrAux = *burua2;
@@ -65,12 +68,11 @@ int* kalkulatu(ptrMugi burua, ptrPuntua* burua2, FILE* fitxategia, int* Grafo, i
 			}
 		}
 	if (jokalaria)  irudiaKendu(jokalaria);
-	if (renderer) SDL_DestroyRenderer(renderer);
-	if (window) SDL_DestroyWindow(window);
+	if (renderer) SDL_DestroyRenderer(renderer);*/
 
 }
 
-void mugitu(float x, float y, float z, float k, float j, float i, FILE* fitxategia, ptrPuntua* burua, int* Grafo, int jokalaria) {
+void mugitu(double x, double y, double z, double k, double j, double i, FILE* fitxategia, ptrPuntua* burua, int* Grafo, int jokalaria, ptrMugi* burua2) {
 
 	while (z != j && k != i) {
 
@@ -80,7 +82,7 @@ void mugitu(float x, float y, float z, float k, float j, float i, FILE* fitxateg
 		SDL_RenderClear(renderer);
 
 		irudiaMugitu(jokalaria, z, k);
-		MapaMarraztu(fitxategia, burua, *Grafo);
+		MapaMarraztu(fitxategia, burua, Grafo, burua2 );
 		irudiakMarraztu();
 		SDL_RenderPresent(renderer);
 
@@ -92,10 +94,22 @@ int JOKOA_jokalariaIrudiaSortu(ptrPuntua ptrAux)
 {
 	int mugit = -1;
 	mugit = irudiaKargatu(JOKOA_PLAYER_IMAGE);
-	irudiaMugitu(mugit, 10, 239);
-	pantailaGarbitu();
+	irudiaMugitu(mugit, ptrAux->pos.x , ptrAux->pos.y);
 	irudiakMarraztu();
-	pantailaBerriztu();
+	SDL_RenderPresent(renderer);
 	return mugit;
 
+}
+
+
+int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest)
+{
+	SDL_Rect src;
+
+	src.x = 0;
+	src.y = 0;
+	src.w = pDest->w;
+	src.h = pDest->h;
+	SDL_RenderCopy(renderer, texture, &src, pDest);
+	return 0;
 }

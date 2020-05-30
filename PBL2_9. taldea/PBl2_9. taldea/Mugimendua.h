@@ -4,8 +4,9 @@
 #include "SDL_ttf.h"
 #include "Erabilgarriak.h"
 
-int* kalkulatu(ptrMugi burua, ptrPuntua* burua2, FILE* fitxategia, int* Grafo, int jokalaria);
-void mugitu(float x, float y, float z, float k, float j, float i, FILE** fitxategia, ptrPuntua* burua, int** Grafo);
+void kalkulatu(ptrPuntua* burua2, ptrMugi* burua , FILE* fitxategia, int* Grafo, int jokalaria);
+void mugitu(double x, double y, double z, double k, double j, double i, FILE* fitxategia, ptrPuntua* burua, int* Grafo, int jokalaria, ptrMugi* burua2);
 int JOKOA_jokalariaIrudiaSortu(ptrPuntua ptrAux);
+int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest);
 
 #endif

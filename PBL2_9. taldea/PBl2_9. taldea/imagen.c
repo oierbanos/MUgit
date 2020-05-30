@@ -2,6 +2,7 @@
 
 #include "imagen.h"
 #include <stdio.h>
+#include "Mugimendua.h"
 
 #define MAX_IMG 100
 
@@ -23,7 +24,7 @@ int irudiaKargatu(char* fileName)
 {
 	int colorkey;
 	SDL_Surface* surface;
-	SDL_Renderer* gRenderer = getRenderer();
+	
 
 	if (irudiKop < MAX_IMG)
 	{
@@ -37,7 +38,7 @@ int irudiaKargatu(char* fileName)
 		{
 			colorkey = SDL_MapRGB(surface->format, 255, 0, 255);
 			SDL_SetColorKey(surface, SDL_TRUE, colorkey);
-			irudiak[irudiKop].texture = SDL_CreateTextureFromSurface(gRenderer, surface);
+			irudiak[irudiKop].texture = SDL_CreateTextureFromSurface(renderer, surface);
 			irudiak[irudiKop].dest.x = irudiak[irudiKop].dest.y = 0;
 			irudiak[irudiKop].dest.w = surface->w;
 			irudiak[irudiKop].dest.h = surface->h;
@@ -56,7 +57,7 @@ int irudiaKargatu(char* fileName)
 	return id - 1;
 }
 
-void  irudiaMugitu(int numImg, int x, int y)
+void  irudiaMugitu(int numImg, double x, double y)
 {
 
 	int id = 0;

@@ -6,7 +6,7 @@
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
 
-void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo)
+void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, int pos1, int pos2)
 {
 	int pKop, org, dest;
 
@@ -16,19 +16,19 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo)
 	if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("302 Errorea\n");
 	else {
 		// Pisuen matrizea sartu
-		pisuakJaso(*burua, fitxategia, Grafo);
+		pisuakJaso(*burua, &fitxategia, Grafo);
 
 		// Bidea Aurkitu
 		printf("If you enter -1 as the starting node the program will end.\n");
 		do {
-			printf("Enter the starting node: ");
-			scanf("%d", &org);
+			
+			org = pos1;
 
 			if (org != -1) {
-				printf("Enter the final node: ");
-				scanf("%d", &dest);
+				
+				dest = pos2;
 
-				dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
+				dijkstra(&Grafo, pKop, org - 1, dest - 1, mBurua);
 
 				printf("\n============================\n");
 				pantailaratuBidea(*mBurua);

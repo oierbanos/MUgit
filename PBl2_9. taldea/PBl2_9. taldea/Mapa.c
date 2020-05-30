@@ -12,12 +12,14 @@
 #include "SDL_ttf.h"
 #include "mugimendua.h"
 
-void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) 
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* burua2)
 {
 	ptrPuntua ptrAux;
 	SDL_Window* window;
 	SDL_Event ebentu;
-	int jarraitu = 0, running = 0, aurkitu;
+	int jarraitu = 0, running = 0, aurkitu, jokalaria=0, kont=0, pos1=0, pos2=0;
+	puntuakJaso(burua, fitxategia);
+	pisuakJaso(*burua, fitxategia, &pisuak);
 
 	if (!hasieratu(&window, &renderer, 600, 600, "Mapa") && TTF_Init() == 0) {
 		atexit(TTF_Quit);
@@ -49,15 +51,32 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak)
 				if (ebentu.button.button == SDL_BUTTON_LEFT)
 					while (ptrAux != NULL && aurkitu == 0) {
 						aurkitu = checkArea(ptrAux->pos.x - 5, ptrAux->pos.y - 5, 10, 10, ebentu);
-						if (aurkitu == 1) printf("Aurkitu da %d puntua.\n", ptrAux->id);
-						ptrAux = ptrAux->ptrHurrengoa;
-					}
+						if(aurkitu!=1) ptrAux = ptrAux->ptrHurrengoa;
+					}	
+				
+				if (aurkitu == 1 && kont == 0) { 
+				
+					pos1 = ptrAux->id; 
+					jokalaria = JOKOA_jokalariaIrudiaSortu(*burua);
+				
+				}
+				if (aurkitu == 1 && kont == 1)
+				{
+					pos2 = ptrAux->id;
+					setUp(fitxategia, burua, burua2, &pisuak, pos1, pos2);
+					kalkulatu(burua, burua2, fitxategia, pisuak, jokalaria);
+				}
+				kont++;
+				if (aurkitu == 1 && kont == 2) kont = 0;
+				
 				break;
 			default:
 				break;
 			}
 		}
 
+
+	//irudiaKendu(jokalaria);
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (window) SDL_DestroyWindow(window);
 }
@@ -67,10 +86,9 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 	int pkop, i, j, konexioa = 0, kont, kont2, kont3 = 0;
 	char str[2] = { '0', '\0' };
 
-	puntuakJaso(burua, fitxategia);
-	pisuakJaso(*burua, fitxategia, &pisuak);
-	ptrPuntua ptrAux = *burua;
-	ptrPuntua ptrAux2 = *burua;
+	//puntuakJaso(burua, fitxategia);
+	//pisuakJaso(*burua, fitxategia, &pisuak);
+	ptrPuntua ptrAux = *burua, ptrAux2 = *burua;
 	pkop = puntuakZenbatu(*burua);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
@@ -94,8 +112,7 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 				if (konexioa == 1) {
 					ptrAux2 = *burua;
 
-					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux->visitado == 0)
-						ptrAux2 = ptrAux2->ptrHurrengoa;
+					while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux2->visitado == 0) ptrAux2 = ptrAux2->ptrHurrengoa;
 					SDL_RenderDrawLine(renderer, ptrAux->pos.x, ptrAux->pos.y, ptrAux2->pos.x, ptrAux2->pos.y);
 					konexioa = 0;
 				}
