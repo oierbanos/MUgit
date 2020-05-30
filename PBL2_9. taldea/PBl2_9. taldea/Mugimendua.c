@@ -17,28 +17,29 @@
 
 void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, int jokalaria) 
 {
-	double mainx = 0, mainy = 0, mx=0, my=0, x = 0, y = 0, z = 0, k = 0;
+	float mainx = 0, mainy = 0, mx = 0, my = 0;
+	POS org, dest;
 
 	ptrMugi p1 = *burua, p2 = p1->ptrHurrengoa;	
 	while (p1 != NULL) {
 
-		bilatu(burua2, &x, &y, p1->moveId);
-		bilatu(burua2, &z, &k, p2->moveId);
+		bilatu(burua2, &org.x, &org.y, p1->moveId);
+		bilatu(burua2, &dest.x, &dest.y, p2->moveId);
 
-		mainx = fabs(x - z);
-		mainy = fabs(y - k);
+		mainx = dest.x - org.x; // Distancia entre un punto y otro en x
+		mainy = dest.y - org.y; // Distancia entre un punto y otro en y
 
-		mx = mainx / mainy;
-		my = mainy / mainx;
+		mx = mainx / mainy; // Proporción del avance en x
+		my = mainy / mainx; // Proporción del avance en y
 
-		mugitu(mx, my, x, y, z, k, fitxategia, burua2, Grafo, jokalaria, burua);
+		mugitu(mx, my, org.x, org.y, dest.x, dest.y, fitxategia, burua2, Grafo, jokalaria, burua);
 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
 }
 
-void mugitu(double x, double y, double z, double k, double j, double i, FILE* fitxategia, ptrPuntua* burua, int* Grafo, int jokalaria, ptrMugi* burua2) {
+void mugitu(float x, float y, float z, float k, float j, float i, FILE* fitxategia, ptrPuntua* burua, int* Grafo, int jokalaria, ptrMugi* burua2) {
 
 	while (z != j && k != i) {
 
@@ -51,9 +52,7 @@ void mugitu(double x, double y, double z, double k, double j, double i, FILE* fi
 		MapaMarraztu(fitxategia, burua, Grafo, burua2 );
 		irudiakMarraztu();
 		SDL_RenderPresent(renderer);
-
 	}
-
 }
 
 int JOKOA_jokalariaIrudiaSortu(ptrPuntua ptrAux)

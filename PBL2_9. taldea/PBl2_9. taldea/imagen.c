@@ -57,15 +57,14 @@ int irudiaKargatu(char* fileName)
 	return id - 1;
 }
 
-void  irudiaMugitu(int numImg, double x, double y)
+void  irudiaMugitu(int numImg, float x, float y)
 {
-
 	int id = 0;
 
 	id = irudiarenPosizioaAurkitu(numImg);
 
-	irudiak[id].dest.x = x;
-	irudiak[id].dest.y = y;
+	irudiak[id].dest.x = (int)x;
+	irudiak[id].dest.y = (int)y;
 }
 
 void irudiakMarraztu(void)

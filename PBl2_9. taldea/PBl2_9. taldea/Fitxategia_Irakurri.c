@@ -30,8 +30,8 @@ void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 		else {
 			egoera = fread(&berria->id, sizeof(int), 1, fitxategia);
 			if (berria->id != -1 && egoera == 1) {
-				egoera = fread(&berria->pos.x, sizeof(int), 1, fitxategia);
-				if (egoera == 1) egoera = fread(&berria->pos.y, sizeof(int), 1, fitxategia);
+				egoera = fread(&berria->pos.x, sizeof(float), 1, fitxategia);
+				if (egoera == 1) egoera = fread(&berria->pos.y, sizeof(float), 1, fitxategia);
 			}
 			if (egoera != 1) printf("203 Errorea\n");
 			berria->ptrHurrengoa = NULL;
@@ -83,7 +83,7 @@ void pantailaratuPuntuak(ptrPuntua burua)
 	ptrPuntua ptrAux = burua;
 
 	while (ptrAux != NULL) {
-		printf("%d %d %d\n", ptrAux->id, ptrAux->pos.x, ptrAux->pos.y);
+		printf("%d %f %f\n", ptrAux->id, ptrAux->pos.x, ptrAux->pos.y);
 		ptrAux = ptrAux->ptrHurrengoa;
 	}
 }

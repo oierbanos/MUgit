@@ -24,7 +24,6 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, int
 
 		dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
 	}
-	askatuPuntuak(burua);
 	fclose(fitxategia);
 	free(*Grafo);
 }
@@ -109,6 +108,11 @@ void gorde(int pKop, int org, int dest, int* distantzia, int* aurrekoa, ptrMugi*
 				mugimenduak(j + 1, burua);
 			} while (j != org);
 		}
+	ptrMugi ptrAux = *burua;
+	while (ptrAux != NULL) { 
+		printf("\n%d", ptrAux->moveId); 
+		ptrAux = ptrAux->ptrHurrengoa; 
+	}
 }
 
 void mugimenduak(int mugimendua, ptrMugi* burua)

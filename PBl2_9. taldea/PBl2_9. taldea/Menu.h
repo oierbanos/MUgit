@@ -6,7 +6,7 @@
 
 int hasieratu(SDL_Window** window, SDL_Renderer** renderer, int width, int height, char* name);
 int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, char* fileName, char* mapName, DIM mapDim);
-int checkArea(int x, int y, int xDistance, int yDistance, SDL_Event ebentu);
+int checkArea(float x, float y, float xDistance, float yDistance, SDL_Event ebentu);
 int textuaPantailanIdatzi(char* title, char* input, int x, int y);
 int getTextFromUser(char* input, char* title, char* windowName);
 void textuaIdatzi(int x, int y, char* str);

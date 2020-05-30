@@ -12,8 +12,8 @@ typedef struct
 }MAPA_ELEMENTUA;
 
 void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* burua2);
-void zirkuluaMarraztu(int x, int y, int r);
-void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak);
+void zirkuluaMarraztu(float x, float y, int r);
+void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak);
 char enteroACaracter(ptrPuntua ptrAux);
 
 #endif

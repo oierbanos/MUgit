@@ -22,8 +22,8 @@ typedef struct DE_DIMENTSIOA
 
 typedef struct DE_POSIZIOA
 {
-	int x;
-	int y;
+	float x;
+	float y;
 } POS;
 
 typedef struct DE_PUNTUA
@@ -44,6 +44,6 @@ int menu(void);
 int erreserbaBurutu(int** bek, int kop);
 void askatuMugitu(ptrMugi* burua);
 void askatuPuntuak(ptrPuntua* burua);
-void bilatu(ptrPuntua* burua2, double* x, double* y, int z);
+void bilatu(ptrPuntua* burua2, float* x, float* y, int id);
 
 #endif

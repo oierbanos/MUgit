@@ -32,14 +32,14 @@ int erreserbaBurutu(int** bek, int kop)
 	else return 1;
 }
 
-void bilatu(ptrPuntua* burua2, double* x, double* y, int z) {
+void bilatu(ptrPuntua* burua2, float* x, float* y, int id) {
 
 	ptrPuntua ptrAux = *burua2;
 	
-	while (ptrAux->id != z && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
+	while (ptrAux->id != id && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
 
-	*x = (float) ptrAux->pos.x;
-	*y =(float) ptrAux->pos.y;
+	*x = ptrAux->pos.x;
+	*y = ptrAux->pos.y;
 }
 
 void askatuPuntuak(ptrPuntua* burua)

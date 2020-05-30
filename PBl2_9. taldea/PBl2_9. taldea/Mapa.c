@@ -17,7 +17,7 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 	ptrPuntua ptrAux;
 	SDL_Window* window;
 	SDL_Event ebentu;
-	int jarraitu = 0, running = 0, aurkitu, jokalaria=0, kont=0, pos1=0, pos2=0;
+	int jarraitu = 0, running = 0, aurkitu, jokalaria=0, kont=0, id1=0, id2=0;
 	puntuakJaso(burua, fitxategia);
 	pisuakJaso(*burua, fitxategia, &pisuak);
 
@@ -27,7 +27,8 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 
 		textuaGaitu(1);
 		SDL_RenderClear(renderer);
-		zuzenakMarraztu(fitxategia, burua, pisuak);
+		grafoaMarraztu(fitxategia, burua, pisuak);
+		rewind(fitxategia);
 		
 		SDL_RenderPresent(renderer);
 		SDL_UpdateWindowSurface(window);
@@ -55,12 +56,12 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 					}
 
 				if (aurkitu == 1 && kont == 0) { 
-					pos1 = ptrAux->id; 
+					id1 = ptrAux->id; 
 					jokalaria = JOKOA_jokalariaIrudiaSortu(*burua);
 				}
 				if (aurkitu == 1 && kont == 1) {
-					pos2 = ptrAux->id;
-					setUp(fitxategia, burua, burua2, &pisuak, pos1, pos2);
+					id2 = ptrAux->id;
+					setUp(fitxategia, burua, burua2, &pisuak, id1, id2);
 					kalkulatu(burua, burua2, fitxategia, pisuak, jokalaria);
 					free(pisuak);
 				}
@@ -76,23 +77,19 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 	if (window) SDL_DestroyWindow(window);
 }
 
-void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
+void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 
 	int pkop, i, j, konexioa = 0, kont, kont2, kont3 = 0;
 	char str[2] = { '0', '\0' };
 
-	//puntuakJaso(burua, fitxategia);
-	//pisuakJaso(*burua, fitxategia, &pisuak);
 	ptrPuntua ptrAux = *burua, ptrAux2 = *burua;
 	pkop = puntuakZenbatu(*burua);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	while (ptrAux != NULL)
-	{
+	while (ptrAux != NULL) {
 		ptrAux->visitado = 0;
 		ptrAux = ptrAux->ptrHurrengoa;
 	}
-
 	ptrAux = *burua;
 
 	for (kont = 0; kont <= pkop; kont++) {
@@ -107,21 +104,19 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 				if (konexioa == 1) {
 					ptrAux2 = *burua;
 
-					if (ptrAux != NULL && ptrAux2 != NULL) {
-						while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL && ptrAux2->visitado == 0) ptrAux2 = ptrAux2->ptrHurrengoa;
-						SDL_RenderDrawLine(renderer, ptrAux->pos.x, ptrAux->pos.y, ptrAux2->pos.x, ptrAux2->pos.y);
-						konexioa = 0;
+					if (ptrAux != NULL && ptrAux2 != NULL && ptrAux->visitado == 0) {
+						while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL) ptrAux2 = ptrAux2->ptrHurrengoa;
+						SDL_RenderDrawLine(renderer, (int)ptrAux->pos.x, (int)ptrAux->pos.y, (int)ptrAux2->pos.x, (int)ptrAux2->pos.y);
 					}
+					konexioa = 0;
 				}
 				i++;
-				
 			}
 			if (ptrAux != NULL) ptrAux->visitado = 1;
 			j++;
 		}
 		kont3++;
 
-		printf("%c\n", *str);
 		if (ptrAux != NULL) {
 			zirkuluaMarraztu(ptrAux->pos.x, ptrAux->pos.y, 5);
 
@@ -131,20 +126,21 @@ void zuzenakMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 			for (kont2 = 0; kont2 < kont; kont2++) ptrAux = ptrAux->ptrHurrengoa;
 			if (ptrAux != NULL) {
 				*(str) = enteroACaracter(ptrAux);
-				textuaIdatzi(ptrAux->pos.x + 5, ptrAux->pos.y + 5, str);
+				printf("ID del punto: %c\n", *str);
+				textuaIdatzi((int)ptrAux->pos.x + 5, (int)ptrAux->pos.y + 5, str);
 			}
 		}
 	}
 }
 
-void zirkuluaMarraztu(int x, int y, int r)
+void zirkuluaMarraztu(float x, float y, int r)
 {
-	int i, h;
+	float i, h;
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	for (i = x - r; i <= x + r; i++) {
-		h = (int)llround(sqrt((double)(r * r - (i - x) * (i - x))));
-		SDL_RenderDrawLine(renderer, i, y + h, i, y - h);
+		h = (float)llround(sqrt((double)(r * r - (i - x) * (i - x))));
+		SDL_RenderDrawLine(renderer, (int)i, (int)y + (int)h, (int)i, (int)y - (int)h);
 	}
 }
 

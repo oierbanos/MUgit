@@ -153,7 +153,7 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 	case SDL_MOUSEBUTTONDOWN:
 		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 0, 230, 20, ebentu)) {
 			egoera = getTextFromUser(fileName, "Fitxategiaren Helbidea", "Get File");
-			if (egoera == OUT) egoera = fitxategiaIreki(fitxategia, fileName);
+			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); }
 			if (egoera != OUT) { strcpy(fileName, ""); fitxategia = NULL; }
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 20, 230, 20, ebentu)) {
@@ -180,7 +180,7 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 	return running;
 }
 
-int checkArea(int x, int y, int xDistance, int yDistance, SDL_Event ebentu)
+int checkArea(float x, float y, float xDistance, float yDistance, SDL_Event ebentu)
 {
 	int egoera = 0;
 

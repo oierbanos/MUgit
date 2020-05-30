@@ -36,7 +36,7 @@ void fitxategiaSortu(FILE** fitxategia)
 	char fitxIzena[MAX_SIZE];
 
 	printf("Fitxategiaren izena: ");
-	fgets(fitxIzena, MAX_SIZE, stdin);
+	fgets(fitxIzena, MAX_SIZE - 4, stdin);
 	*(fitxIzena + strlen(fitxIzena) - 1) = '\0';
 	sprintf(fitxIzena, "%s.map", fitxIzena);
 
@@ -47,6 +47,7 @@ void puntuakIdatzi(FILE* fitxategia, int kop)
 {
 	char str[MAX_SIZE];
 	int aux, egoera, i = 0, stop = -1;
+	float posAux;
 
 	do {
 		printf("%d. puntua:\n", i + 1);
@@ -60,16 +61,16 @@ void puntuakIdatzi(FILE* fitxategia, int kop)
 		else {
 			printf("Puntuaren koordenatua (X): ");
 			fgets(str, MAX_SIZE, stdin);
-			sscanf(str, "%d", &aux);
+			sscanf(str, "%f", &posAux);
 
-			egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
+			egoera = fwrite(&posAux, sizeof(float), 1, fitxategia);
 			if (egoera != 1) printf("103 Errorea\n");
 			else {
 				printf("Puntuaren koordenatua (Y): ");
 				fgets(str, MAX_SIZE, stdin);
-				sscanf(str, "%d", &aux);
+				sscanf(str, "%f", &posAux);
 
-				egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
+				egoera = fwrite(&posAux, sizeof(float), 1, fitxategia);
 				if (egoera != 1) printf("104 Errorea\n");
 			}
 		}
