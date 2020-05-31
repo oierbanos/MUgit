@@ -79,7 +79,7 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 
 void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 
-	int pkop, i, j, konexioa = 0, kont, kont2, kont3 = 0;
+	int pkop, i, j=0, konexioa = 0, kont, kont2, kont3 = 0;
 	char str[2] = { '0', '\0' };
 
 	ptrPuntua ptrAux = *burua, ptrAux2 = *burua;
@@ -92,20 +92,17 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 	}
 	ptrAux = *burua;
 
-	for (kont = 0; kont <= pkop; kont++) {
-		j = 0;
+	for (kont = 1; kont <= pkop; kont++) {
 		kont2 = 0;
-
-		while (j != pkop) {
-			i = 0;
+		i = 0;
 			while (i != pkop) {
-				if (*(pisuak + i * pkop + j) != 0) konexioa = 1;
+				if (*(pisuak + j * pkop + i) != 0) konexioa = 1;
 
 				if (konexioa == 1) {
 					ptrAux2 = *burua;
 
 					if (ptrAux != NULL && ptrAux2 != NULL && ptrAux->visitado == 0) {
-						while (ptrAux2->id != i && ptrAux2->ptrHurrengoa != NULL) ptrAux2 = ptrAux2->ptrHurrengoa;
+						while (ptrAux2->id != j && ptrAux2->ptrHurrengoa != NULL) ptrAux2 = ptrAux2->ptrHurrengoa;
 						SDL_RenderDrawLine(renderer, (int)ptrAux->pos.x, (int)ptrAux->pos.y, (int)ptrAux2->pos.x, (int)ptrAux2->pos.y);
 					}
 					konexioa = 0;
@@ -114,21 +111,19 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 			}
 			if (ptrAux != NULL) ptrAux->visitado = 1;
 			j++;
-		}
-		kont3++;
+	
 
 		if (ptrAux != NULL) {
 			zirkuluaMarraztu(ptrAux->pos.x, ptrAux->pos.y, 5);
+			
 
-			ptrAux = *burua;
-			ptrAux2 = *burua;
-
-			for (kont2 = 0; kont2 < kont; kont2++) ptrAux = ptrAux->ptrHurrengoa;
 			if (ptrAux != NULL) {
+
 				*(str) = enteroACaracter(ptrAux);
 				printf("ID del punto: %c\n", *str);
 				textuaIdatzi((int)ptrAux->pos.x + 5, (int)ptrAux->pos.y + 5, str);
 			}
+			ptrAux = ptrAux->ptrHurrengoa;
 		}
 	}
 }

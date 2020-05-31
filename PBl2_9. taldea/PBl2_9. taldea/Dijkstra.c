@@ -24,7 +24,6 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, int
 
 		dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
 	}
-	fclose(fitxategia);
 	free(*Grafo);
 }
 
