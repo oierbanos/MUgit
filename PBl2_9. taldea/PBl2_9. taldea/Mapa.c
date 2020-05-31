@@ -79,7 +79,8 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 
 void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 
-	int pkop, i, j=0, konexioa = 0, kont, kont2, kont3 = 0;
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	int pkop, i, j=0, konexioa = 0, kont;
 	char str[2] = { '0', '\0' };
 
 	ptrPuntua ptrAux = *burua, ptrAux2 = *burua;
@@ -93,7 +94,6 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 	ptrAux = *burua;
 
 	for (kont = 1; kont <= pkop; kont++) {
-		kont2 = 0;
 		i = 0;
 			while (i != pkop) {
 				if (*(pisuak + j * pkop + i) != 0) konexioa = 1;
@@ -101,9 +101,14 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 				if (konexioa == 1) {
 					ptrAux2 = *burua;
 
-					if (ptrAux != NULL && ptrAux2 != NULL && ptrAux->visitado == 0) {
+					
+
+					if (ptrAux != NULL && ptrAux2 != NULL) {
 						while (ptrAux2->id != j && ptrAux2->ptrHurrengoa != NULL) ptrAux2 = ptrAux2->ptrHurrengoa;
-						SDL_RenderDrawLine(renderer, (int)ptrAux->pos.x, (int)ptrAux->pos.y, (int)ptrAux2->pos.x, (int)ptrAux2->pos.y);
+						if (ptrAux->visitado == 0) {
+							SDL_RenderDrawLine(renderer, (int)ptrAux->pos.x, (int)ptrAux->pos.y, (int)ptrAux2->pos.x, (int)ptrAux2->pos.y);
+							SDL_RenderPresent(renderer);
+						}
 					}
 					konexioa = 0;
 				}

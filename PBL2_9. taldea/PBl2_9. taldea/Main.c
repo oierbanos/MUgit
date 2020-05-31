@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
 	if (!hasieratu(&window, &renderer, WIDTH, HEIGHT, "MUgit") && TTF_Init() == 0) {
 		atexit(TTF_Quit);
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // ESTO NO HACE NADA...
 		textuaGaitu(1);
 
 		while (running == 0) { // Loop infinito para mantener la pantalla

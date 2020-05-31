@@ -10,21 +10,21 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, int
 {
 	int pKop, org, dest;
 
-	puntuakJaso(burua, fitxategia);
+	//puntuakJaso(burua, fitxategia);
 	pKop = puntuakZenbatu(*burua);
 
-	if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("302 Errorea\n");
-	else {
+	//if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("302 Errorea\n");
+	//else {
 		// Pisuen matrizea sartu
-		pisuakJaso(*burua, fitxategia, Grafo);
+		//pisuakJaso(*burua, fitxategia, Grafo);
 
 		// Bidea Aurkitu
 		org = pos1;
 		dest = pos2;
 
 		dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
-	}
-	free(*Grafo);
+	//}
+	//free(*Grafo);
 }
 
 void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)

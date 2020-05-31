@@ -32,26 +32,24 @@ void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, 
 		mx = mainx / mainy; // Proporción del avance en x
 		my = mainy / mainx; // Proporción del avance en y
 
-		mugitu(mx, my, org.x, org.y, dest.x, dest.y, jokalaria, fitxategia, Grafo, burua);
+		mugitu(mx, my, org.x, org.y, dest.x, dest.y, jokalaria, fitxategia, Grafo, burua2);
 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
 }
 
-void mugitu(float x, float y, float z, float k, float j, float i, int jokalaria, FILE* fitxategia, int* pisuak, ptrMugi* burua) {
+void mugitu(float x, float y, float z, float k, float j, float i, int jokalaria, FILE* fitxategia, int* pisuak, ptrPuntua* burua2) {
 
 	while (z != j && k != i) {
 
 		z += x;
 		k += y;
 
-		
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		SDL_RenderClear(renderer);
 		irudiaMugitu(jokalaria, z, k);
-		SDL_RenderPresent(renderer);
-		grafoaMarraztu(fitxategia, burua, pisuak);
-		SDL_RenderPresent(renderer);
+		grafoaMarraztu(fitxategia, burua2, pisuak);
 		irudiakMarraztu();
 		SDL_RenderPresent(renderer);
 	}
