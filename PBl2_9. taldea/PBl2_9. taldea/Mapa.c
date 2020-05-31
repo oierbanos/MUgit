@@ -87,11 +87,11 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 	pkop = puntuakZenbatu(*burua);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	while (ptrAux != NULL) {
-		ptrAux->visitado = 0;
-		ptrAux = ptrAux->ptrHurrengoa;
+	while (ptrAux2 != NULL) {
+		ptrAux2->visitado = 0;
+		ptrAux2 = ptrAux2->ptrHurrengoa;
 	}
-	ptrAux = *burua;
+	ptrAux2 = *burua;
 
 	for (kont = 1; kont <= pkop; kont++) {
 		i = 0;
@@ -99,13 +99,13 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 				if (*(pisuak + j * pkop + i) != 0) konexioa = 1;
 
 				if (konexioa == 1) {
-					ptrAux2 = *burua;
+					ptrAux = *burua;
 
 					
 
 					if (ptrAux != NULL && ptrAux2 != NULL) {
-						while (ptrAux2->id != j && ptrAux2->ptrHurrengoa != NULL) ptrAux2 = ptrAux2->ptrHurrengoa;
-						if (ptrAux->visitado == 0) {
+						while (ptrAux->id != i + 1 && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
+						if (ptrAux2->visitado == 0) {
 							SDL_RenderDrawLine(renderer, (int)ptrAux->pos.x, (int)ptrAux->pos.y, (int)ptrAux2->pos.x, (int)ptrAux2->pos.y);
 							SDL_RenderPresent(renderer);
 						}
@@ -114,21 +114,21 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 				}
 				i++;
 			}
-			if (ptrAux != NULL) ptrAux->visitado = 1;
+			if (ptrAux2 != NULL) ptrAux2->visitado = 1;
 			j++;
 	
 
-		if (ptrAux != NULL) {
-			zirkuluaMarraztu(ptrAux->pos.x, ptrAux->pos.y, 5);
+		if (ptrAux2 != NULL) {
+			zirkuluaMarraztu(ptrAux2->pos.x, ptrAux2->pos.y, 5);
 			
 
-			if (ptrAux != NULL) {
+			if (ptrAux2 != NULL) {
 
-				*(str) = enteroACaracter(ptrAux);
+				*(str) = enteroACaracter(ptrAux2);
 				printf("ID del punto: %c\n", *str);
-				textuaIdatzi((int)ptrAux->pos.x + 5, (int)ptrAux->pos.y + 5, str);
+				textuaIdatzi((int)ptrAux2->pos.x + 5, (int)ptrAux2->pos.y + 5, str);
 			}
-			ptrAux = ptrAux->ptrHurrengoa;
+			ptrAux2 = ptrAux2->ptrHurrengoa;
 		}
 	}
 }
