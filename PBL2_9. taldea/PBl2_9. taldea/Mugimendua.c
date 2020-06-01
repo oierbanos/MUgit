@@ -64,21 +64,24 @@ void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, flo
 		propX = difX / 100; // Proporción del avance en x
 		propY = difY / 100; // Proporción del avance en y
 
-		mugitu(propX, propY, org, dest, mugit, window);
+		mugitu(propX, propY, org, dest, mugit, window, &pBurua, fitxategia, pisuak);
 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
 }
 
-void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* window)
+void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* window, ptrPuntua* pBurua, FILE* fitxategia, float* pisuak)
 {
 	while (org.x != dest.x || org.y != dest.y) {
 		if (org.x != dest.x) org.x += propX;
 		if (org.y != dest.y) org.y += propY;
 
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		irudiaMugitu(mugit, org.x, org.y);
+		SDL_RenderClear(renderer);
 		irudiakMarraztu();
+		grafoaMarraztu(fitxategia, pBurua, pisuak);
 		SDL_RenderPresent(renderer);
 		SDL_UpdateWindowSurface(window);
 	}

@@ -27,12 +27,14 @@ int getTextFromUser(char* input, char* windowName, int width, int height, char* 
 
 	if (!hasieratu(&window, &renderer, width, height, windowName) && TTF_Init() == 0) {
 		atexit(TTF_Quit);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		textuaGaitu(1);
 
 		menu = irudiaSortu(0, 0, image, window);
 		SDL_StartTextInput();
 		while (running == IN) {
-			//SDL_RenderClear(renderer);
+			SDL_RenderClear(renderer);
+			irudiakMarraztu();
 			running = textuaPantailanIdatzi(input, 50, 255);
 			SDL_RenderPresent(renderer);
 			SDL_UpdateWindowSurface(window);
@@ -73,8 +75,6 @@ int hasieratu(SDL_Window** window, SDL_Renderer** renderer, int width, int heigh
 
 void textuaGaitu(int aukera)
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
 	switch (aukera) // Posibilidad de meter distintos tipos de fuente
 	{
 	case 1:
@@ -93,6 +93,7 @@ void textuaGaitu(int aukera)
 
 int textuaPantailanIdatzi(char* input, int x, int y)
 {
+	char str[MAX_SIZE];
 	SDL_Event ebentu;
 	int running = 0;
 
@@ -103,7 +104,7 @@ int textuaPantailanIdatzi(char* input, int x, int y)
 		else if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN || ebentu.type == SDL_MOUSEBUTTONDOWN) {
 			if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_BACKSPACE && strlen(input) > 0)
 				*(input + strlen(input) - 1) = '\0';
-			else if (ebentu.type == SDL_TEXTINPUT)
+			else if (ebentu.type == SDL_TEXTINPUT && strlen(input) <= MAX_SIZE)
 				strcat(input, ebentu.text.text);
 			else if (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN || ebentu.type == SDL_MOUSEBUTTONDOWN) {
 				if (ebentu.key.keysym.sym == SDLK_RETURN || ebentu.button.button == SDL_BUTTON_LEFT && checkArea(84, 365, 283, 41, ebentu)) running = OUT;
@@ -111,7 +112,8 @@ int textuaPantailanIdatzi(char* input, int x, int y)
 			}
 		}
 	}
-	textuaIdatzi(x, y, input);
+	sprintf(str, " %s", input);
+	textuaIdatzi(x, y, str);
 
 	return running;
 }

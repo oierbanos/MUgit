@@ -61,7 +61,6 @@ void pisuakJaso(ptrPuntua burua, FILE* fitxategia, float** pisuak)
 	else {
 		do {
 			egoera = fread((*pisuak + i), sizeof(float), 1, fitxategia);
-			printf("Jaso da(%d): %f\n", i, *(*pisuak + i));
 			i++;
 		} while (egoera == 1 && i < kont * kont);
 	}

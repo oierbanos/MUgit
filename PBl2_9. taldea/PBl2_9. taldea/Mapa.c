@@ -53,7 +53,6 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	pkop = puntuakZenbatu(*burua);
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 	while (ptrAux2 != NULL) {
 		ptrAux2->visitado = 0;
@@ -88,7 +87,6 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
 
 			if (ptrAux2 != NULL) {
 				*(str) = enteroACaracter(ptrAux2);
-				printf("ID del punto: %c\n", *str);
 				textuaIdatzi((int)ptrAux2->pos.x + 5, (int)ptrAux2->pos.y + 5, str);
 			}
 			ptrAux2 = ptrAux2->ptrHurrengoa;
@@ -100,7 +98,7 @@ void zirkuluaMarraztu(float x, float y, int r)
 {
 	float i, h;
 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	for (i = x - r; i <= x + r; i++) {
 		h = (float)llround(sqrt((double)(r * r - (i - x) * (i - x))));
 		SDL_RenderDrawLine(renderer, (int)i, (int)y + (int)h, (int)i, (int)y - (int)h);
