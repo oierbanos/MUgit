@@ -4,6 +4,7 @@
 #include "Dijkstra.h"
 #include "Fitxategia_Irakurri.h"
 #include "Erabilgarriak.h"
+#include "imagen.h"
 
 int menu(void)
 {
@@ -70,4 +71,17 @@ void askatuMugitu(ptrMugi* burua)
 		}
 	}
 	*burua = NULL;
+}
+
+int irudiaSortu(float x, float y, char* name, SDL_Window* window)
+{
+	int bmpID = -1;
+
+	bmpID = irudiaKargatu(name);
+	irudiaMugitu(bmpID, x, y);
+	irudiakMarraztu();
+	SDL_RenderPresent(renderer);
+	SDL_UpdateWindowSurface(window);
+
+	return bmpID;
 }

@@ -34,10 +34,9 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mu
 		ptrAux = *burua;
 		idOrg = ptrAux->id;
 		SDL_RenderPresent(renderer);
-		mugit = irudiaSortu(*burua);
-		SDL_UpdateWindowSurface(window);
+		mugit = irudiaSortu(ptrAux->pos.x, ptrAux->pos.y, MUGIT_IMAGE, window);
 
-		while (running == 0) running = movement(burua, ptrAux, mugiBurua, fitxategia, &pisuak, mugit, &idOrg);
+		while (running == 0) running = movement(burua, ptrAux, mugiBurua, fitxategia, &pisuak, mugit, &idOrg, window);
 
 		irudiaKendu(mugit);
 		if (renderer) SDL_DestroyRenderer(renderer);

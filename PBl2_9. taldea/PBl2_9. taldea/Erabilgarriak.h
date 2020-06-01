@@ -16,6 +16,8 @@ SDL_Renderer* renderer;
 
 #define MUGIT_IMAGE "../Media/Images/mugit.bmp"
 #define MENU_IMAGE "../Media/Images/Menu.bmp"
+#define FILE_IMAGE "../Media/Images/helbidea.bmp"
+#define MAP_IMAGE "../Media/Images/irudia.bmp"
 
 typedef struct DE_DIMENTSIOA
 {
@@ -44,9 +46,10 @@ typedef struct A_MUGIMENDUA
 } MUGI, * ptrMugi;
 
 int menu(void);
-int erreserbaBurutu(float** bek, int kop);
 void askatuMugitu(ptrMugi* burua);
 void askatuPuntuak(ptrPuntua* burua);
+int erreserbaBurutu(float** bek, int kop);
 void bilatu(ptrPuntua burua, float* x, float* y, int id);
+int irudiaSortu(float x, float y, char* name, SDL_Window* window);
 
 #endif

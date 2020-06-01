@@ -13,7 +13,7 @@
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
 
-int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxategia, float** pisuak, int mugit, int* idOrg)
+int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxategia, float** pisuak, int mugit, int* idOrg, SDL_Window* window)
 {
 	SDL_Event ebentu;
 	int running = 0, aurkitu, idDest;
@@ -36,7 +36,7 @@ int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxat
 			if (aurkitu == 1) {
 				idDest = ptrAux->id;
 				setUp(fitxategia, burua, mugiBurua, pisuak, *idOrg, idDest);
-				if (mugiBurua != NULL) { kalkulatuMugimendua(*burua, *mugiBurua, fitxategia, *pisuak, mugit); *idOrg = idDest; }
+				if (mugiBurua != NULL) { kalkulatuMugimendua(*burua, *mugiBurua, fitxategia, *pisuak, mugit, window); *idOrg = idDest; }
 				if (mugiBurua != NULL) askatuMugitu(mugiBurua);
 			}
 			break;
@@ -48,7 +48,7 @@ int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxat
 	return running;
 }
 
-void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, float* pisuak, int mugit) 
+void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, float* pisuak, int mugit, SDL_Window* window) 
 {
 	POS org, dest;
 	ptrMugi p1 = mBurua, p2 = p1->ptrHurrengoa;
@@ -64,38 +64,25 @@ void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, flo
 		propX = difX / 100; // Proporción del avance en x
 		propY = difY / 100; // Proporción del avance en y
 
-		mugitu(propX, propY, org, dest, mugit, fitxategia, pisuak, pBurua);
+		mugitu(propX, propY, org, dest, mugit, window);
 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
 }
 
-void mugitu(float propX, float propY, POS org, POS dest, int mugit, FILE* fitxategia, float* pisuak, ptrPuntua pBurua)
+void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* window)
 {
 	while (org.x != dest.x || org.y != dest.y) {
 		if (org.x != dest.x) org.x += propX;
 		if (org.y != dest.y) org.y += propY;
 
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 		irudiaMugitu(mugit, org.x, org.y);
 		irudiakMarraztu();
 		SDL_RenderPresent(renderer);
+		SDL_UpdateWindowSurface(window);
 	}
 }
-
-int irudiaSortu(ptrPuntua ptrAux)
-{
-	int mugit = -1;
-
-	mugit = irudiaKargatu(MUGIT_IMAGE);
-	irudiaMugitu(mugit, ptrAux->pos.x , ptrAux->pos.y);
-	irudiakMarraztu();
-	SDL_RenderPresent(renderer);
-
-	return mugit;
-}
-
 
 int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest)
 {

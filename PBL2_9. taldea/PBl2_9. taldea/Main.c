@@ -24,19 +24,14 @@ int main(int argc, char** argv)
 
 	if (!hasieratu(&window, &renderer, WIDTH, HEIGHT, "MUgit") && TTF_Init() == 0) {
 		atexit(TTF_Quit);
+		menu = irudiaSortu(0, 0, MENU_IMAGE, window);
 		textuaGaitu(1);
 
 		while (running == 0) { // Loop infinito para mantener la pantalla
 			while ((egoera = SDL_PollEvent(&ebentu)) == 1 && running == 0) {
-				SDL_RenderClear(renderer); // Limpiar
-				menu = irudiaKargatu(MENU_IMAGE);
 				if (egoera == 1) running = aukeraMenu(ebentu, &fitxategia, &burua, &mBurua, &pisuak, fileName, mapName, mapDim);
-				textuaIdatzi(0, 0, "Fitxategiaren Helbidea");
-				textuaIdatzi(0, 20, "Irudiaren Helbidea");
-				textuaIdatzi(0, 40, "Mapa berri bat sortu");
-				textuaIdatzi(0, 60, "Mapa marraztu");
-				SDL_RenderPresent(renderer); // Refrescar
-				SDL_UpdateWindowSurface(window); // Actualizar pantalla
+				SDL_RenderPresent(renderer);
+				SDL_UpdateWindowSurface(window);
 				irudiakMarraztu();
 			}
 		}

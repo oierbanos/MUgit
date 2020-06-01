@@ -7,6 +7,7 @@
 #include "Mapa.h"
 #include "Mugimendua.h"
 #include "SDL_ttf.h"
+#include "imagen.h"
 #include "Erabilgarriak.h"
 #include "Dijkstra.h"
 #include "Fitxategia_Irakurri.h"
@@ -19,27 +20,28 @@ SDL_Renderer* getRenderer(void)
 	return renderer;
 }
 
-int getTextFromUser(char* input, char* title, char* windowName)
+int getTextFromUser(char* input, char* windowName, int width, int height, char* image)
 {
 	SDL_Window* window;
-	int running = IN;
+	int running = IN, menu = -1;
 
-	if (!hasieratu(&window, &renderer, 500, 36, windowName) && TTF_Init() == 0) {
+	if (!hasieratu(&window, &renderer, width, height, windowName) && TTF_Init() == 0) {
 		atexit(TTF_Quit);
 		textuaGaitu(1);
 
+		menu = irudiaSortu(0, 0, image, window);
 		SDL_StartTextInput();
-		while (running == IN) { // Loop infinito para mantener la pantalla
-			SDL_RenderClear(renderer); // Limpiar
-			running = textuaPantailanIdatzi(title, input, 10, 0);
-			textuaIdatzi(10, 20, "Sakatu enter helbidea gordetzeko.");
-			SDL_RenderPresent(renderer); // Refrescar
-			SDL_UpdateWindowSurface(window); // Actualizar pantalla
+		while (running == IN) {
+			//SDL_RenderClear(renderer);
+			running = textuaPantailanIdatzi(input, 50, 255);
+			SDL_RenderPresent(renderer);
+			SDL_UpdateWindowSurface(window);
 		}
+		irudiaKendu(menu);
+		SDL_StopTextInput();
 	}
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (window) SDL_DestroyWindow(window);
-	SDL_StopTextInput();
 
 	return running;
 }
@@ -89,9 +91,8 @@ void textuaGaitu(int aukera)
 		printf("TTF_OpenFontIndex: %s\n", TTF_GetError()); // handle error
 }
 
-int textuaPantailanIdatzi(char* title, char* input, int x, int y)
+int textuaPantailanIdatzi(char* input, int x, int y)
 {
-	char str[128];
 	SDL_Event ebentu;
 	int running = 0;
 
@@ -99,19 +100,18 @@ int textuaPantailanIdatzi(char* title, char* input, int x, int y)
 	while (SDL_PollEvent(&ebentu) && running == IN) {
 		if (ebentu.type == SDL_QUIT)
 			running = TERMINATE;
-		else if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN) {
+		else if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN || ebentu.type == SDL_MOUSEBUTTONDOWN) {
 			if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_BACKSPACE && strlen(input) > 0)
 				*(input + strlen(input) - 1) = '\0';
 			else if (ebentu.type == SDL_TEXTINPUT)
 				strcat(input, ebentu.text.text);
-			else if (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN) {
-				if (ebentu.key.keysym.sym == SDLK_RETURN) running = OUT;
-				else running = TERMINATE;
+			else if (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN || ebentu.type == SDL_MOUSEBUTTONDOWN) {
+				if (ebentu.key.keysym.sym == SDLK_RETURN || ebentu.button.button == SDL_BUTTON_LEFT && checkArea(84, 365, 283, 41, ebentu)) running = OUT;
+				else if (ebentu.type != SDL_MOUSEBUTTONDOWN) running = TERMINATE;
 			}
 		}
 	}
-	sprintf(str, "%s: %s", title, input);
-	textuaIdatzi(x, y, str);
+	textuaIdatzi(x, y, input);
 
 	return running;
 }
@@ -120,7 +120,7 @@ void textuaIdatzi(int x, int y, char* str)
 {
 	SDL_Surface* textSurface;
 	SDL_Texture* mTexture;
-	SDL_Color textColor = { 255, 255, 255 };
+	SDL_Color textColor = { 0, 0, 0 };
 	SDL_Rect src, dst;
 	SDL_Renderer* gRenderer;
 
@@ -150,27 +150,24 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 		if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = -1;
 		break;
 	case SDL_MOUSEBUTTONDOWN:
-		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 0, 230, 20, ebentu)) {
-			egoera = getTextFromUser(fileName, "Fitxategiaren Helbidea", "Get File");
+		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 351, 482, 93, ebentu)) {
+			egoera = getTextFromUser(fileName, "Get File", 450, 563, FILE_IMAGE);
 			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); }
-			if (egoera != OUT) { strcpy(fileName, ""); fitxategia = NULL; }
+			else { strcpy(fileName, ""); fitxategia = NULL; }
+
+			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
+			if (egoera != OUT) strcpy(mapName, "");
 		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 20, 230, 20, ebentu)) {
-			egoera = getTextFromUser(mapName, "Irudiaren Helbidea", "Get Map");
-			if (egoera == OUT) printf("Helbidea: %s\n", mapName);
-			else strcpy(mapName, "");
-		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 40, 230, 20, ebentu)) {
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
 			fitxategiBatSortu();
 		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 60, 230, 20, ebentu)) {
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 476, 482, 93, ebentu)) {
 			if (*fitxategia != NULL) {
 				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua);
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");
 		}
-		
 		break;
 	default:
 		break;
