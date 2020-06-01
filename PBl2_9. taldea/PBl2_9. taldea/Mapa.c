@@ -10,14 +10,15 @@
 #include "Erabilgarriak.h"
 #include "math.h"
 #include "SDL_ttf.h"
+#include "imagen.h"
 #include "mugimendua.h"
 
-void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* burua2)
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua)
 {
 	ptrPuntua ptrAux;
 	SDL_Window* window;
-	SDL_Event ebentu;
-	int jarraitu = 0, running = 0, aurkitu, jokalaria=0, kont=0, id1=0, id2=0;
+	int running = 0, mugit = -1, idOrg;
+
 	puntuakJaso(burua, fitxategia);
 	pisuakJaso(*burua, fitxategia, &pisuak);
 
@@ -30,60 +31,28 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak, ptrMugi* buru
 		grafoaMarraztu(fitxategia, burua, pisuak);
 		rewind(fitxategia);
 		
+		ptrAux = *burua;
+		idOrg = ptrAux->id;
 		SDL_RenderPresent(renderer);
+		mugit = irudiaSortu(*burua);
 		SDL_UpdateWindowSurface(window);
-	}
-	else {
-		fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
-	}
-	while (running == 0)
-		while (SDL_PollEvent(&ebentu) && running == IN) {
-			aurkitu = 0;
-			ptrAux = *burua;
-			switch (ebentu.type)
-			{
-			case SDL_QUIT:
-				running = 1;
-				break;
-			case SDL_KEYDOWN:
-				if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = 1;
-				break;
-			case SDL_MOUSEBUTTONDOWN:
-				if (ebentu.button.button == SDL_BUTTON_LEFT)
-					while (ptrAux != NULL && aurkitu == 0) {
-						aurkitu = checkArea(ptrAux->pos.x - 5, ptrAux->pos.y - 5, 10, 10, ebentu);
-						if (aurkitu != 1) ptrAux = ptrAux->ptrHurrengoa;
-					}
 
-				if (aurkitu == 1 && kont == 0) { 
-					id1 = ptrAux->id; 
-					jokalaria = JOKOA_jokalariaIrudiaSortu(*burua);
-				}
-				if (aurkitu == 1 && kont == 1) {
-					id2 = ptrAux->id;
-					setUp(fitxategia, burua, burua2, &pisuak, id1, id2);
-					kalkulatu(burua, burua2, fitxategia, pisuak, jokalaria);
-					free(pisuak);
-				}
-				kont++;
-				if (aurkitu == 1 && kont == 2) kont = 0;
-				break;
-			default:
-				break;
-			}
-		}
-	//irudiaKendu(jokalaria);
-	if (renderer) SDL_DestroyRenderer(renderer);
-	if (window) SDL_DestroyWindow(window);
+		while (running == 0) running = movement(burua, ptrAux, mugiBurua, fitxategia, &pisuak, mugit, &idOrg);
+
+		irudiaKendu(mugit);
+		if (renderer) SDL_DestroyRenderer(renderer);
+		if (window) SDL_DestroyWindow(window);
+	}
+	else fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
 }
 
-void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
-
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
+{
 	int pkop, i, j=0, konexioa = 0, kont;
 	char str[2] = { '0', '\0' };
-
 	ptrPuntua ptrAux = *burua, ptrAux2 = *burua;
+
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	pkop = puntuakZenbatu(*burua);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
@@ -101,8 +70,6 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 				if (konexioa == 1) {
 					ptrAux = *burua;
 
-					
-
 					if (ptrAux != NULL && ptrAux2 != NULL) {
 						while (ptrAux->id != i + 1 && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
 						if (ptrAux2->visitado == 0) {
@@ -117,13 +84,10 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, int* pisuak) {
 			if (ptrAux2 != NULL) ptrAux2->visitado = 1;
 			j++;
 	
-
 		if (ptrAux2 != NULL) {
 			zirkuluaMarraztu(ptrAux2->pos.x, ptrAux2->pos.y, 5);
-			
 
 			if (ptrAux2 != NULL) {
-
 				*(str) = enteroACaracter(ptrAux2);
 				printf("ID del punto: %c\n", *str);
 				textuaIdatzi((int)ptrAux2->pos.x + 5, (int)ptrAux2->pos.y + 5, str);

@@ -2,10 +2,13 @@
 #define SAVE_IN_A_FILE
 #include <stdlib.h>
 
-void fitxategiBatSortu(void);
 void puntuKopurua(int* kop);
+void fitxategiBatSortu(void);
+int konexioa(int puntua1, int puntua2);
 void fitxategiaSortu(FILE** fitxategia);
-void puntuakIdatzi(FILE* fitxategia, int kop);
-void pisuenMatrizeaIdatzi(FILE* fitxategia, int kop);
+float pitagoras(POS* pPos, int zutabea, int lerroa);
+void kalkulatuDistantzia(float* distantzia, POS* pPos, int kop);
+void puntuakIdatzi(FILE* fitxategia, int kop, float* distantzia);
+void distantziakIdatzi(FILE* fitxategia, int kop, float* distantziak);
 
 #endif

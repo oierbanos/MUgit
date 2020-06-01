@@ -25,16 +25,16 @@ int menu(void)
 	return aukera;
 }
 
-int erreserbaBurutu(int** bek, int kop)
+int erreserbaBurutu(float** bek, int kop)
 {
-	*bek = (int*)malloc(sizeof(int) * kop);
+	*bek = (float*)malloc(sizeof(float) * kop);
 	if (*bek == NULL) return 0;
 	else return 1;
 }
 
-void bilatu(ptrPuntua* burua2, float* x, float* y, int id) {
+void bilatu(ptrPuntua burua, float* x, float* y, int id) {
 
-	ptrPuntua ptrAux = *burua2;
+	ptrPuntua ptrAux = burua;
 	
 	while (ptrAux->id != id && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
 

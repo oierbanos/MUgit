@@ -1,10 +1,7 @@
 #include "SDL.h"
-
 #include "imagen.h"
 #include <stdio.h>
 #include "Mugimendua.h"
-
-#define MAX_IMG 100
 
 int irudiarenPosizioaAurkitu(int id);
 

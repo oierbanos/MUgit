@@ -6,44 +6,36 @@
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
 
-void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, int pos1, int pos2)
+void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, int pos1, int pos2)
 {
 	int pKop, org, dest;
 
 	//puntuakJaso(burua, fitxategia);
 	pKop = puntuakZenbatu(*burua);
 
-	//if (!erreserbaBurutu(Grafo, pKop * pKop)) printf("302 Errorea\n");
-	//else {
-		// Pisuen matrizea sartu
-		//pisuakJaso(*burua, fitxategia, Grafo);
+	// Bidea Aurkitu
+	org = pos1;
+	dest = pos2;
 
-		// Bidea Aurkitu
-		org = pos1;
-		dest = pos2;
-
-		dijkstra(*Grafo, pKop, org - 1, dest - 1, mBurua);
-	//}
-	//free(*Grafo);
+	dijkstra(*pisuak, pKop, org - 1, dest - 1, mBurua);
 }
 
-void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
+void dijkstra(float* pisuak, int pKop, int org, int dest, ptrMugi* burua)
 {
-	int* pisua = NULL, * distantzia = NULL, * aurrekoa = NULL, * check = NULL;
-	int kop, minLuzeera, hurrengoa = 0;
+	float* pisua = NULL, * distantzia = NULL, * aurrekoa = NULL, * check = NULL, minLuzeera;
+	int kop, hurrengoa = 0;
 
 	// Aurrekoa nodo bakoitzaren aurrekoa gordetzen du
 	// kop begiratutako nodo kopurua kontrolatzen du
 	if (erreserbaBurutu(&pisua, pKop * pKop) && erreserbaBurutu(&distantzia, pKop) && erreserbaBurutu(&aurrekoa, pKop) && erreserbaBurutu(&check, pKop)) {
 		// Dijkstraren taula sortu
-		dijkstraTaula(Grafo, pisua, pKop);
+		dijkstraTaula(pisuak, pisua, pKop);
 
 		// hasieratu aurrekoa, distantzia eta check
 		hasieratuDijkstra(pKop, org, &kop, distantzia, aurrekoa, check, pisua);
 
 		while (kop < pKop - 1) {
 			minLuzeera = INFINITO;
-
 			// 'hurrengoa'-k gertuen dagoen nodoa ematen du
 			for (int i = 0; i < pKop; i++)
 				if (*(distantzia + i) < minLuzeera && !*(check + i)) {
@@ -57,11 +49,10 @@ void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 				if (!*(check + i))
 					if (minLuzeera + *(pisua + hurrengoa * pKop + i) < *(distantzia + i)) {
 						*(distantzia + i) = minLuzeera + *(pisua + hurrengoa * pKop + i);
-						*(aurrekoa + i) = hurrengoa;
+						*(aurrekoa + i) = (float)(hurrengoa);
 					}
 			kop++;
 		}
-
 		// Nodo batetik besterako distantziak kate batean gorde
 		gorde(pKop, org, dest, distantzia, aurrekoa, burua);
 		free(distantzia);
@@ -72,21 +63,21 @@ void dijkstra(int* Grafo, int pKop, int org, int dest, ptrMugi* burua)
 	else printf("303 Errorea\n");
 }
 
-void dijkstraTaula(int* Grafo, int* pisua, int pKop)
+void dijkstraTaula(float* pisuak, float* pisua, int pKop)
 {
 	for (int i = 0; i < pKop; i++)
 		for (int j = 0; j < pKop; j++)
-			if (*(Grafo + i * pKop + j) == 0)
+			if (*(pisuak + i * pKop + j) == 0)
 				*(pisua + i * pKop + j) = INFINITO;
 			else
-				*(pisua + i * pKop + j) = *(Grafo + i * pKop + j);
+				*(pisua + i * pKop + j) = *(pisuak + i * pKop + j);
 }
 
-void hasieratuDijkstra(int pKop, int org, int* kop, int* distantzia, int* aurrekoa, int* check, int* pisua)
+void hasieratuDijkstra(int pKop, int org, int* kop, float* distantzia, float* aurrekoa, float* check, float* pisua)
 {
 	for (int i = 0; i < pKop; i++) {
 		*(distantzia + i) = *(pisua + org * pKop + i);
-		*(aurrekoa + i) = org;
+		*(aurrekoa + i) = (float)(org);
 		*(check + i) = 0;
 	}
 	*(distantzia + org) = 0;
@@ -94,16 +85,16 @@ void hasieratuDijkstra(int pKop, int org, int* kop, int* distantzia, int* aurrek
 	*kop = 1;
 }
 
-void gorde(int pKop, int org, int dest, int* distantzia, int* aurrekoa, ptrMugi* burua)
+void gorde(int pKop, int org, int dest, float* distantzia, float* aurrekoa, ptrMugi* burua)
 {
 	for (int i = 0; i < pKop; i++)
 		if (i == dest) {
-			printf("\nDistance of node %d = %d", i + 1, *(distantzia + i));
+			printf("\nDistance of node %d = %f", i + 1, *(distantzia + i));
 			mugimenduak(i + 1, burua);
 
 			int j = i;
 			do {
-				j = *(aurrekoa + j);
+				j = (int)(*(aurrekoa + j));
 				mugimenduak(j + 1, burua);
 			} while (j != org);
 		}

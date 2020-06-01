@@ -51,19 +51,18 @@ void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 	} while (berria != NULL && berria->id != -1 && egoera == 1);
 }
 
-void pisuakJaso(ptrPuntua burua, FILE* fitxategia, int** pisuak)
+void pisuakJaso(ptrPuntua burua, FILE* fitxategia, float** pisuak)
 {
 	int kont = puntuakZenbatu(burua);
 	int egoera, i = 0;
 
-	*pisuak = (int*)malloc(kont * kont * sizeof(int));
+	*pisuak = (float*)malloc(kont * kont * sizeof(float));
 	if (*pisuak == NULL) printf("204 Errorea\n");
 	else {
 		do {
-			egoera = fread((*pisuak + i), sizeof(int), 1, fitxategia);
-			printf("%d ", *(*pisuak + i));
+			egoera = fread((*pisuak + i), sizeof(float), 1, fitxategia);
+			printf("Jaso da(%d): %f\n", i, *(*pisuak + i));
 			i++;
-			if (i % kont == 0) printf("\n");
 		} while (egoera == 1 && i < kont * kont);
 	}
 }

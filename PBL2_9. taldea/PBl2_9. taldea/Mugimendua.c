@@ -13,57 +13,87 @@
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
 
-#define JOKOA_PLAYER_IMAGE "../Media/mugit.bmp"
-
-void kalkulatu(ptrPuntua* burua2, ptrMugi* burua, FILE* fitxategia, int* Grafo, int jokalaria) 
+int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxategia, float** pisuak, int mugit, int* idOrg)
 {
-	float mainx = 0, mainy = 0, mx = 0, my = 0;
+	SDL_Event ebentu;
+	int running = 0, aurkitu, idDest;
+
+	while (SDL_PollEvent(&ebentu) && running == IN) {
+		aurkitu = 0;
+		ptrAux = *burua;
+		switch (ebentu.type)
+		{
+		case SDL_KEYDOWN:
+			if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = 1;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if (ebentu.button.button == SDL_BUTTON_LEFT)
+				while (ptrAux != NULL && aurkitu == 0) {
+					aurkitu = checkArea(ptrAux->pos.x - 5, ptrAux->pos.y - 5, 10, 10, ebentu);
+					if (aurkitu == 0) ptrAux = ptrAux->ptrHurrengoa;
+				}
+
+			if (aurkitu == 1) {
+				idDest = ptrAux->id;
+				setUp(fitxategia, burua, mugiBurua, pisuak, *idOrg, idDest);
+				if (mugiBurua != NULL) { kalkulatuMugimendua(*burua, *mugiBurua, fitxategia, *pisuak, mugit); *idOrg = idDest; }
+				if (mugiBurua != NULL) askatuMugitu(mugiBurua);
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	return running;
+}
+
+void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, float* pisuak, int mugit) 
+{
 	POS org, dest;
+	ptrMugi p1 = mBurua, p2 = p1->ptrHurrengoa;
+	float difX = 0, difY = 0, propX = 0, propY = 0;
+	int pkop = puntuakZenbatu(pBurua);
 
-	ptrMugi p1 = *burua, p2 = p1->ptrHurrengoa;	
-	while (p1 != NULL && p2!=NULL) {
+	while (p1 != NULL && p2 != NULL) {
+		bilatu(pBurua, &org.x, &org.y, p1->moveId);
+		bilatu(pBurua, &dest.x, &dest.y, p2->moveId);
 
-		bilatu(burua2, &org.x, &org.y, p1->moveId);
-		bilatu(burua2, &dest.x, &dest.y, p2->moveId);
+		difX = dest.x - org.x; // Distancia entre un punto y otro en x
+		difY = dest.y - org.y; // Distancia entre un punto y otro en y
+		propX = difX / 100; // Proporción del avance en x
+		propY = difY / 100; // Proporción del avance en y
 
-		mainx = dest.x - org.x; // Distancia entre un punto y otro en x
-		mainy = dest.y - org.y; // Distancia entre un punto y otro en y
-
-		mx = mainx / mainy; // Proporción del avance en x
-		my = mainy / mainx; // Proporción del avance en y
-
-		mugitu(mx, my, org.x, org.y, dest.x, dest.y, jokalaria, fitxategia, Grafo, burua2);
+		mugitu(propX, propY, org, dest, mugit, fitxategia, pisuak, pBurua);
 
 		p1 = p1->ptrHurrengoa;
 		p2 = p1->ptrHurrengoa;
 	}
 }
 
-void mugitu(float x, float y, float z, float k, float j, float i, int jokalaria, FILE* fitxategia, int* pisuak, ptrPuntua* burua2) {
-
-	while (z != j && k != i) {
-
-		z += x;
-		k += y;
+void mugitu(float propX, float propY, POS org, POS dest, int mugit, FILE* fitxategia, float* pisuak, ptrPuntua pBurua)
+{
+	while (org.x != dest.x || org.y != dest.y) {
+		if (org.x != dest.x) org.x += propX;
+		if (org.y != dest.y) org.y += propY;
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderClear(renderer);
-		irudiaMugitu(jokalaria, z, k);
-		grafoaMarraztu(fitxategia, burua2, pisuak);
+		irudiaMugitu(mugit, org.x, org.y);
 		irudiakMarraztu();
 		SDL_RenderPresent(renderer);
 	}
 }
 
-int JOKOA_jokalariaIrudiaSortu(ptrPuntua ptrAux)
+int irudiaSortu(ptrPuntua ptrAux)
 {
 	int mugit = -1;
-	mugit = irudiaKargatu(JOKOA_PLAYER_IMAGE);
+
+	mugit = irudiaKargatu(MUGIT_IMAGE);
 	irudiaMugitu(mugit, ptrAux->pos.x , ptrAux->pos.y);
 	irudiakMarraztu();
 	SDL_RenderPresent(renderer);
-	return mugit;
 
+	return mugit;
 }
 
 

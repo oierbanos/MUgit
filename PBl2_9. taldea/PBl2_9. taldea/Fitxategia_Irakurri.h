@@ -5,7 +5,7 @@
 
 int fitxategiaIreki(FILE** fitxategia, char* fileName);
 void puntuakJaso(ptrPuntua* burua, FILE* fitxategia);
-void pisuakJaso(ptrPuntua burua, FILE* fitxategia, int** pisuak);
+void pisuakJaso(ptrPuntua burua, FILE* fitxategia, float** pisuak);
 int puntuakZenbatu(ptrPuntua burua);
 void pantailaratuPuntuak(ptrPuntua burua);
 

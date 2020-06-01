@@ -26,7 +26,6 @@ int getTextFromUser(char* input, char* title, char* windowName)
 
 	if (!hasieratu(&window, &renderer, 500, 36, windowName) && TTF_Init() == 0) {
 		atexit(TTF_Quit);
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		textuaGaitu(1);
 
 		SDL_StartTextInput();
@@ -138,7 +137,7 @@ void textuaIdatzi(int x, int y, char* str)
 	SDL_DestroyTexture(mTexture);
 }
 
-int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, int** Grafo, char* fileName, char* mapName, DIM mapDim)
+int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM mapDim)
 {
 	int running = 0, egoera, jokalaria=0;
 
@@ -166,7 +165,7 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(0, 60, 230, 20, ebentu)) {
 			if (*fitxategia != NULL) {
-				MapaMarraztu(*fitxategia, burua, *Grafo, mBurua);
+				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua);
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");
