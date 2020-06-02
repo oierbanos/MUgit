@@ -40,8 +40,8 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 
 			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
 			if (egoera == OUT) {
-				get_image_size(mapName, &mapDim->width, &mapDim->height);
-				printf("Width: %ld\nHeight: %ld\n", mapDim->width, mapDim->height);
+				//get_image_size(mapName, &mapDim->width, &mapDim->height);
+				//printf("Width: %ld\nHeight: %ld\n", mapDim->width, mapDim->height);
 			}
 			else  strcpy(mapName, "");
 		}

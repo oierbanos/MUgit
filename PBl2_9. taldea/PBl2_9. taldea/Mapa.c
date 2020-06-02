@@ -11,7 +11,7 @@
 #include "math.h"
 #include "SDL_ttf.h"
 #include "imagen.h"
-#include "mugimendua.h"
+#include "Mugimendua.h"
 
 void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, DIM mapDim)
 {
