@@ -1,2 +1,6 @@
-﻿  Main.c
+﻿  bitMap.c
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(54,42): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(54,49): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(54,57): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(54,65): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
   PBl2_9. taldea.vcxproj -> C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\Debug\PBl2_9. taldea.exe
