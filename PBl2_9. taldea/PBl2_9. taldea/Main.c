@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 	SDL_Window* window;
 	SDL_Event ebentu;
 
-	//bitmap();
+	bitmap();
 	if (!hasieratu(&window, &renderer, WIDTH, HEIGHT, "MUgit") && TTF_Init() == 0) { // Hasieratu lehioa
 		atexit(TTF_Quit);
 		menu = irudiaSortu(0, 0, MENU_IMAGE, window); // Menu nagusiaren irudia sortu
