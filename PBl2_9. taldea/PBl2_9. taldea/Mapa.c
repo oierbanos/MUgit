@@ -13,7 +13,7 @@
 #include "imagen.h"
 #include "mugimendua.h"
 
-void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua)
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, DIM mapDim)
 {
 	ptrPuntua ptrAux;
 	SDL_Window* window;
@@ -22,13 +22,13 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mu
 	puntuakJaso(burua, fitxategia);
 	pisuakJaso(*burua, fitxategia, &pisuak);
 
-	if (!hasieratu(&window, &renderer, 600, 600, "Mapa") && TTF_Init() == 0) {
+	if (!hasieratu(&window, &renderer, mapDim.width, mapDim.height, "Mapa") && TTF_Init() == 0) {
 		atexit(TTF_Quit);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 		textuaGaitu(1);
 		SDL_RenderClear(renderer);
-		grafoaMarraztu(fitxategia, burua, pisuak);
+		grafoaMarraztu(burua, pisuak);
 		rewind(fitxategia);
 		
 		ptrAux = *burua;
@@ -45,7 +45,7 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mu
 	else fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
 }
 
-void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
+void grafoaMarraztu(ptrPuntua* burua, float* pisuak)
 {
 	int pkop, i, j=0, konexioa = 0, kont;
 	char str[2] = { '0', '\0' };
@@ -72,7 +72,6 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
 						while (ptrAux->id != i + 1 && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
 						if (ptrAux2->visitado == 0) {
 							SDL_RenderDrawLine(renderer, (int)ptrAux->pos.x, (int)ptrAux->pos.y, (int)ptrAux2->pos.x, (int)ptrAux2->pos.y);
-							SDL_RenderPresent(renderer);
 						}
 					}
 					konexioa = 0;
@@ -83,6 +82,7 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
 			j++;
 	
 		if (ptrAux2 != NULL) {
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 			zirkuluaMarraztu(ptrAux2->pos.x, ptrAux2->pos.y, 5);
 
 			if (ptrAux2 != NULL) {
@@ -92,13 +92,13 @@ void grafoaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak)
 			ptrAux2 = ptrAux2->ptrHurrengoa;
 		}
 	}
+	SDL_RenderPresent(renderer);
 }
 
 void zirkuluaMarraztu(float x, float y, int r)
 {
 	float i, h;
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	for (i = x - r; i <= x + r; i++) {
 		h = (float)llround(sqrt((double)(r * r - (i - x) * (i - x))));
 		SDL_RenderDrawLine(renderer, (int)i, (int)y + (int)h, (int)i, (int)y - (int)h);

@@ -20,6 +20,49 @@ SDL_Renderer* getRenderer(void)
 	return renderer;
 }
 
+int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM* mapDim)
+{
+	int running = 0, egoera, jokalaria = 0;
+
+	switch (ebentu.type)
+	{
+	case SDL_QUIT: // Lehioa 'X' botoiaren bidez itxi
+		running = -1;
+		break;
+	case SDL_KEYDOWN: // Escape teklaren bidez lehioa itxi
+		if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = -1;
+		break;
+	case SDL_MOUSEBUTTONDOWN: // Pantailan klikatu da
+		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 351, 482, 93, ebentu)) { // Fitxategiaren eta maparen irudiaren helbideak jaso
+			egoera = getTextFromUser(fileName, "Get File", 450, 563, FILE_IMAGE); // Fitxategiaren helbidea jaso
+			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); }
+			else { strcpy(fileName, ""); fitxategia = NULL; }
+
+			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
+			if (egoera == OUT) {
+				get_image_size(mapName, &mapDim->width, &mapDim->height);
+				printf("Width: %ld\nHeight: %ld\n", mapDim->width, mapDim->height);
+			}
+			else  strcpy(mapName, "");
+		}
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
+			fitxategiBatSortu();
+		}
+		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 476, 482, 93, ebentu)) {
+			if (*fitxategia != NULL) {
+				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, *mapDim);
+				rewind(*fitxategia);
+			}
+			else printf("Fitxategia ezin da ireki.\n");
+		}
+		break;
+	default:
+		break;
+	}
+
+	return running;
+}
+
 int getTextFromUser(char* input, char* windowName, int width, int height, char* image)
 {
 	SDL_Window* window;
@@ -112,7 +155,7 @@ int textuaPantailanIdatzi(char* input, int x, int y)
 			}
 		}
 	}
-	sprintf(str, " %s", input);
+	sprintf(str, "%s_", input);
 	textuaIdatzi(x, y, str);
 
 	return running;
@@ -137,45 +180,6 @@ void textuaIdatzi(int x, int y, char* str)
 	SDL_RenderCopy(gRenderer, mTexture, &src, &dst);
 	SDL_FreeSurface(textSurface);
 	SDL_DestroyTexture(mTexture);
-}
-
-int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM mapDim)
-{
-	int running = 0, egoera, jokalaria=0;
-
-	switch (ebentu.type)
-	{
-	case SDL_QUIT:
-		running = -1;
-		break;
-	case SDL_KEYDOWN:
-		if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = -1;
-		break;
-	case SDL_MOUSEBUTTONDOWN:
-		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 351, 482, 93, ebentu)) {
-			egoera = getTextFromUser(fileName, "Get File", 450, 563, FILE_IMAGE);
-			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); }
-			else { strcpy(fileName, ""); fitxategia = NULL; }
-
-			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
-			if (egoera != OUT) strcpy(mapName, "");
-		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
-			fitxategiBatSortu();
-		}
-		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 476, 482, 93, ebentu)) {
-			if (*fitxategia != NULL) {
-				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua);
-				rewind(*fitxategia);
-			}
-			else printf("Fitxategia ezin da ireki.\n");
-		}
-		break;
-	default:
-		break;
-	}
-
-	return running;
 }
 
 int checkArea(float x, float y, float xDistance, float yDistance, SDL_Event ebentu)

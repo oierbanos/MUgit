@@ -81,7 +81,7 @@ void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* 
 		irudiaMugitu(mugit, org.x, org.y);
 		SDL_RenderClear(renderer);
 		irudiakMarraztu();
-		grafoaMarraztu(fitxategia, pBurua, pisuak);
+		grafoaMarraztu(pBurua, pisuak);
 		SDL_RenderPresent(renderer);
 		SDL_UpdateWindowSurface(window);
 	}

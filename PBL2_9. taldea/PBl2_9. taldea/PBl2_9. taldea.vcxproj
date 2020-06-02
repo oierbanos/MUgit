@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bitMap.c" />
     <ClCompile Include="Dijkstra.c" />
     <ClCompile Include="Erabilgarriak.c" />
     <ClCompile Include="Fitxategian_Idatzi.c" />
@@ -30,6 +31,7 @@
     <ClCompile Include="Mugimendua.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitMap.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Erabilgarriak.h" />
     <ClInclude Include="Fitxategian_Idatzi.h" />

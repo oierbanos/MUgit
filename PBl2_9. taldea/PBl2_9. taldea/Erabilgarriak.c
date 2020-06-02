@@ -6,26 +6,6 @@
 #include "Erabilgarriak.h"
 #include "imagen.h"
 
-int menu(void)
-{
-	char str[MAX_SIZE];
-	int aukera;
-
-	printf("==========================\n");
-	printf("           MENU           \n");
-	printf("==========================\n");
-	printf("1.- Mapa bat sortu.\n");
-	printf("2.- Mapa bat kargatu.\n");
-	printf("3.- Dijkstra aplikatu.\n");
-	printf("4.- Mapa marraztu\n");
-	printf("Sartu 0 programa amaitzeko.\n");
-	printf("\nAukera: ");
-	fgets(str, MAX_SIZE, stdin);
-	sscanf(str, "%d", &aukera);
-
-	return aukera;
-}
-
 int erreserbaBurutu(float** bek, int kop)
 {
 	*bek = (float*)malloc(sizeof(float) * kop);
@@ -84,4 +64,58 @@ int irudiaSortu(float x, float y, char* name, SDL_Window* window)
 	SDL_UpdateWindowSurface(window);
 
 	return bmpID;
+}
+
+void get_image_size(char* file_name, long* rows, long* cols)
+{
+	struct bitmapheader bmph;
+
+	read_bm_header(file_name, &bmph);
+	*rows = bmph.height;
+	*cols = bmph.width;
+}
+
+void read_bm_header(char* file_name, struct bitmapheader* bmheader)
+{
+	char buffer[10];
+	long ll;
+	unsigned long ull;
+	FILE* fitxategia;
+
+	fitxategia = fopen(file_name, "rb");
+	fseek(fitxategia, 14, SEEK_SET);
+
+	fread(buffer, 1, 4, fitxategia);
+	extract_ulong_from_buffer(buffer, 1, 0, &ull);
+	bmheader->size = ull;
+
+	fread(buffer, 1, 4, fitxategia);
+	extract_long_from_buffer(buffer, 1, 0, &ll);
+	bmheader->width = ll;
+
+	fread(buffer, 1, 4, fitxategia);
+	extract_long_from_buffer(buffer, 1, 0, &ll);
+	bmheader->height = ll;
+}
+
+void extract_long_from_buffer(char* buffer, int lsb, int start, long* number)
+{
+	union long_char_union lcu = { lcu.l_num = 0 };
+
+	lcu.l_alpha[0] = buffer[start + 0];
+	lcu.l_alpha[1] = buffer[start + 1];
+	lcu.l_alpha[2] = buffer[start + 2];
+	lcu.l_alpha[3] = buffer[start + 3];
+	*number = lcu.l_num;
+}
+
+void extract_ulong_from_buffer(char* buffer, int  lsb, int start, unsigned long* number)
+{
+	union ulong_char_union lcu = { lcu.l_num = 0 };
+
+	lcu.l_alpha[0] = buffer[start + 0];
+	lcu.l_alpha[1] = buffer[start + 1];
+	lcu.l_alpha[2] = buffer[start + 2];
+	lcu.l_alpha[3] = buffer[start + 3];
+	*number = lcu.l_num;
 }
