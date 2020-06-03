@@ -1,73 +1,55 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
+#include<stdio.h>
 #include <stdlib.h>
-#include "SDL.h"
+#include "Dijkstra.h"
+#include "Erabilgarriak.h"
+#include "Fitxategia_Irakurri.h"
+#include "Fitxategian_Idatzi.h"
+#include "SDL_ttf.h"
+#include "imagen.h"
+#include "bitMap.h"
+#include "Mapa.h"
+#include "Menu.h"
 
-#define WIDTH 500
-#define HEIGHT 500
-
-int hasieratu(SDL_Window** window, SDL_Renderer** renderer);
-
-// Funtzio orokorra
 int main(int argc, char** argv)
 {
+	DIM mapDim = { mapDim.height = 600, mapDim.width = 600 };
+	int running = 0, egoera, menu = -1, pkop = 0;
+	char fileName[128] = "", mapName[128] = "";
+	FILE * fitxategia = NULL;
+	ptrPuntua burua = NULL;
+	ptrMugi mBurua = NULL;
+	float* pisuak = NULL;
 	SDL_Window* window;
-	SDL_Renderer* renderer;
-	SDL_Event event;
-	int running = 0;
+	MP* points = NULL;
+	SDL_Event ebentu;
 
-	if (!hasieratu(&window, &renderer)) {
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	if (!hasieratu(&window, &renderer, WIDTH, HEIGHT, "MUgit") && TTF_Init() == 0) { // Hasieratu lehioa
+		atexit(TTF_Quit);
+		menu = irudiaSortu(0, 0, MENU_IMAGE, window); // Menu nagusiaren irudia sortu
+		textuaGaitu(1);
 
-		// SDL_Delay(20000); Utilizarlo como el sleep
-
-		// Loop infinito para mantener la pantalla
-		while (running == 0)
-		{
-			// Mirar a ver si hay un evento
-			while (SDL_PollEvent(&event))
-			{
-				if (event.type == SDL_QUIT) running = 1;
+		while (running == 0) { // Loop nagusia
+			while ((egoera = SDL_PollEvent(&ebentu)) == 1 && running == 0) { // Ebentu baten bila egon
+				if (egoera == 1) running = aukeraMenu(ebentu, &fitxategia, &burua, &mBurua, &pisuak, fileName, mapName, &mapDim, points, &pkop); // Programaren aukera desberdinak aurrera eraman
+				SDL_RenderPresent(renderer); // Pantailaren elementu desberdinak marraztu/berriztu
+				SDL_UpdateWindowSurface(window);
+				irudiakMarraztu();
 			}
-
-			// Limpiar la pantalla
-			SDL_RenderClear(renderer);
-
-			// Dibujar algo
-
-			// Mostrar lo que se ha dibujado
-			SDL_RenderPresent(renderer);
 		}
+		irudiaKendu(menu); // Menuaren irudia kendu
 	}
-	// Liberar informacion y terminar
-	if (renderer) SDL_DestroyRenderer(renderer);
-	if (window) SDL_DestroyWindow(window);
-	//SDL_QUIT; Para que no de warning (en linux) hay que poner SDL_Quit()
+	closeFont();
+	free(pisuak); // Elementu desberdinak memoriatik ezabatu
+	free(points);
+	askatuMugitu(&mBurua);
+	askatuPuntuak(&burua);
+	if (fitxategia != NULL) fclose(fitxategia); // Fitxategia irekita badago, hau itxi
+	if (renderer) SDL_DestroyRenderer(renderer); // Render-a kendu
+	if (window) SDL_DestroyWindow(window); // Lehioa kendu
+	SDL_StopTextInput();
+	TTF_Quit();
 	SDL_Quit();
-	return 0;
-}
-
-int hasieratu(SDL_Window** window, SDL_Renderer** renderer)
-{
-	// Iniciar SDL comprobando errores
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		fprintf(stderr, "SDL ez da hasieratu: %s\n", SDL_GetError());
-		return 1;
-	}
-
-	// Crear una ventana con SDL comprobando error
-	*window = SDL_CreateWindow("Main Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
-	if (!window) {
-		fprintf(stderr, "Ez da leihoa sortu.\n");
-		return 1;
-	}
-
-	// Crear un renderizador (Esta sincronizado con la pantalla que aparece al usuario y con el ratio en el que se refresca)
-	*renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (!renderer) {
-		fprintf(stderr, "Could not create renderer\n");
-		return 1;
-	}
 
 	return 0;
 }

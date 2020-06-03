@@ -4,19 +4,19 @@
 CC := gcc
 
 # set the compiler flags
-CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 --std=c99 -Wall -lSDL2_image -lm
+CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 --std=c99 -Wall -lSDL2_image -lSDL2_ttf -lm
 
 # add header files here
 HDRS :=
 
 # add source files here
-SRCS := Main.c
+SRCS := Main.c Dijkstra.c Erabilgarriak.c Fitxategia_Irakurri.c Fitxategian_Idatzi.c Mapa.c Menu.c bitMap.c imagen.c Mugimendua.c
 
 # generate names of object files
 OBJS := $(SRCS:.c=.o)
 
 # name of executable
-EXEC := robot
+EXEC := mugit
 
 # default recipe
 all: $(EXEC)
