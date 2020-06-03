@@ -3,109 +3,84 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "Menu.h"
+#include "bitMap.h"
 #include "Dijkstra.h"
 #include "Erabilgarriak.h"
 #include "Fitxategian_Idatzi.h"
 #include "Fitxategia_Irakurri.h"
 
-void fitxategiBatSortu(void)
+void fitxategiBatSortu(MP* points, int pkop)
 {
 	FILE* fitxategia;
-	int kop;
 	float *distantzia;
 
-	puntuKopurua(&kop);
-	distantzia = (float*)malloc(sizeof(float) * kop * kop);
+	distantzia = (float*)malloc(sizeof(float) * pkop * pkop);
 
-	if (kop <= 0 || distantzia == NULL) printf("101 Errorea");
+	if (pkop <= 0 || distantzia == NULL) printf("101 Errorea");
 	else {
 		fitxategiaSortu(&fitxategia);
-		puntuakIdatzi(fitxategia, kop, distantzia);
-		distantziakIdatzi(fitxategia, kop, distantzia);
+		puntuakIdatzi(fitxategia, points, pkop, distantzia);
+		distantziakIdatzi(fitxategia, pkop, distantzia);
 		fclose(fitxategia);
 	}
 }
 
-void puntuKopurua(int* kop)
-{
-	char str[MAX_SIZE];
-
-	printf("Mapan egongo diren puntu kopurua: ");
-	fgets(str, MAX_SIZE, stdin);
-	sscanf(str, "%d", kop);
-}
-
 void fitxategiaSortu(FILE** fitxategia)
 {
-	char fitxIzena[MAX_SIZE];
+	char fitxIzena[MAX_SIZE] = "", konprobaketa[MAX_SIZE];
+	int egoera;
 
-	printf("Fitxategiaren izena: ");
-	fgets(fitxIzena, MAX_SIZE - 4, stdin);
-	*(fitxIzena + strlen(fitxIzena) - 1) = '\0';
-	sprintf(fitxIzena, "%s.map", fitxIzena);
-
+	egoera = getTextFromUser(fitxIzena, "Get File", 450, 563, FILE_IMAGE);
+	if (strlen(fitxIzena) >= 5) {
+		sprintf(konprobaketa, "%s", (fitxIzena + strlen(fitxIzena) - 4));
+		if (strcmp(konprobaketa, ".map") != 0) sprintf(fitxIzena, "%s.map", fitxIzena);
+	}
 	*fitxategia = fopen(fitxIzena, "wb");
 }
 
-void puntuakIdatzi(FILE* fitxategia, int kop, float* distantzia)
+void puntuakIdatzi(FILE* fitxategia, MP* points, int kop, float* distantzia)
 {
-	char str[MAX_SIZE];
-	int aux, egoera, i = 0, stop = -1;
-	POS* posAux = (POS*)malloc(sizeof(POS) * kop);
+	int egoera, i = 1, stop = -1;
 
 	do {
-		printf("%d. puntua:\n", i + 1);
-		aux = i + 1;
-
-		egoera = fwrite(&aux, sizeof(int), 1, fitxategia);
+		egoera = fwrite(&i, sizeof(int), 1, fitxategia);
 		if (egoera != 1) printf("102 Errorea\n");
 		else {
-			printf("Puntuaren koordenatua (X): ");
-			fgets(str, MAX_SIZE, stdin);
-			sscanf(str, "%f", &(posAux + i)->x);
-
-			egoera = fwrite(&(posAux + i)->x, sizeof(float), 1, fitxategia);
+			egoera = fwrite(&(points + i - 1)->pos.x, sizeof(float), 1, fitxategia);
 			if (egoera != 1) printf("103 Errorea\n");
 			else {
-				printf("Puntuaren koordenatua (Y): ");
-				fgets(str, MAX_SIZE, stdin);
-				sscanf(str, "%f", &(posAux + i)->y);
-
-				egoera = fwrite(&(posAux + i)->y, sizeof(float), 1, fitxategia);
+				egoera = fwrite(&(points + i - 1)->pos.y, sizeof(float), 1, fitxategia);
 				if (egoera != 1) printf("104 Errorea\n");
 			}
 		}
 		i++;
-	} while (egoera == 1 && i < kop);
+	} while (egoera == 1 && i <= kop);
+
 	fwrite(&stop, sizeof(int), 1, fitxategia);
-	kalkulatuDistantzia(distantzia, posAux, kop);
+	kalkulatuDistantzia(distantzia, points, kop);
 }
 
-void kalkulatuDistantzia(float* distantzia, POS* pPos, int kop) 
+void kalkulatuDistantzia(float* distantzia, MP* points, int kop) 
 {
-	for(int i = 0; i < kop; i++)
-		for (int j = 0; j < kop; j++) {
-			if (i == j) *(distantzia + i * kop + j) = 0;
-			else if (konexioa(i, j)) *(distantzia + i * kop + j) = pitagoras(pPos, i, j);
-			else *(distantzia + i * kop + j) = 0;
+	int j, i;
+
+	for (i = 0; i < kop; i++)
+		for (j = 0; j < kop; j++)
+			*(distantzia + i * kop + j) = 0;
+
+	for (int i = 0; i < kop; i++) {
+		j = 0;
+		while ((points + i)->konexioak[j] != -1) {
+			*(distantzia + i * kop + (points + i)->konexioak[j]) = pitagoras(points, i, (points + i)->konexioak[j]);
+			j++;
 		}
+	}
 }
 
-float pitagoras(POS* pPos, int zutabea, int lerroa)
+float pitagoras(MP* points, int zutabea, int lerroa)
 {
-	return (float)(sqrt((double)(((pPos + zutabea)->x - (pPos + lerroa)->x) * ((pPos + zutabea)->x - (pPos + lerroa)->x) + ((pPos + zutabea)->y - (pPos + lerroa)->y) * ((pPos + zutabea)->y - (pPos + lerroa)->y))));
-}
-
-int konexioa(int puntua1, int puntua2)
-{
-	char str[MAX_SIZE];
-	int aux;
-
-	printf("%d puntuaren eta %d puntuak konektatuta daude (0/1)? ", puntua1 + 1, puntua2 + 1);
-	fgets(str, MAX_SIZE, stdin);
-	sscanf(str, "%d", &aux);
-
-	return aux;
+	return (float)(sqrt((double)(((points + zutabea)->pos.x - (points + lerroa)->pos.x) * ((points + zutabea)->pos.x - (points + lerroa)->pos.x) + ((points + zutabea)->pos.y - (points + lerroa)->pos.y) * ((points + zutabea)->pos.y - (points + lerroa)->pos.y))));
 }
 
 void distantziakIdatzi(FILE* fitxategia, int kop, float* distantziak)

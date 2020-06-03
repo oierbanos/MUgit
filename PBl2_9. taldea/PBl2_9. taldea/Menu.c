@@ -9,6 +9,7 @@
 #include "SDL_ttf.h"
 #include "imagen.h"
 #include "Erabilgarriak.h"
+#include "bitMap.h"
 #include "Dijkstra.h"
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
@@ -20,9 +21,9 @@ SDL_Renderer* getRenderer(void)
 	return renderer;
 }
 
-int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM* mapDim)
+int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM* mapDim, MP* points, int* pkop)
 {
-	int running = 0, egoera, jokalaria = 0;
+	int running = 0, egoera;
 
 	switch (ebentu.type)
 	{
@@ -39,18 +40,19 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 			else { strcpy(fileName, ""); fitxategia = NULL; }
 
 			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
-			if (egoera == OUT) {
-				//get_image_size(mapName, &mapDim->width, &mapDim->height);
-				//printf("Width: %ld\nHeight: %ld\n", mapDim->width, mapDim->height);
-			}
+			if (egoera == OUT) get_image_size(mapName, &mapDim->width, &mapDim->height);
 			else  strcpy(mapName, "");
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
-			fitxategiBatSortu();
+			bitmap(&points, pkop);
+			if (*pkop >= 2) fitxategiBatSortu(points, *pkop);
+			free(points);
+			points = NULL;
+			*pkop = 0;
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 476, 482, 93, ebentu)) {
 			if (*fitxategia != NULL) {
-				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, *mapDim);
+				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, *mapDim, mapName);
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");

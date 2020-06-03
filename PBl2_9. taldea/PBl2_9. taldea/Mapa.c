@@ -13,11 +13,11 @@
 #include "imagen.h"
 #include "Mugimendua.h"
 
-void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, DIM mapDim)
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, DIM mapDim, char* mapName)
 {
-	ptrPuntua ptrAux;
+	int running = 0, mugit = -1, idOrg, mapbackground = -1;
 	SDL_Window* window;
-	int running = 0, mugit = -1, idOrg;
+	ptrPuntua ptrAux;
 
 	puntuakJaso(burua, fitxategia);
 	pisuakJaso(*burua, fitxategia, &pisuak);
@@ -35,10 +35,12 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mu
 		idOrg = ptrAux->id;
 		SDL_RenderPresent(renderer);
 		mugit = irudiaSortu(ptrAux->pos.x, ptrAux->pos.y, MUGIT_IMAGE, window);
+		mapbackground = irudiaSortu(0, 0, mapName, window);
 
 		while (running == 0) running = movement(burua, ptrAux, mugiBurua, fitxategia, &pisuak, mugit, &idOrg, window);
 
 		irudiaKendu(mugit);
+		irudiaKendu(mapbackground);
 		if (renderer) SDL_DestroyRenderer(renderer);
 		if (window) SDL_DestroyWindow(window);
 	}

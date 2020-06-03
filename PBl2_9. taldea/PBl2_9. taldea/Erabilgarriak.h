@@ -75,7 +75,7 @@ int erreserbaBurutu(float** bek, int kop);
 void bilatu(ptrPuntua burua, float* x, float* y, int id);
 void get_image_size(char* file_name, long* rows, long* cols);
 int irudiaSortu(float x, float y, char* name, SDL_Window* window);
-void read_bm_header(char* file_name, struct bitmapheader* bmheader);
+int read_bm_header(char* file_name, struct bitmapheader* bmheader);
 void extract_long_from_buffer(char* buffer, int lsb, int start, long* number);
 void extract_ulong_from_buffer(char* buffer, int lsb, int start, unsigned long* number);
 

@@ -8,8 +8,9 @@ typedef struct DE_MAP_POINTS
 	int* konexioak;
 } MP;
 
-void bitmap(void);
 DIM eskatuDimentzioak(void);
+void bitmap(MP** points, int* pkop);
+void ordenatu(MP* points, int pkop);
 void konektatu(MP** points, int org, int dest);
 int checkPlace(MP* points, int kont, SDL_Event ebentu);
 void koordenatuakGorde(MP** points, int* kont, float mouseX, float mouseY);

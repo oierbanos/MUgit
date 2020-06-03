@@ -69,13 +69,16 @@ int irudiaSortu(float x, float y, char* name, SDL_Window* window)
 void get_image_size(char* file_name, long* rows, long* cols)
 {
 	struct bitmapheader bmph;
+	int egoera;
 
-	read_bm_header(file_name, &bmph);
-	*rows = bmph.height;
-	*cols = bmph.width;
+	egoera = read_bm_header(file_name, &bmph);
+	if (egoera == 1) {
+		*rows = bmph.height;
+		*cols = bmph.width;
+	}
 }
 
-void read_bm_header(char* file_name, struct bitmapheader* bmheader)
+int read_bm_header(char* file_name, struct bitmapheader* bmheader)
 {
 	char buffer[10];
 	long ll;
@@ -83,19 +86,24 @@ void read_bm_header(char* file_name, struct bitmapheader* bmheader)
 	FILE* fitxategia;
 
 	fitxategia = fopen(file_name, "rb");
-	fseek(fitxategia, 14, SEEK_SET);
+	if (fitxategia != NULL) {
+		fseek(fitxategia, 14, SEEK_SET);
 
-	fread(buffer, 1, 4, fitxategia);
-	extract_ulong_from_buffer(buffer, 1, 0, &ull);
-	bmheader->size = ull;
+		fread(buffer, 1, 4, fitxategia);
+		extract_ulong_from_buffer(buffer, 1, 0, &ull);
+		bmheader->size = ull;
 
-	fread(buffer, 1, 4, fitxategia);
-	extract_long_from_buffer(buffer, 1, 0, &ll);
-	bmheader->width = ll;
+		fread(buffer, 1, 4, fitxategia);
+		extract_long_from_buffer(buffer, 1, 0, &ll);
+		bmheader->width = ll;
 
-	fread(buffer, 1, 4, fitxategia);
-	extract_long_from_buffer(buffer, 1, 0, &ll);
-	bmheader->height = ll;
+		fread(buffer, 1, 4, fitxategia);
+		extract_long_from_buffer(buffer, 1, 0, &ll);
+		bmheader->height = ll;
+
+		return 1;
+	}
+	else return 0;
 }
 
 void extract_long_from_buffer(char* buffer, int lsb, int start, long* number)

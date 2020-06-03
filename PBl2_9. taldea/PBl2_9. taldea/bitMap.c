@@ -11,14 +11,13 @@
 #include "SDL_ttf.h"
 #include "imagen.h"
 
-void bitmap(void) 
+void bitmap(MP** points, int* pkop) 
 {
 	DIM mapDim;
 	SDL_Event ebentu;
-	MP* points = NULL;
 	SDL_Window* window;
 	POS org = { org.x = -1 }, dest;
-	int running = 0, pkop = 0, ckop = 0, check = -1, tmp;
+	int running = 0, check = -1, tmp;
 
 	mapDim = eskatuDimentzioak();
 	if (!hasieratu(&window, &renderer, mapDim.width, mapDim.height, "Create map") && TTF_Init() == 0) {
@@ -33,28 +32,30 @@ void bitmap(void)
 
 		while (running == 0) {
 			while (SDL_PollEvent(&ebentu)) {
+				SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 				if (ebentu.type == SDL_QUIT) running = 1;
-				else if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_ESCAPE) running = 1;
+				else if (ebentu.type == SDL_KEYDOWN && (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN)) 
+					running = 1;
 				else if (ebentu.type == SDL_MOUSEBUTTONDOWN && ebentu.button.button == SDL_BUTTON_LEFT) {
 					zirkuluaMarraztu((float)(ebentu.button.x), (float)(ebentu.button.y), 5);
-					koordenatuakGorde(&points, &pkop, (float)(ebentu.button.x), (float)(ebentu.button.y));
+					koordenatuakGorde(points, pkop, (float)(ebentu.button.x), (float)(ebentu.button.y));
 					SDL_RenderPresent(renderer);
 					SDL_UpdateWindowSurface(window);
 				}
-				else if ((ebentu.type == SDL_MOUSEBUTTONDOWN && ebentu.button.button == SDL_BUTTON_RIGHT) && points != NULL) {
-					check = checkPlace(points, pkop, ebentu);
+				else if ((ebentu.type == SDL_MOUSEBUTTONDOWN && ebentu.button.button == SDL_BUTTON_RIGHT) && *points != NULL) {
+					check = checkPlace(*points, *pkop, ebentu);
 					if (check != -1 && org.x == -1) {
-						org = (points + check)->pos;
+						org = (*points + check)->pos;
 						tmp = check;
 					}
 					else if (check != -1 && org.x != -1) { 
-						dest = (points + check)->pos;
+						dest = (*points + check)->pos;
 						if (org.x != dest.x && org.y != dest.y) {
 							SDL_SetRenderDrawColor(renderer, 255, 145, 50, 255);
 							SDL_RenderDrawLine(renderer, org.x, org.y, dest.x, dest.y);
 							SDL_RenderPresent(renderer);
 							SDL_UpdateWindowSurface(window);
-							konektatu(&points, tmp, check);
+							konektatu(points, tmp, check);
 							org.x = -1;
 						}
 					}
@@ -62,12 +63,9 @@ void bitmap(void)
 				}
 			}
 		}
-		for (int i = 0; i < pkop; i++) {
-			printf("Koordenatuak: %.2f, %.2f\n", (points + i)->pos.x, (points + i)->pos.y);
-			int j = 0;
-			while ((points + i)->konexioak[j] != -1) { printf("Konexioa: %d\n", (points + i)->konexioak[j]); j++; }
-		}
-		free(points);
+		ordenatu(*points, *pkop);
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
 	}
 }
 
@@ -146,6 +144,30 @@ void konektatu(MP** points, int org, int dest)
 		if ((*points + dest)->konexioak != NULL) {
 			(*points + dest)->konexioak[kont] = org;
 			(*points + dest)->konexioak[kont + 1] = -1;
+		}
+	}
+}
+
+void ordenatu(MP* points, int pkop)
+{
+	int j, k, txiki, txikiPos, tmp;
+
+	for (int i = 0; i < pkop; i++) {
+		j = 0;
+		while ((points + i)->konexioak[j] != -1) {
+			txiki = (points + i)->konexioak[j];
+			k = j;
+			txikiPos = k;
+			while ((points + i)->konexioak[k] != -1) {
+				if ((points + i)->konexioak[k] < txiki) { txiki = (points + i)->konexioak[k]; txikiPos = k; }
+				k++;
+			}
+			if (txikiPos != j) {
+				tmp = (points + i)->konexioak[txikiPos];
+				(points + i)->konexioak[txikiPos] = (points + i)->konexioak[j];
+				(points + i)->konexioak[j] = tmp;
+			}
+			j++;
 		}
 	}
 }

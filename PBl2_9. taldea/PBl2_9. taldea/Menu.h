@@ -3,8 +3,9 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "Erabilgarriak.h"
+#include "bitMap.h"
 
-int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM* mapDim);
+int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, char* fileName, char* mapName, DIM* mapDim, MP* points, int* pkop);
 int hasieratu(SDL_Window** window, SDL_Renderer** renderer, int width, int height, char* name);
 int getTextFromUser(char* input, char* windowName, int width, int height, char* image);
 int checkArea(float x, float y, float xDistance, float yDistance, SDL_Event ebentu);

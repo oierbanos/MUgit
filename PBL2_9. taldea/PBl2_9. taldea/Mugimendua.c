@@ -32,7 +32,6 @@ int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxat
 					aurkitu = checkArea(ptrAux->pos.x - 5, ptrAux->pos.y - 5, 10, 10, ebentu);
 					if (aurkitu == 0) ptrAux = ptrAux->ptrHurrengoa;
 				}
-
 			if (aurkitu == 1) {
 				idDest = ptrAux->id;
 				setUp(fitxategia, burua, mugiBurua, pisuak, *idOrg, idDest);
@@ -44,7 +43,6 @@ int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxat
 			break;
 		}
 	}
-
 	return running;
 }
 
@@ -73,18 +71,13 @@ void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, flo
 
 void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* window, ptrPuntua* pBurua, FILE* fitxategia, float* pisuak)
 {
-	while (org.x != dest.x || org.y != dest.y) {
+	while (org.x <= dest.x - 1 || org.x >= dest.x + 1 || org.y <= dest.y - 1 || org.y >= dest.y + 1) {
 		if (org.x != dest.x) org.x += propX;
 		if (org.y != dest.y) org.y += propY;
 
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-		irudiaMugitu(mugit, org.x, org.y);
-		SDL_RenderClear(renderer);
-		irudiakMarraztu();
-		grafoaMarraztu(pBurua, pisuak);
-		SDL_RenderPresent(renderer);
-		SDL_UpdateWindowSurface(window);
+		marraztu(mugit, org.x, org.y, pBurua, pisuak, window);
 	}
+	marraztu(mugit, dest.x, dest.y, pBurua, pisuak, window);
 }
 
 int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest)
@@ -97,4 +90,15 @@ int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest)
 	src.h = pDest->h;
 	SDL_RenderCopy(renderer, texture, &src, pDest);
 	return 0;
+}
+
+void marraztu(int mugit, float x, float y, ptrPuntua* pBurua, float* pisuak, SDL_Window* window)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	irudiaMugitu(mugit, x, y);
+	SDL_RenderClear(renderer);
+	irudiakMarraztu();
+	grafoaMarraztu(pBurua, pisuak);
+	SDL_RenderPresent(renderer);
+	SDL_UpdateWindowSurface(window);
 }
