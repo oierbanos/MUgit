@@ -117,27 +117,29 @@ DIM eskatuDimentzioak(char* aukera)
 			irudiakMarraztu();
 			while (SDL_PollEvent(&ebentu) && running == IN) {
 				if (option == 1)
-					aukeraJaso(ebentu, &option, width);
-				else if (option == 2)
 					aukeraJaso(ebentu, &option, height);
+				else if (option == 2)
+					aukeraJaso(ebentu, &option, width);
 				if (ebentu.type == SDL_MOUSEBUTTONDOWN) {
 					if (checkArea(93, 401, 102, 44, ebentu)) { strcpy(aukera, "bai"); running = OUT; }
 					else if (checkArea(256, 401, 102, 44, ebentu)) { strcpy(aukera, "ez"); running = OUT; }
 				}
 				else if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_ESCAPE)
-					running = OUT;
+					running = TERMINATE;
 			}
-			sprintf(str1, "%s_", width);
+			sprintf(str1, "%s_", height);
 			textuaIdatzi(52, 195, str1);
 
-			sprintf(str2, "%s_", height);
+			sprintf(str2, "%s_", width);
 			textuaIdatzi(52, 288, str2);
 
 			SDL_RenderPresent(renderer);
 			SDL_UpdateWindowSurface(window);
 		}
-		sscanf(str1, "%d", &dim.width);
-		sscanf(str2, "%d", &dim.height);
+		if (running != TERMINATE) {
+			sscanf(str1, "%d", &dim.height);
+			sscanf(str2, "%d", &dim.width);
+		}
 
 		irudiaKendu(img);
 		SDL_DestroyRenderer(renderer);
