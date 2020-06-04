@@ -45,38 +45,10 @@ typedef struct A_MUGIMENDUA
 	struct A_MUGIMENDUA* ptrHurrengoa;
 } MUGI, * ptrMugi;
 
-union ulong_char_union {
-	long l_num;
-	char l_alpha[4];
-};
-
-struct bitmapheader {
-	unsigned long size;
-	long width;
-	long height;
-};
-
-struct tiff_header_struct {
-	short lsb;
-	long bits_per_pixel;
-	long image_length;
-	long image_width;
-	long strip_offset;
-};
-
-union long_char_union {
-	long l_num;
-	char l_alpha[4];
-};
-
 void askatuMugitu(ptrMugi* burua);
 void askatuPuntuak(ptrPuntua* burua);
 int erreserbaBurutu(float** bek, int kop);
 void bilatu(ptrPuntua burua, float* x, float* y, int id);
-void get_image_size(char* file_name, long* rows, long* cols);
 int irudiaSortu(float x, float y, char* name, SDL_Window* window);
-int read_bm_header(char* file_name, struct bitmapheader* bmheader);
-void extract_long_from_buffer(char* buffer, int lsb, int start, long* number);
-void extract_ulong_from_buffer(char* buffer, int lsb, int start, unsigned long* number);
 
 #endif

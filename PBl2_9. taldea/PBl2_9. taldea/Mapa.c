@@ -13,30 +13,33 @@
 #include "imagen.h"
 #include "Mugimendua.h"
 
-void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, DIM mapDim, char* mapName)
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, char* mapName)
 {
 	int running = 0, mugit = -1, idOrg, mapbackground = -1;
+	DIM mapDim = { mapDim.width = -1, mapDim.height = -1 };
 	SDL_Window* window;
 	ptrPuntua ptrAux;
 
+	dimentsioakJaso(fitxategia, &mapDim);
 	puntuakJaso(burua, fitxategia);
 	pisuakJaso(*burua, fitxategia, &pisuak);
 
-	if (!hasieratu(&window, &renderer, mapDim.width, mapDim.height, "Mapa") && TTF_Init() == 0) {
+	if (mapDim.height > 0 && mapDim.width > 0 && !hasieratu(&window, &renderer, mapDim.width, mapDim.height, "Mapa") && TTF_Init() == 0) {
 		atexit(TTF_Quit);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 		textuaGaitu(1);
 		SDL_RenderClear(renderer);
 		if (strcmp(mapName, "") != 0) mapbackground = irudiaSortu(0, 0, mapName, window);
-		grafoaMarraztu(burua, pisuak);
-		rewind(fitxategia);
-		
+
 		ptrAux = *burua;
 		idOrg = ptrAux->id;
 		SDL_RenderPresent(renderer);
 		mugit = irudiaSortu(ptrAux->pos.x, ptrAux->pos.y, MUGIT_IMAGE, window);
 
+		grafoaMarraztu(burua, pisuak);
+		rewind(fitxategia);
+		
 		while (running == 0) running = movement(burua, ptrAux, mugiBurua, fitxategia, &pisuak, mugit, &idOrg, window);
 
 		irudiaKendu(mugit);
@@ -49,8 +52,8 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mu
 
 void grafoaMarraztu(ptrPuntua* burua, float* pisuak)
 {
+	char str[12];
 	int pkop, i, j=0, konexioa = 0, kont;
-	char str[2] = { '0', '\0' };
 	ptrPuntua ptrAux = *burua, ptrAux2 = *burua;
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -88,7 +91,7 @@ void grafoaMarraztu(ptrPuntua* burua, float* pisuak)
 			zirkuluaMarraztu(ptrAux2->pos.x, ptrAux2->pos.y, 5);
 
 			if (ptrAux2 != NULL) {
-				*(str) = enteroACaracter(ptrAux2);
+				sprintf(str, "%d", ptrAux2->id);
 				textuaIdatzi((int)ptrAux2->pos.x + 5, (int)ptrAux2->pos.y + 5, str);
 			}
 			ptrAux2 = ptrAux2->ptrHurrengoa;
@@ -105,8 +108,4 @@ void zirkuluaMarraztu(float x, float y, int r)
 		h = (float)llround(sqrt((double)(r * r - (i - x) * (i - x))));
 		SDL_RenderDrawLine(renderer, (int)i, (int)y + (int)h, (int)i, (int)y - (int)h);
 	}
-}
-
-char enteroACaracter(ptrPuntua ptrAux) {
-	return (ptrAux->id + 48);
 }

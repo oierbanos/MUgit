@@ -89,7 +89,7 @@ void gorde(int pKop, int org, int dest, float* distantzia, float* aurrekoa, ptrM
 {
 	for (int i = 0; i < pKop; i++)
 		if (i == dest) {
-			printf("\nDistance of node %d = %f", i + 1, *(distantzia + i));
+			printf("\nDistance of node %d = %.2f\n", i + 1, *(distantzia + i));
 			mugimenduak(i + 1, burua);
 
 			int j = i;
@@ -100,7 +100,7 @@ void gorde(int pKop, int org, int dest, float* distantzia, float* aurrekoa, ptrM
 		}
 	ptrMugi ptrAux = *burua;
 	while (ptrAux != NULL) { 
-		printf("\n%d", ptrAux->moveId); 
+		printf("%d\n", ptrAux->moveId); 
 		ptrAux = ptrAux->ptrHurrengoa; 
 	}
 }

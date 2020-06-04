@@ -10,9 +10,8 @@ typedef struct
 	int id;
 }MAPA_ELEMENTUA;
 
-void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, DIM mapDim, char* mapName);
-void grafoaMarraztu(ptrPuntua* burua, float* pisuak);
 void zirkuluaMarraztu(float x, float y, int r);
-char enteroACaracter(ptrPuntua ptrAux);
+void grafoaMarraztu(ptrPuntua* burua, float* pisuak);
+void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mugiBurua, char* mapName);
 
 #endif

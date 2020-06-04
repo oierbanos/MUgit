@@ -13,7 +13,6 @@
 
 int main(int argc, char** argv)
 {
-	DIM mapDim = { mapDim.height = 600, mapDim.width = 600 };
 	int running = 0, egoera, menu = -1, pkop = 0;
 	char fileName[128] = "", mapName[128] = "";
 	FILE * fitxategia = NULL;
@@ -23,6 +22,7 @@ int main(int argc, char** argv)
 	SDL_Window* window;
 	MP* points = NULL;
 	SDL_Event ebentu;
+	DIM mapDim;
 
 	if (!hasieratu(&window, &renderer, WIDTH, HEIGHT, "MUgit") && TTF_Init() == 0) { // Hasieratu lehioa
 		atexit(TTF_Quit);

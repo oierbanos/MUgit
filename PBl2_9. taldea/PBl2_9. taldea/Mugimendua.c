@@ -71,7 +71,7 @@ void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, flo
 
 void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* window, ptrPuntua* pBurua, FILE* fitxategia, float* pisuak)
 {
-	while (org.x <= dest.x - 1 || org.x >= dest.x + 1 || org.y <= dest.y - 1 || org.y >= dest.y + 1) {
+	while (org.x <= dest.x - 0.5 || org.x >= dest.x + 0.5 || org.y <= dest.y - 0.5 || org.y >= dest.y + 0.5) {
 		if (org.x != dest.x) org.x += propX;
 		if (org.y != dest.y) org.y += propY;
 

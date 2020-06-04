@@ -3,10 +3,11 @@
 #include <stdlib.h>
 #include "Erabilgarriak.h"
 
-int fitxategiaIreki(FILE** fitxategia, char* fileName);
-void puntuakJaso(ptrPuntua* burua, FILE* fitxategia);
-void pisuakJaso(ptrPuntua burua, FILE* fitxategia, float** pisuak);
 int puntuakZenbatu(ptrPuntua burua);
 void pantailaratuPuntuak(ptrPuntua burua);
+void dimentsioakJaso(FILE* fitxategia, DIM* mapDim);
+void puntuakJaso(ptrPuntua* burua, FILE* fitxategia);
+int fitxategiaIreki(FILE** fitxategia, char* fileName);
+void pisuakJaso(ptrPuntua burua, FILE* fitxategia, float** pisuak);
 
 #endif

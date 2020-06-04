@@ -11,22 +11,23 @@
 #include "SDL_ttf.h"
 #include "imagen.h"
 
-void bitmap(MP** points, int* pkop) 
+void bitmap(MP** points, int* pkop, DIM* mapDim) 
 {
-	DIM mapDim;
 	SDL_Event ebentu;
 	SDL_Window* window;
 	POS org = { org.x = -1 }, dest;
-	int running = 0, check = -1, tmp/*, mapImg*/;
+	char aukera[MAX_SIZE], img[MAX_SIZE];
+	int running = 0, check = -1, tmp, mapImg = -1;
 
-	mapDim = eskatuDimentzioak();
-	if (!hasieratu(&window, &renderer, mapDim.width, mapDim.height, "Create map") && TTF_Init() == 0) {
+	*mapDim = eskatuDimentzioak(aukera);
+	if (strcmp(aukera, "bai") == 0) eskatuIrudia(img);
+
+	if (!hasieratu(&window, &renderer, (*mapDim).width, (*mapDim).height, "Create map") && TTF_Init() == 0) {
+		atexit(TTF_Quit);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
 		SDL_RenderClear(renderer);
-		textuaGaitu(1);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-		//mapImg = eskatuIrudia(window);
-		//irudiakMarraztu();
+		if (strcmp(aukera, "bai") == 0) mapImg = irudiaSortu(0, 0, img, window);
 		textuaIdatzi(10, 5, "Ezkerreko klick-a: puntua sortu");
 		textuaIdatzi(10, 25, "Eskuineko klick-a: Bi puntu konektatu");
 		SDL_RenderPresent(renderer);
@@ -34,7 +35,7 @@ void bitmap(MP** points, int* pkop)
 
 		while (running == 0) {
 			while (SDL_PollEvent(&ebentu)) {
-				SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+				SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 				if (ebentu.type == SDL_QUIT) running = 1;
 				else if (ebentu.type == SDL_KEYDOWN && (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN)) 
 					running = 1;
@@ -65,8 +66,8 @@ void bitmap(MP** points, int* pkop)
 				}
 			}
 		}
+		if (mapImg != -1) irudiaKendu(mapImg);
 		ordenatu(*points, *pkop);
-		//if (mapImg != -1) irudiaKendu(mapImg);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 	}
@@ -98,7 +99,7 @@ int checkPlace(MP* points, int kont, SDL_Event ebentu)
 	else return -1;
 }
 
-DIM eskatuDimentzioak(void)
+DIM eskatuDimentzioak(char* aukera)
 {
 	char str[MAX_SIZE];
 	DIM dim;
@@ -110,6 +111,10 @@ DIM eskatuDimentzioak(void)
 	printf("Maparen luzeera: ");
 	fgets(str, MAX_SIZE, stdin);
 	sscanf(str, "%d", &dim.height);
+
+	printf("Irudi bat sartu nahi duzu (bai/ez)? ");
+	fgets(aukera, MAX_SIZE, stdin);
+	*(aukera + strlen(aukera) - 1) = '\0';
 
 	return dim;
 }
@@ -175,20 +180,10 @@ void ordenatu(MP* points, int pkop)
 	}
 }
 
-int eskatuIrudia(SDL_Window* window)
+void eskatuIrudia(char* img)
 {
-	char str[MAX_SIZE];
-	int egoera, id;
+	int egoera;
 
-	printf("Irudi bat sartu nahi duzu (bai/ez)? ");
-	fgets(str, MAX_SIZE, stdin);
-	*(str + strlen(str) - 1) = '\0';
-
-	if (strcmp(str, "bai") == 0) {
-		strcpy(str, "");
-		egoera = getTextFromUser(str, "Get Map", 450, 563, MAP_IMAGE);
-		id = irudiaSortu(0, 0, str, window);
-		return id;
-	}
-	else return -1;
+	strcpy(img, "");
+	egoera = getTextFromUser(img, "Get Map", 450, 563, MAP_IMAGE);
 }

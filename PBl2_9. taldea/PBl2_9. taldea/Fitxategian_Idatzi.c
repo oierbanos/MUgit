@@ -10,7 +10,7 @@
 #include "Fitxategian_Idatzi.h"
 #include "Fitxategia_Irakurri.h"
 
-void fitxategiBatSortu(MP* points, int pkop)
+void fitxategiBatSortu(MP* points, int pkop, DIM mapDim)
 {
 	FILE* fitxategia;
 	float *distantzia;
@@ -20,6 +20,7 @@ void fitxategiBatSortu(MP* points, int pkop)
 	if (pkop <= 0 || distantzia == NULL) printf("101 Errorea");
 	else {
 		fitxategiaSortu(&fitxategia);
+		dimentsioakIdatzi(fitxategia, mapDim);
 		puntuakIdatzi(fitxategia, points, pkop, distantzia);
 		distantziakIdatzi(fitxategia, pkop, distantzia);
 		fclose(fitxategia);
@@ -32,12 +33,23 @@ void fitxategiaSortu(FILE** fitxategia)
 	int egoera;
 
 	egoera = getTextFromUser(fitxIzena, "Get File", 450, 563, FILE_IMAGE);
-	if (strlen(fitxIzena) >= 5) {
+	if (strlen(fitxIzena) >= 4) {
 		sprintf(konprobaketa, "%s", (fitxIzena + strlen(fitxIzena) - 4));
 		if (strcmp(konprobaketa, ".map") != 0) sprintf(fitxIzena, "%s.map", fitxIzena);
 	}
+	else sprintf(fitxIzena, "%s.map", fitxIzena);
+
 	*fitxategia = fopen(fitxIzena, "wb");
 }
+
+void dimentsioakIdatzi(FILE* fitxategia, DIM mapDim)
+{
+	int egoera;
+
+	egoera = fwrite(&mapDim, sizeof(DIM), 1, fitxategia);
+	if (egoera != 1) printf("Error\n");
+}
+
 
 void puntuakIdatzi(FILE* fitxategia, MP* points, int kop, float* distantzia)
 {
@@ -57,8 +69,11 @@ void puntuakIdatzi(FILE* fitxategia, MP* points, int kop, float* distantzia)
 		i++;
 	} while (egoera == 1 && i <= kop);
 
-	fwrite(&stop, sizeof(int), 1, fitxategia);
-	kalkulatuDistantzia(distantzia, points, kop);
+	if (egoera == 1) {
+		fwrite(&stop, sizeof(int), 1, fitxategia);
+		kalkulatuDistantzia(distantzia, points, kop);
+	}
+	else printf("Error\n");
 }
 
 void kalkulatuDistantzia(float* distantzia, MP* points, int kop) 
@@ -95,4 +110,5 @@ void distantziakIdatzi(FILE* fitxategia, int kop, float* distantziak)
 		} while (j < kop && egoera == 1);
 		i++;
 	} while (i < kop && egoera == 1);
+	if (egoera != 1) printf("Error\n");
 }

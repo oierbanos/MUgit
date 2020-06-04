@@ -40,19 +40,18 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 			else { strcpy(fileName, ""); fitxategia = NULL; }
 
 			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
-			if (egoera == OUT) get_image_size(mapName, &mapDim->height, &mapDim->width);
-			else  strcpy(mapName, "");
+			if (egoera != OUT)  strcpy(mapName, "");
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
-			bitmap(&points, pkop);
-			if (*pkop >= 2) fitxategiBatSortu(points, *pkop);
+			bitmap(&points, pkop, mapDim);
+			if (*pkop >= 2) fitxategiBatSortu(points, *pkop, *mapDim);
 			free(points);
 			points = NULL;
 			*pkop = 0;
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 476, 482, 93, ebentu)) {
 			if (*fitxategia != NULL) {
-				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, *mapDim, mapName);
+				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, mapName);
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");
@@ -67,8 +66,8 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 
 int getTextFromUser(char* input, char* windowName, int width, int height, char* image)
 {
-	SDL_Window* window;
 	int running = IN, menu = -1;
+	SDL_Window* window;
 
 	if (!hasieratu(&window, &renderer, width, height, windowName) && TTF_Init() == 0) {
 		atexit(TTF_Quit);

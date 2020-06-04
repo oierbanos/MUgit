@@ -18,6 +18,14 @@ int fitxategiaIreki(FILE** fitxategia, char* fileName)
 	else return 1;
 }
 
+void dimentsioakJaso(FILE* fitxategia, DIM* mapDim)
+{
+	int egoera;
+
+	egoera = fread(mapDim, sizeof(DIM), 1, fitxategia);
+	if (egoera != 1) printf("Error\n");
+}
+
 void puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 {
 	ptrPuntua berria = NULL, ptrAux = NULL;
