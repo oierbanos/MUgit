@@ -18,6 +18,7 @@ SDL_Renderer* renderer;
 #define MENU_IMAGE "../Media/Images/Menu.bmp"
 #define FILE_IMAGE "../Media/Images/helbidea.bmp"
 #define MAP_IMAGE "../Media/Images/irudia.bmp"
+#define DIM_IMAGE "../Media/Images/MapaSortu.bmp"
 
 typedef struct DE_DIMENTSIOA
 {

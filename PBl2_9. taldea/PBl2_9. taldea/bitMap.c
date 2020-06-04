@@ -22,7 +22,7 @@ void bitmap(MP** points, int* pkop, DIM* mapDim)
 	*mapDim = eskatuDimentzioak(aukera);
 	if (strcmp(aukera, "bai") == 0) eskatuIrudia(img);
 
-	if (!hasieratu(&window, &renderer, (*mapDim).width, (*mapDim).height, "Create map") && TTF_Init() == 0) {
+	if (!hasieratu(&window, &renderer, (*mapDim).width, (*mapDim).height, "Create map") && TTF_Init() == 0 && mapDim->height > 0 && mapDim->width > 0) {
 		atexit(TTF_Quit);
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
@@ -101,22 +101,61 @@ int checkPlace(MP* points, int kont, SDL_Event ebentu)
 
 DIM eskatuDimentzioak(char* aukera)
 {
-	char str[MAX_SIZE];
-	DIM dim;
+	char width[MAX_SIZE] = { "" }, height[MAX_SIZE] = { "" }, str1[MAX_SIZE], str2[MAX_SIZE];
+	int running = IN, option = 1, img = -1;
+	DIM dim = { -1, -1 };
+	SDL_Window* window;
+	SDL_Event ebentu;
 
-	printf("Maparen zabalera: ");
-	fgets(str, MAX_SIZE, stdin);
-	sscanf(str, "%d", &dim.width);
+	if (!hasieratu(&window, &renderer, 450, 563, "Create map") && TTF_Init() == 0) {
+		atexit(TTF_Quit);
+		textuaGaitu(1);
+		img = irudiaSortu(0, 0, DIM_IMAGE, window);
 
-	printf("Maparen luzeera: ");
-	fgets(str, MAX_SIZE, stdin);
-	sscanf(str, "%d", &dim.height);
+		while (running == IN) {
+			SDL_RenderClear(renderer);
+			irudiakMarraztu();
+			while (SDL_PollEvent(&ebentu) && running == IN) {
+				if (option == 1)
+					aukeraJaso(ebentu, &option, width);
+				else if (option == 2)
+					aukeraJaso(ebentu, &option, height);
+				if (ebentu.type == SDL_MOUSEBUTTONDOWN) {
+					if (checkArea(93, 401, 102, 44, ebentu)) { strcpy(aukera, "bai"); running = OUT; }
+					else if (checkArea(256, 401, 102, 44, ebentu)) { strcpy(aukera, "ez"); running = OUT; }
+				}
+				else if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_ESCAPE)
+					running = OUT;
+			}
+			sprintf(str1, "%s_", width);
+			textuaIdatzi(52, 195, str1);
 
-	printf("Irudi bat sartu nahi duzu (bai/ez)? ");
-	fgets(aukera, MAX_SIZE, stdin);
-	*(aukera + strlen(aukera) - 1) = '\0';
+			sprintf(str2, "%s_", height);
+			textuaIdatzi(52, 288, str2);
 
+			SDL_RenderPresent(renderer);
+			SDL_UpdateWindowSurface(window);
+		}
+		sscanf(str1, "%d", &dim.width);
+		sscanf(str2, "%d", &dim.height);
+
+		irudiaKendu(img);
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
+	}
 	return dim;
+}
+
+void aukeraJaso(SDL_Event ebentu, int* option, char* input)
+{
+	if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN) {
+		if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_BACKSPACE && strlen(input) > 0)
+			*(input + strlen(input) - 1) = '\0';
+		else if (ebentu.type == SDL_TEXTINPUT && strlen(input) <= MAX_SIZE)
+			strcat(input, ebentu.text.text);
+		else if (ebentu.key.keysym.sym == SDLK_RETURN)
+			if (ebentu.key.keysym.sym == SDLK_RETURN) (*option)++;
+	}
 }
 
 void konektatu(MP** points, int org, int dest)
