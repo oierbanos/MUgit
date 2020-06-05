@@ -11,10 +11,15 @@ typedef struct Img
 	SDL_Rect dest;
 }IMG;
 
+// Kargatuta dagoen irudi bat ezabatu
 void irudiaKendu(int id);
+// Irudia pantaila marraztu
 void irudiakMarraztu(void);
+// Irudi bat kargatu
 int  irudiaKargatu(char* fileName);
+// Irudi batek ezarrita duen ID-a aurkitu
 int irudiarenPosizioaAurkitu(int id);
+// Irudi bat posizio berri batera mugitu
 void  irudiaMugitu(int numImg, float x, float y);
 
 #endif

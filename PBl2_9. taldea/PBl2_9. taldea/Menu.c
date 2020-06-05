@@ -123,10 +123,10 @@ void textuaGaitu(int aukera)
 	switch (aukera) // Textu mota desberdinak sartzeko aukera
 	{
 	case 1:
-		font = TTF_OpenFont("../Media/Fonts/Courier Prime.ttf", 16);
+		font = TTF_OpenFont("Media/Fonts/Courier Prime.ttf", 16);
 		break;
 	case 2:
-		font = TTF_OpenFont("../Media/Fonts/Amiko-Regular.ttf", 16);
+		font = TTF_OpenFont("Media/Fonts/Amiko-Regular.ttf", 16);
 		break;
 	default:
 		printf("Aukera desegokia.\n");
