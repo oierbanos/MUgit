@@ -1,22 +1,40 @@
-# POPBL2_9.taldea
+# POPBL2 9. taldea, Robot Mugikor Autonomoa
+Mondragon Unibertsiatea, Ingeniaritza Informatikoa 1. maila
+
+Taldeko kideak:
+- Jon Navaridas
+- Joseba Izaguirre
+- Julen Rodríguez
+- Sergio Villain
+- Oier Baños
 
 Proiektuaren deskribapena:
 Biltegi baten barruan hainbat produktu ezberdin toki batetik bestera eramango duen robota. Robot honek biltegi barruko bideak kontuan hartuta biderik laburrena bilatuko du, kasu honetan dijkstra algoritmoaz baliatuz. Programa hau robotaren mugimenduaren simulazio bat da, non biltegiaren mapak sortu/kargatu eta erabili ahal dira.
 
-Arazoen Zerrenda:
--101 errorea: Sartutako puntu kopurua 1 baino txikiagoa izan da.
--102 errorea: Arazo bat eman da puntuaren ID-a gordetzeko.
--103 errorea: Arazo bat eman da puntuaren X koordenatua gordetzerakoan.
--104 errorea: Arazo bat eman da puntuaren Y koordenatua gordetzerakoan.
--105 errorea: Arazo bat eman da bi puntuen arteko distantzia gordetzerakoan.
--201 errorea: Arazoa egon da fitxategia irakurtzerakoan.
--202 errorea: Arazoa egon da memoriaren erreserba egiterakoan puntu bat gordetzeko.
--203 errorea: Arazo bat eman da puntuaren ID-a edo koordenatuak irakurtzerakoan.
--204 errorea: Arazo bat eman da pisuen taularen atal baten informazioa jasotzerakoan.
--301 errorea: Mapa gordetzen duen fitxategiaren helbidea ez da aurkitu.
--302 errorea: Pisuen matrizea gordetzen duen elementuarentzako memoria erreserba egiterakoan errorea eman da.
--303 errorea: Arazo bat eman da dijkstra algoritmoan memoria erreserbak egiterakoan.
--304 errorea: Arazo bat eman da robotak egin behar dituen mugimenduak gordetzerakoan.
+Aplikazioa martxan jarri:
+Repositorioan aurkitzen den instaladorea descargatu eta aplikazioa instalatu.
+Mapak gordetzeko aplikazioa administratzaile bezala hasieratu behar da.
 
-GitHub repositorioaren helbidea:
-https://github.com/oierbanos/POPBL2_9.taldea
+Arazo Kodeen Zerrenda:
+- 101. Errorea: Ezin izan da lehioa sortu.
+- 102. Errorea: Irudia ez da ondo kargatu.
+- 103. Errorea: Arazo bat egon da bektorearen memoria alokatzerakoan.
+- 201. Errorea: Puntuak gordeko dituen aldagaiaren memoria alokatzerakoan arazo bat egon da.
+- 202. Errorea: Distantziak gordeko dituen matrizearen memoria alokaketa txarto joan da.
+- 203. Errorea: Sartutako puntu kopurua baxuegia da.
+- 204. Errorea: Sartutako karaktere kopurua handiegia da.
+- 205. Errorea: Arazo bat eman da dimentsioak fitxategian gordetzerakoan.
+- 206. Errorea: Puntuaren ID-a ez da gorde.
+- 207. Errorea: Puntuaren 'X' koordenatua ez da gorde.
+- 208. Errorea: Puntuaren 'Y' koordenatua ez da gorde.
+- 209. Errorea: Fitxategian idazterakoan arazoak eman dira.
+- 210. Errorea: Distantzien matrizea gordetzerakoan arazoak egon dira.
+- 301. Errorea: Fitxategairen helbidea ez da aurkitu.
+- 302. Errorea: Maparen dimentsioak ez dira jaso.
+- 303. Errorea: Puntuak jasoko dituen aldagaiaren memoria alokatu denean arazo bat egon da.
+- 304. Errorea: Arazo bat egon da puntu baten informazioa fitxategitik ateratzeko.
+- 305. Errorea: Puntuen arteko distantziako gordeko dituen matrizearen memoria modu desegokian alokatu da.
+- 306. Errorea: Bi puntuen arteko distantziak modu desegokian jaso dira.
+- 307. Errorea: Mapan aurkitzen diren puntu kopurua 0 baino gehiago izan behar dira.
+- 401. Errorea: Ez da fitxategi bat aurkitu.
+- 402. Errorea: Arazo bat egon da memoria alokatzerakoan.
