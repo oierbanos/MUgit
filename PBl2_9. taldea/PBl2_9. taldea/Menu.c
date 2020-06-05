@@ -5,18 +5,18 @@
 #include "SDL.h"
 #include "Menu.h"
 #include "Mapa.h"
-#include "Mugimendua.h"
-#include "SDL_ttf.h"
 #include "imagen.h"
-#include "Erabilgarriak.h"
 #include "bitMap.h"
+#include "SDL_ttf.h"
 #include "Dijkstra.h"
+#include "Mugimendua.h"
+#include "Erabilgarriak.h"
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
 
 TTF_Font* font = 0;
 
-SDL_Renderer* getRenderer(void)
+SDL_Renderer* getRenderer(void) // Render bat jaso
 {
 	return renderer;
 }
@@ -36,22 +36,22 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 	case SDL_MOUSEBUTTONDOWN: // Pantailan klikatu da
 		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 351, 482, 93, ebentu)) { // Fitxategiaren eta maparen irudiaren helbideak jaso
 			egoera = getTextFromUser(fileName, "Get File", 450, 563, FILE_IMAGE); // Fitxategiaren helbidea jaso
-			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); }
-			else { strcpy(fileName, ""); fitxategia = NULL; }
+			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); } // Textua gorde nahi bada, fitxategia ireki
+			else { strcpy(fileName, ""); fitxategia = NULL; } // Gordeko ez bada jasotako textua ezabatu
 
-			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE);
-			if (egoera != OUT)  strcpy(mapName, "");
+			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE); // Irudiaren helbidea jaso
+			if (egoera != OUT)  strcpy(mapName, ""); // Gorde nahi ez bada, barruko textua ezabatu
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
-			bitmap(&points, pkop, mapDim);
-			if (*pkop >= 2) fitxategiBatSortu(points, *pkop, *mapDim);
-			free(points);
+			bitmap(&points, pkop, mapDim); // Erabiltzaileak mapa bat marraztu
+			if (*pkop >= 2) fitxategiBatSortu(points, *pkop, *mapDim); // Sortutako mapa puntu minimo kopurua badauka, informazioa gorde
+			free(points); // Beharrezkoa ez den informazioa ezabatu
 			points = NULL;
 			*pkop = 0;
 		}
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 476, 482, 93, ebentu)) {
 			if (*fitxategia != NULL) {
-				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, mapName);
+				MapaMarraztu(*fitxategia, burua, *pisuak, mBurua, mapName); // Biltegiaren mapa pantailan marraztu, robotaren mugimendua simulatzeko
 				rewind(*fitxategia);
 			}
 			else printf("Fitxategia ezin da ireki.\n");
@@ -74,15 +74,16 @@ int getTextFromUser(char* input, char* windowName, int width, int height, char* 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		textuaGaitu(1);
 
-		menu = irudiaSortu(0, 0, image, window);
+		menu = irudiaSortu(0, 0, image, window); // Fondoaren irudia ezarri
 		SDL_StartTextInput();
 		while (running == IN) {
 			SDL_RenderClear(renderer);
-			irudiakMarraztu();
-			running = textuaPantailanIdatzi(input, 50, 255);
+			irudiakMarraztu(); // Irudia pantailan jarri
+			running = textuaPantailanIdatzi(input, 50, 255); // Erabiltzaileak emandako textua pantailan idatzi
 			SDL_RenderPresent(renderer);
 			SDL_UpdateWindowSurface(window);
 		}
+		closeFont(); // Textua desgaitu
 		irudiaKendu(menu);
 		SDL_StopTextInput();
 	}
@@ -119,7 +120,7 @@ int hasieratu(SDL_Window** window, SDL_Renderer** renderer, int width, int heigh
 
 void textuaGaitu(int aukera)
 {
-	switch (aukera) // Posibilidad de meter distintos tipos de fuente
+	switch (aukera) // Textu mota desberdinak sartzeko aukera
 	{
 	case 1:
 		font = TTF_OpenFont("../Media/Fonts/Courier Prime.ttf", 16);
@@ -141,23 +142,22 @@ int textuaPantailanIdatzi(char* input, int x, int y)
 	SDL_Event ebentu;
 	int running = 0;
 
-	// Mirar a ver si hay un evento
 	while (SDL_PollEvent(&ebentu) && running == IN) {
-		if (ebentu.type == SDL_QUIT)
+		if (ebentu.type == SDL_QUIT) // Lehiioa itxi
 			running = TERMINATE;
 		else if (ebentu.type == SDL_TEXTINPUT || ebentu.type == SDL_KEYDOWN || ebentu.type == SDL_MOUSEBUTTONDOWN) {
 			if (ebentu.type == SDL_KEYDOWN && ebentu.key.keysym.sym == SDLK_BACKSPACE && strlen(input) > 0)
-				*(input + strlen(input) - 1) = '\0';
+				*(input + strlen(input) - 1) = '\0'; // Pantailan erabiltzen den textuaren karaktere bat ezabatu
 			else if (ebentu.type == SDL_TEXTINPUT && strlen(input) <= MAX_SIZE)
-				strcat(input, ebentu.text.text);
-			else if (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN || ebentu.type == SDL_MOUSEBUTTONDOWN) {
-				if (ebentu.key.keysym.sym == SDLK_RETURN || ebentu.button.button == SDL_BUTTON_LEFT && checkArea(84, 365, 283, 41, ebentu)) running = OUT;
-				else if (ebentu.type != SDL_MOUSEBUTTONDOWN) running = TERMINATE;
+				strcat(input, ebentu.text.text); // Sartutako karaktere bakoitza jaso
+			else if (ebentu.key.keysym.sym == SDLK_ESCAPE || ebentu.key.keysym.sym == SDLK_RETURN || ebentu.type == SDL_MOUSEBUTTONDOWN) { // Textua jaso eta gorde
+				if (ebentu.key.keysym.sym == SDLK_RETURN || (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(84, 365, 283, 41, ebentu))) running = OUT;
+				else if (ebentu.type != SDL_MOUSEBUTTONDOWN) running = TERMINATE; // Escape sakatu bada textua ez da gordetzen
 			}
 		}
 	}
-	sprintf(str, "%s_", input);
-	textuaIdatzi(x, y, str);
+	sprintf(str, "%s_", input); // Pantailaratuko den textua string batean sartu
+	textuaIdatzi(x, y, str); // Textua pantailaratu
 
 	return running;
 }

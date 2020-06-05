@@ -83,13 +83,3 @@ int puntuakZenbatu(ptrPuntua burua)
 
 	return kont;
 }
-
-void pantailaratuPuntuak(ptrPuntua burua)
-{
-	ptrPuntua ptrAux = burua;
-
-	while (ptrAux != NULL) {
-		printf("%d %f %f\n", ptrAux->id, ptrAux->pos.x, ptrAux->pos.y);
-		ptrAux = ptrAux->ptrHurrengoa;
-	}
-}

@@ -6,30 +6,29 @@
 #include "Erabilgarriak.h"
 #include "imagen.h"
 
-int erreserbaBurutu(float** bek, int kop)
+int erreserbaBurutu(float** bek, int kop) // Bektore baten erreserba egin
 {
 	*bek = (float*)malloc(sizeof(float) * kop);
 	if (*bek == NULL) return 0;
 	else return 1;
 }
 
-void bilatu(ptrPuntua burua, float* x, float* y, int id) {
+void bilatu(ptrPuntua burua, float* x, float* y, int id) { // Puntu bat bilatu eta haren koordenatuak jaso
 
 	ptrPuntua ptrAux = burua;
 	
-	while (ptrAux->id != id && ptrAux->ptrHurrengoa != NULL) ptrAux = ptrAux->ptrHurrengoa;
-
+	while (ptrAux->id != id && ptrAux->ptrHurrengoa != NULL) 
+		ptrAux = ptrAux->ptrHurrengoa;
 	*x = ptrAux->pos.x;
 	*y = ptrAux->pos.y;
 }
 
-void askatuPuntuak(ptrPuntua* burua)
+void askatuPuntuak(ptrPuntua* burua) // ptrPuntua motako aldagaiak askatu
 {
 	ptrPuntua aux = *burua;
 
 	if (*burua != NULL) {
-		while (*burua != NULL)
-		{
+		while (*burua != NULL) {
 			*burua = (*burua)->ptrHurrengoa;
 			free(aux);
 			aux = *burua;
@@ -38,13 +37,12 @@ void askatuPuntuak(ptrPuntua* burua)
 	*burua = NULL;
 }
 
-void askatuMugitu(ptrMugi* burua)
+void askatuMugitu(ptrMugi* burua) // ptrMugi motako aldagaiak askatu
 {
 	ptrMugi aux = *burua;
 
 	if (*burua != NULL) {
-		while (*burua != NULL)
-		{
+		while (*burua != NULL) {
 			*burua = (*burua)->ptrHurrengoa;
 			free(aux);
 			aux = *burua;

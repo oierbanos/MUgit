@@ -5,11 +5,11 @@
 #include "SDL.h"
 #include "Menu.h"
 #include "Mapa.h"
-#include "Mugimendua.h"
 #include "imagen.h"
 #include "SDL_ttf.h"
-#include "Erabilgarriak.h"
 #include "Dijkstra.h"
+#include "Mugimendua.h"
+#include "Erabilgarriak.h"
 #include "Fitxategia_Irakurri.h"
 #include "Fitxategian_Idatzi.h"
 
@@ -23,20 +23,20 @@ int movement(ptrPuntua* burua, ptrPuntua ptrAux, ptrMugi* mugiBurua,FILE* fitxat
 		ptrAux = *burua;
 		switch (ebentu.type)
 		{
-		case SDL_KEYDOWN:
+		case SDL_KEYDOWN: // Lehioa itxi
 			if (ebentu.key.keysym.sym == SDLK_ESCAPE) running = 1;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (ebentu.button.button == SDL_BUTTON_LEFT)
-				while (ptrAux != NULL && aurkitu == 0) {
+				while (ptrAux != NULL && aurkitu == 0) { // Maparen zein puntuan klikatu den kalkulatu
 					aurkitu = checkArea(ptrAux->pos.x - 5, ptrAux->pos.y - 5, 10, 10, ebentu);
 					if (aurkitu == 0) ptrAux = ptrAux->ptrHurrengoa;
 				}
 			if (aurkitu == 1) {
 				idDest = ptrAux->id;
-				setUp(fitxategia, burua, mugiBurua, pisuak, *idOrg, idDest);
-				if (mugiBurua != NULL) { kalkulatuMugimendua(*burua, *mugiBurua, fitxategia, *pisuak, mugit, window); *idOrg = idDest; }
-				if (mugiBurua != NULL) askatuMugitu(mugiBurua);
+				setUp(fitxategia, burua, mugiBurua, pisuak, *idOrg, idDest); // dijkstra kalkulatu
+				if (mugiBurua != NULL) { kalkulatuMugimendua(*burua, *mugiBurua, fitxategia, *pisuak, mugit, window); *idOrg = idDest; } // Mugimendua kalkulatu
+				if (mugiBurua != NULL) askatuMugitu(mugiBurua); // Bariableak askatu
 			}
 			break;
 		default:
@@ -51,17 +51,17 @@ void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, flo
 	POS org, dest;
 	ptrMugi p1 = mBurua, p2 = p1->ptrHurrengoa;
 	float difX = 0, difY = 0, propX = 0, propY = 0;
-	int pkop = puntuakZenbatu(pBurua);
 
 	while (p1 != NULL && p2 != NULL) {
-		bilatu(pBurua, &org.x, &org.y, p1->moveId);
-		bilatu(pBurua, &dest.x, &dest.y, p2->moveId);
+		bilatu(pBurua, &org.x, &org.y, p1->moveId); // Hasierako puntua aurkitu
+		bilatu(pBurua, &dest.x, &dest.y, p2->moveId); // Amaierako puntua aurkitu
 
-		difX = dest.x - org.x; // Distancia entre un punto y otro en x
-		difY = dest.y - org.y; // Distancia entre un punto y otro en y
-		propX = difX / 100; // Proporción del avance en x
-		propY = difY / 100; // Proporción del avance en y
+		difX = dest.x - org.x; // Hasierako eta amaierako puntuen arteko distantzia 'x' ardatzean
+		difY = dest.y - org.y; // Hasierako eta amaierako puntuen arteko distantzia 'y' ardatzean
+		propX = difX / 100; // Aurrera egiteko proportzioa 'x' ardatzean
+		propY = difY / 100; // Aurrera egiteko proportzioa 'y' ardatzean
 
+		// Robota mugitu
 		mugitu(propX, propY, org, dest, mugit, window, &pBurua, fitxategia, pisuak);
 
 		p1 = p1->ptrHurrengoa;
@@ -72,12 +72,12 @@ void kalkulatuMugimendua(ptrPuntua pBurua, ptrMugi mBurua, FILE* fitxategia, flo
 void mugitu(float propX, float propY, POS org, POS dest, int mugit, SDL_Window* window, ptrPuntua* pBurua, FILE* fitxategia, float* pisuak)
 {
 	while (org.x <= dest.x - 0.5 || org.x >= dest.x + 0.5 || org.y <= dest.y - 0.5 || org.y >= dest.y + 0.5) {
-		if (org.x != dest.x) org.x += propX;
-		if (org.y != dest.y) org.y += propY;
+		if (org.x <= dest.x - 0.5 || org.x >= dest.x + 0.5) org.x += propX;
+		if (org.y <= dest.y - 0.5 || org.y >= dest.y + 0.5) org.y += propY;
 
-		marraztu(mugit, org.x, org.y, pBurua, pisuak, window);
-	}
-	marraztu(mugit, dest.x, dest.y, pBurua, pisuak, window);
+		marraztu(mugit, org.x, org.y, pBurua, pisuak, window); // Mapa marraztu
+	}// Desbideraketa badago, amaierako puntura mugitu
+	if (org.x != dest.x || org.y != dest.y) marraztu(mugit, dest.x, dest.y, pBurua, pisuak, window);
 }
 
 int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest)
@@ -95,10 +95,10 @@ int irudiaMarraztu(SDL_Texture* texture, SDL_Rect* pDest)
 void marraztu(int mugit, float x, float y, ptrPuntua* pBurua, float* pisuak, SDL_Window* window)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	irudiaMugitu(mugit, x, y);
+	irudiaMugitu(mugit, x, y); // Irudia posizio berrira mugitu
 	SDL_RenderClear(renderer);
-	irudiakMarraztu();
-	grafoaMarraztu(pBurua, pisuak);
+	irudiakMarraztu(); // Irudiak pantailan jarri
+	grafoaMarraztu(pBurua, pisuak); // Grafoa berriz marraztu
 	SDL_RenderPresent(renderer);
 	SDL_UpdateWindowSurface(window);
 }

@@ -1,6 +1,16 @@
 ﻿  bitMap.c
-C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(58,42): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(58,49): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(58,57): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(58,65): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(60,42): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(60,49): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(60,57): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+  Dijkstra.c
+  Erabilgarriak.c
+  Fitxategian_Idatzi.c
+  Fitxategia_Irakurri.c
+  imagen.c
+  Main.c
+  Mapa.c
+  Menu.c
+  Mugimendua.c
+  Generando código...
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\PBl2_9. taldea\bitMap.c(60,65): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
   PBl2_9. taldea.vcxproj -> C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\PBl2_9. taldea\Debug\PBl2_9. taldea.exe

@@ -17,6 +17,7 @@ void setUp(FILE* fitxategia, ptrPuntua* burua, ptrMugi* mBurua, float** pisuak, 
 	org = pos1;
 	dest = pos2;
 
+	// Dijkstra aplikatu
 	dijkstra(*pisuak, pKop, org - 1, dest - 1, mBurua);
 }
 
@@ -55,10 +56,10 @@ void dijkstra(float* pisuak, int pKop, int org, int dest, ptrMugi* burua)
 		}
 		// Nodo batetik besterako distantziak kate batean gorde
 		gorde(pKop, org, dest, distantzia, aurrekoa, burua);
-		free(distantzia);
-		free(aurrekoa);
-		free(pisua);
-		free(check);
+		if (distantzia != NULL) free(distantzia);
+		if (aurrekoa != NULL) free(aurrekoa);
+		if (pisua != NULL) free(pisua);
+		if (check != NULL) free(check);
 	}
 	else printf("303 Errorea\n");
 }
@@ -67,9 +68,9 @@ void dijkstraTaula(float* pisuak, float* pisua, int pKop)
 {
 	for (int i = 0; i < pKop; i++)
 		for (int j = 0; j < pKop; j++)
-			if (*(pisuak + i * pKop + j) == 0)
+			if (*(pisuak + i * pKop + j) == 0) // Puntuak ez daude konektatuta
 				*(pisua + i * pKop + j) = INFINITO;
-			else
+			else // Puntuak konektatuta daude
 				*(pisua + i * pKop + j) = *(pisuak + i * pKop + j);
 }
 
@@ -99,14 +100,12 @@ void gorde(int pKop, int org, int dest, float* distantzia, float* aurrekoa, ptrM
 			} while (j != org);
 		}
 	ptrMugi ptrAux = *burua;
-	while (ptrAux != NULL) { 
-		printf("%d\n", ptrAux->moveId); 
+	while (ptrAux != NULL)
 		ptrAux = ptrAux->ptrHurrengoa; 
-	}
 }
 
 void mugimenduak(int mugimendua, ptrMugi* burua)
-{
+{ // robotak egin behar dituen mugimenduak gorde
 	ptrMugi ptrAux = *burua, berria;
 
 	berria = (ptrMugi)malloc(sizeof(MUGI));
