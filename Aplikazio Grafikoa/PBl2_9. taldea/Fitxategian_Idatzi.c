@@ -38,7 +38,7 @@ void fitxategiaSortu(FILE** fitxategia)
 	if (strlen(fitxIzena) >= 4) { // Konprobatu fitxategia ".map" batekin amaitzen den, horrela amaitzen ez bada ".map" amaiera bat jarri
 		sprintf(konprobaketa, "%s", (fitxIzena + strlen(fitxIzena) - 4)); // Konprobatu ".map" jarrita dagoen
 		if (strcmp(konprobaketa, ".map") != 0 && strlen(fitxIzena) <= MAX_SIZE - strlen(".map")) sprintf(fitxIzena, "%s.map", fitxIzena);
-		else printf("#204 Errorea\n");
+		else if (strcmp(konprobaketa, ".map") != 0) printf("#204 Errorea\n");
 	}
 	else sprintf(fitxIzena, "%s.map", fitxIzena); // Txikiegia baldin bada ".map" bat izateko, ".map"-a jarri
 

@@ -37,8 +37,11 @@ void MapaMarraztu(FILE* fitxategia, ptrPuntua* burua, float* pisuak, ptrMugi* mu
 		idOrg = ptrAux->id;
 		SDL_RenderPresent(renderer); // Robotaren irudia sortu
 		mugit = irudiaSortu(ptrAux->pos.x, ptrAux->pos.y, MUGIT_IMAGE, window);
-
+		
+		irudiakMarraztu();
 		grafoaMarraztu(burua, pisuak); // Robota mugituko den puntuak eta haien konexioak pantailan marraztu
+		SDL_RenderPresent(renderer);
+		SDL_UpdateWindowSurface(window);
 		rewind(fitxategia);
 
 		while (running == 0) // Robota pantailan zehar mugitzeko aukera
@@ -98,7 +101,7 @@ void grafoaMarraztu(ptrPuntua* burua, float* pisuak)
 			ptrAux2 = ptrAux2->ptrHurrengoa;
 		}
 	}
-	SDL_RenderPresent(renderer);
+	//SDL_RenderPresent(renderer);
 }
 
 void zirkuluaMarraztu(float x, float y, int r)

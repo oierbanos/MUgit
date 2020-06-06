@@ -29,6 +29,7 @@ void bitmap(MP** points, int* pkop, DIM* mapDim)
 
 		SDL_RenderClear(renderer);
 		if (strcmp(aukera, "bai") == 0) mapImg = irudiaSortu(0, 0, img, window); // Atzeko irudia badago, sortu
+		irudiakMarraztu();
 		textuaIdatzi(10, 5, "Ezkerreko klick-a: puntua sortu"); // Instrukzioak
 		textuaIdatzi(10, 25, "Eskuineko klick-a: Bi puntu konektatu");
 		SDL_RenderPresent(renderer);

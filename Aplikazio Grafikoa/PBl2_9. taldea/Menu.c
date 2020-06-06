@@ -37,7 +37,7 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 		if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 351, 482, 93, ebentu)) { // Fitxategiaren eta maparen irudiaren helbideak jaso
 			if (*fitxategia != NULL) fclose(*fitxategia);
 			egoera = getTextFromUser(fileName, "Get File", 450, 563, FILE_IMAGE); // Fitxategiaren helbidea jaso
-			if (egoera == OUT) { egoera = fitxategiaIreki(fitxategia, fileName); } // Textua gorde nahi bada, fitxategia ireki
+			if (egoera == OUT && strcmp(fileName, "") != 0) { egoera = fitxategiaIreki(fitxategia, fileName); } // Textua gorde nahi bada, fitxategia ireki
 			else { strcpy(fileName, ""); fitxategia = NULL; } // Gordeko ez bada jasotako textua ezabatu
 
 			egoera = getTextFromUser(mapName, "Get Map", 450, 563, MAP_IMAGE); // Irudiaren helbidea jaso
