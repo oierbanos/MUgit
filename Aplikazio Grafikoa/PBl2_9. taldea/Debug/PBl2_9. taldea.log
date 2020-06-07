@@ -3,9 +3,6 @@ C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio 
 C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,49): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,57): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,65): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(89,36): warning C4047: '=': 'int *' es distinto en los niveles de direccionamiento indirecto de 'int'
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(175,38): warning C4047: '==': 'int *' es distinto en los niveles de direccionamiento indirecto de 'int'
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(191,39): warning C4047: '==': 'int *' es distinto en los niveles de direccionamiento indirecto de 'int'
   Dijkstra.c
   Erabilgarriak.c
   Fitxategian_Idatzi.c
