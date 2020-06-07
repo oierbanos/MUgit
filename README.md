@@ -29,6 +29,7 @@ Arazo Kodeen Zerrenda:
 - 208. Errorea: Puntuaren 'Y' koordenatua ez da gorde.
 - 209. Errorea: Fitxategian idazterakoan arazoak eman dira.
 - 210. Errorea: Distantzien matrizea gordetzerakoan arazoak egon dira.
+- 211. Errorea: Puntu kopurua bi baino txikiago da.
 - 301. Errorea: Fitxategairen helbidea ez da aurkitu.
 - 302. Errorea: Maparen dimentsioak ez dira jaso.
 - 303. Errorea: Puntuak jasoko dituen aldagaiaren memoria alokatu denean arazo bat egon da.

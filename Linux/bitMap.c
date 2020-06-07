@@ -35,7 +35,7 @@ void bitmap(MP** points, int* pkop, DIM* mapDim)
 		SDL_RenderPresent(renderer);
 		SDL_UpdateWindowSurface(window);
 
-		hasieratuKonexioak(*points, *pkop); // Konexio guztiak "-1"-era jarri
+
 		while (running == 0) {
 			while (SDL_PollEvent(&ebentu)) {
 				SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -85,7 +85,8 @@ void koordenatuakGorde(MP** points, int* kont, float mouseX, float mouseY)
 	if (*points != NULL) { // Puntu berri bat sortu
 		(*points + *kont)->pos.x = mouseX;
 		(*points + *kont)->pos.y = mouseY;
-		(*points + *kont)->konexioak = NULL;
+		(*points + *kont)->konexioak = (int*)malloc(sizeof(int));
+		(*points + *kont)->konexioak = -1;
 		(*kont)++;
 	}
 	else printf("#201 Errorea\n");
@@ -171,8 +172,8 @@ void konektatu(MP** points, int org, int dest)
 {
 	int kont = 0;
 
-	if ((*points + org)->konexioak == NULL) { // Lehenengo konexioa jaso (hasiera)
-		(*points + org)->konexioak = (int*)malloc(sizeof(int) * 2);
+	if ((*points + org)->konexioak == -1) { // Lehenengo konexioa jaso (hasiera)
+		(*points + org)->konexioak = (int*)realloc((*points + org)->konexioak, sizeof(int) * 2);
 		if ((*points + org)->konexioak != NULL) {
 			(*points + org)->konexioak[0] = dest;
 			(*points + org)->konexioak[1] = -1;
@@ -186,9 +187,9 @@ void konektatu(MP** points, int org, int dest)
 			(*points + org)->konexioak[kont + 1] = -1;
 		}
 	}
-
-	if ((*points + dest)->konexioak == NULL) { // Lehenengo konexioa jaso (amaiera)
-		(*points + dest)->konexioak = (int*)malloc(sizeof(int) * 2);
+	kont = 0;
+	if ((*points + dest)->konexioak == -1) { // Lehenengo konexioa jaso (amaiera)
+		(*points + dest)->konexioak = (int*)realloc((*points + dest)->konexioak, sizeof(int) * 2);
 		if ((*points + dest)->konexioak != NULL) {
 			(*points + dest)->konexioak[0] = org;
 			(*points + dest)->konexioak[1] = -1;
@@ -226,12 +227,6 @@ void ordenatu(MP* points, int pkop)
 			j++;
 		}
 	}
-}
-
-void hasieratuKonexioak(MP* points, int pkop)
-{
-	for (int i = 0; i < pkop; i++)
-		*(points + i)->konexioak = -1;
 }
 
 void eskatuIrudia(char* img)

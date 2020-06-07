@@ -46,6 +46,7 @@ int aukeraMenu(SDL_Event ebentu, FILE** fitxategia, ptrPuntua* burua, ptrMugi* m
 		else if (ebentu.button.button == SDL_BUTTON_LEFT && checkArea(67, 224, 482, 93, ebentu)) {
 			bitmap(&points, pkop, mapDim); // Erabiltzaileak mapa bat marraztu
 			if (*pkop >= 2) fitxategiBatSortu(points, *pkop, *mapDim); // Sortutako mapa puntu minimo kopurua badauka, informazioa gorde
+			else printf("#211 Errorea\n");
 			free(points); // Beharrezkoa ez den informazioa ezabatu
 			points = NULL;
 			*pkop = 0;

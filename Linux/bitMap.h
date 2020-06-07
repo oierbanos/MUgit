@@ -14,8 +14,6 @@ void eskatuIrudia(char* img);
 DIM eskatuDimentsioak(char* aukera);
 // Puntu bat beste puntuekin dituen konexioak ID-aren bitartez txikitik handira ordenatu
 void ordenatu(MP* points, int pkop);
-// Konexio guztiak "-1"-era jarri
-void hasieratuKonexioak(MP* points, int pkop);
 // Bi puntuen arteko konexioa sorut
 void konektatu(MP** points, int org, int dest);
 // Maparen grafoa irudikatu

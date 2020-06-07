@@ -101,7 +101,6 @@ void grafoaMarraztu(ptrPuntua* burua, float* pisuak)
 			ptrAux2 = ptrAux2->ptrHurrengoa;
 		}
 	}
-	//SDL_RenderPresent(renderer);
 }
 
 void zirkuluaMarraztu(float x, float y, int r)

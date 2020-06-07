@@ -66,7 +66,7 @@ int puntuakJaso(ptrPuntua* burua, FILE* fitxategia)
 int pisuakJaso(ptrPuntua burua, FILE* fitxategia, float** pisuak)
 {
 	int kont = puntuakZenbatu(burua);
-	int egoera, i = 0;
+	int egoera = 0, i = 0;
 
 	*pisuak = (float*)malloc(kont * kont * sizeof(float));
 	if (*pisuak == NULL) printf("#305 Errorea\n");

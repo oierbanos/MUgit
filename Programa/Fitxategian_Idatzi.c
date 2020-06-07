@@ -20,7 +20,7 @@ void fitxategiBatSortu(MP* points, int pkop, DIM mapDim)
 	if (distantzia == NULL) printf("#202 Errorea\n");
 
 	// Jasotako puntu kopurua 0 baino txikiagoa bada ez da mapa gordeko
-	if (pkop <= 0 || distantzia == NULL) printf("#203 Errorea\n");
+	if (pkop < 2 || distantzia == NULL) printf("#203 Errorea\n");
 	else {
 		fitxategiaSortu(&fitxategia);
 		egoera = dimentsioakIdatzi(fitxategia, mapDim); // Maparen dimentsioak gorde
@@ -91,7 +91,7 @@ void kalkulatuDistantzia(float* distantzia, MP* points, int kop)
 		for (j = 0; j < kop; j++)
 			*(distantzia + i * kop + j) = 0;
 
-	for (int i = 0; i < kop; i++) {
+	for (i = 0; i < kop; i++) {
 		j = 0;
 		while ((points + i)->konexioak[j] != -1) { // konektatuta dauden puntuen artean pitagoras aplikatu, distantziak jakiteko
 			*(distantzia + i * kop + (points + i)->konexioak[j]) = pitagoras(points, i, (points + i)->konexioak[j]);
