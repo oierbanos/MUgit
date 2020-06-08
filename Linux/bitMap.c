@@ -86,7 +86,7 @@ void koordenatuakGorde(MP** points, int* kont, float mouseX, float mouseY)
 		(*points + *kont)->pos.x = mouseX;
 		(*points + *kont)->pos.y = mouseY;
 		(*points + *kont)->konexioak = (int*)malloc(sizeof(int));
-		(*points + *kont)->konexioak = -1;
+		if ((*points + *kont)->konexioak != NULL) *((*points + *kont)->konexioak) = -1;
 		(*kont)++;
 	}
 	else printf("#201 Errorea\n");
@@ -172,35 +172,40 @@ void konektatu(MP** points, int org, int dest)
 {
 	int kont = 0;
 
-	if ((*points + org)->konexioak == -1) { // Lehenengo konexioa jaso (hasiera)
-		(*points + org)->konexioak = (int*)realloc((*points + org)->konexioak, sizeof(int) * 2);
-		if ((*points + org)->konexioak != NULL) {
-			(*points + org)->konexioak[0] = dest;
-			(*points + org)->konexioak[1] = -1;
+	if ((*points + org)->konexioak != NULL)	{
+		if (*((*points + org)->konexioak) == -1) { // Lehenengo konexioa jaso (hasiera)
+			(*points + org)->konexioak = (int*)realloc((*points + org)->konexioak, sizeof(int) * 2);
+			if ((*points + org)->konexioak != NULL) {
+				(*points + org)->konexioak[0] = dest;
+				(*points + org)->konexioak[1] = -1;
+			}
+		}
+		else {
+			while ((*points + org)->konexioak[kont] != -1) kont++; // Hurrengo konexioa jaso (hasiera)
+			(*points + org)->konexioak = (int*)realloc((*points + org)->konexioak, sizeof(int) * (kont + 2));
+			if ((*points + org)->konexioak != NULL) {
+				(*points + org)->konexioak[kont] = dest;
+				(*points + org)->konexioak[kont + 1] = -1;
+			}
 		}
 	}
-	else {
-		while ((*points + org)->konexioak[kont] != -1) kont++; // Hurrengo konexioa jaso (hasiera)
-		(*points + org)->konexioak = (int*)realloc((*points + org)->konexioak, sizeof(int) * (kont + 2));
-		if ((*points + org)->konexioak != NULL) {
-			(*points + org)->konexioak[kont] = dest;
-			(*points + org)->konexioak[kont + 1] = -1;
-		}
-	}
+
 	kont = 0;
-	if ((*points + dest)->konexioak == -1) { // Lehenengo konexioa jaso (amaiera)
-		(*points + dest)->konexioak = (int*)realloc((*points + dest)->konexioak, sizeof(int) * 2);
-		if ((*points + dest)->konexioak != NULL) {
-			(*points + dest)->konexioak[0] = org;
-			(*points + dest)->konexioak[1] = -1;
+	if ((*points + dest)->konexioak != NULL) {
+		if (*((*points + dest)->konexioak) == -1) { // Lehenengo konexioa jaso (amaiera)
+			(*points + dest)->konexioak = (int*)realloc((*points + dest)->konexioak, sizeof(int) * 2);
+			if ((*points + dest)->konexioak != NULL) {
+				(*points + dest)->konexioak[0] = org;
+				(*points + dest)->konexioak[1] = -1;
+			}
 		}
-	}
-	else {
-		while ((*points + dest)->konexioak[kont] != -1) kont++; // Hurrengo konexioak jaso (amaiera)
-		(*points + dest)->konexioak = (int*)realloc((*points + dest)->konexioak, sizeof(int) * (kont + 2));
-		if ((*points + dest)->konexioak != NULL) {
-			(*points + dest)->konexioak[kont] = org;
-			(*points + dest)->konexioak[kont + 1] = -1;
+		else {
+			while ((*points + dest)->konexioak[kont] != -1) kont++; // Hurrengo konexioak jaso (amaiera)
+			(*points + dest)->konexioak = (int*)realloc((*points + dest)->konexioak, sizeof(int) * (kont + 2));
+			if ((*points + dest)->konexioak != NULL) {
+				(*points + dest)->konexioak[kont] = org;
+				(*points + dest)->konexioak[kont + 1] = -1;
+			}
 		}
 	}
 }
