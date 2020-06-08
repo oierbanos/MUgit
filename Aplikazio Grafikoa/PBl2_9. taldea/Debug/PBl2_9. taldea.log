@@ -1,8 +1,7 @@
 ﻿  bitMap.c
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,42): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,49): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,57): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,65): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,42): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,49): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,57): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
   Dijkstra.c
   Erabilgarriak.c
   Fitxategian_Idatzi.c
@@ -13,4 +12,5 @@ C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio 
   Menu.c
   Mugimendua.c
   Generando código...
-  PBl2_9. taldea.vcxproj -> C:\Users\oierb\Desktop\MUgit-6e6da843a9d21d4f0c0e567183ee275f4e6ef631\Aplikazio Grafikoa\Debug\PBl2_9. taldea.exe
+C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Aplikazio Grafikoa\PBl2_9. taldea\bitMap.c(61,65): warning C4244: 'función': conversión de 'float' a 'int'; posible pérdida de datos
+  PBl2_9. taldea.vcxproj -> C:\Users\Jon\Documents\GitHub\POPBL2_9.taldea\Aplikazio Grafikoa\Debug\PBl2_9. taldea.exe
